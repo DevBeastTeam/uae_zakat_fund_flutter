@@ -1,0 +1,9 @@
+import 'package:get/get.dart';
+import 'package:zakat_fund/view_model/feedback_preview_view_model.dart';
+
+class FeedbackPreviewBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.put(FeedbackPreviewViewModel());
+  }
+}

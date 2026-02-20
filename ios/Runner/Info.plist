@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(PRODUCT_DISPLAY_NAME)</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_DISPLAY_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>myappscheme</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>myappscheme</string>
+				<string>fb1801815333686796</string>
+				<string>com.googleusercontent.apps.254561753658-tsa3cn69ids9j9aemafipco15d7slhqb</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>uaepassZakatPlatformDS</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>uaepassZakatPlatformDS</string>
+			</array>
+		</dict>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAppID</key>
+	<string>1801815333686796</string>
+	<key>FacebookClientToken</key>
+	<string>78471fe173039a07e8dc9adbcd9806ff</string>
+	<key>FacebookDisplayName</key>
+	<string>National Platform for Zakat</string>
+	<key>GIDClientID</key>
+	<string>254561753658-tsa3cn69ids9j9aemafipco15d7slhqb.apps.googleusercontent.com</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>uaepass</string>
+		<string>uaepassqa</string>
+		<string>uaepassdev</string>
+		<string>uaepassstg</string>
+		<string>mailto</string>
+		<string>tel</string>
+	</array>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Let National Platform for Zakat access Camera to scan qrcode.</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Let National Platform for Zakat access to save files</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Let National Platform for Zakat access Face id to make authentication process more secure.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Let National Platform for Zakat access your location show in map to add new address.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Let National Platform for Zakat access your location show in map to add new address.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Let National Platform for Zakat access your microphone to record voice.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Let National Platform for Zakat access your Photo Library to share content from your device.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Let National Platform for Zakat access your Photo Library to share content from your device.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>UIFileSharingEnabled</key>
+	<true/>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
+</dict>
+</plist>

@@ -1,0 +1,221 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:zakat_fund/model/dashboard_data.dart';
+import 'package:zakat_fund/model/lookup_data.dart';
+import 'package:zakat_fund/model/our_services.dart';
+import 'package:zakat_fund/utils/constants/app_colors.dart';
+import 'package:zakat_fund/utils/constants/app_resources.dart';
+import 'package:zakat_fund/utils/constants/app_textstyle.dart';
+import 'package:zakat_fund/utils/utils.dart';
+import 'package:zakat_fund/view_model/cms_services_view_model.dart';
+import 'package:zakat_fund/widgets/add_elevated_button.dart';
+import 'package:zakat_fund/widgets/cupertino_search_field.dart';
+import 'package:zakat_fund/widgets/cupertino_switch.dart';
+import 'package:zakat_fund/widgets/list_view_heaader_menu.dart';
+import 'package:zakat_fund/widgets/my_app_bar.dart';
+import 'package:zakat_fund/widgets/search_add_container.dart';
+import 'package:zakat_fund/widgets/stats_row_widget.dart';
+
+class CmsServicesScreen extends GetView<CMSServicesViewModel> {
+  const CmsServicesScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: myAppBar(title: "services"),
+      body: _buildBody(),
+    );
+  }
+
+  SingleChildScrollView _buildBody() {
+    return SingleChildScrollView(
+      controller: controller.scrollController,
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      child: Column(
+        children: [
+          if (controller.canView) ...[
+            Obx(() => buildStatsRow(0, controller.stats)),
+            10.verticalSpace,
+            Obx(() => buildStatsRow(3, controller.stats)),
+            16.verticalSpace
+          ],
+          _buildAddServiceBtn(),
+          if (controller.canAdd) 10.verticalSpace,
+          _buildExportFilterRow(),
+          if (controller.canExport || controller.canView) 10.verticalSpace,
+          if (controller.canView) ...[
+            _buildSearchField(),
+            16.verticalSpace,
+            _buildListView()
+          ]
+        ],
+      ),
+    );
+  }
+
+  CupertinoSearchField _buildSearchField() {
+    return CupertinoSearchField(
+      controller: controller.searchController,
+      onChanged: (val) {
+        if (val.trim().isEmpty) {
+          controller.pageSize = 10;
+          controller.fetchServices(clear: true);
+        }
+      },
+      onClear: () {
+        controller.searchController.clear();
+        controller.pageSize = 10;
+        controller.fetchServices(clear: true);
+      },
+      onSubmitted: (val) {
+        if (val.trim().isNotEmpty) {
+          controller.pageSize = 10;
+          controller.fetchServices(clear: true);
+        }
+      },
+    );
+  }
+
+  Widget _buildExportFilterRow() {
+    if (!controller.canView && !controller.canExport) {
+      return const SizedBox.shrink();
+    }
+
+    return Row(
+      children: [
+        if (controller.canExport)
+          Expanded(
+            child: expandedChip(
+              label: 'export',
+              icon: AppResources.exportIcon,
+              onPressed: () => controller.exportServices(),
+            ),
+          ),
+        if (controller.canExport && controller.canView) 16.horizontalSpace,
+        if (controller.canView)
+          Expanded(
+            child: expandedChip(
+              label: 'filter',
+              icon: AppResources.filterIcon,
+              onPressed: () => controller.filterBottomSheet(),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildAddServiceBtn() {
+    if (!controller.canAdd) {
+      return SizedBox.shrink();
+    }
+    return addElevatedButton(
+        onPressed: () => controller.addNewService(), text: "addNewService");
+  }
+
+  Widget _buildListView() {
+    return Obx(() => ListView.separated(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: controller.services.length,
+          separatorBuilder: (_, int index) => 16.verticalSpace,
+          itemBuilder: (_, int index) => newsItem(controller.services[index]),
+        ));
+  }
+
+  Container newsItem(OurServices service) {
+    String category = "";
+    LookupData? cat = controller.categoriesList
+        .firstWhereOrNull((cat) => cat.value == service.serviceCategoryId);
+    if (cat != null) {
+      category = Utils.isArabic ? cat.nameAr ?? "" : cat.name;
+    }
+    String status = Utils.statusIntoString(service.requestStatus);
+    List<DashboardData> projectDetails = [
+      DashboardData(title: "id", value: service.id.toString()),
+      DashboardData(
+          title: "title",
+          value: Utils.isArabic ? service.titleAr : service.titleEn),
+      DashboardData(title: "category", value: category),
+      DashboardData(
+          title: "creationDate",
+          value: Utils.dateFormat1.format(service.createdDate)),
+    ];
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 10.h),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.r),
+          border: Border.all(color: AppColors.lightGrey)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          listViewHeaderPopUpMenu(
+              status: status,
+              onSelected: (value) => controller.onMenuSelected(value, service),
+              menuItems: controller.canView || controller.canEdit
+                  ? [
+                      popupMenuItem(
+                          label: "view",
+                          icon: AppResources.eyeIcon,
+                          textStyle: AppTextStyle.darkBrown14spTextStyle),
+                      if (controller.canEdit)
+                        popupMenuItem(
+                            label: "edit",
+                            icon: AppResources.editIcon1,
+                            textStyle: AppTextStyle
+                                .secondaryPrimaryBlack14spTextStyle),
+                    ]
+                  : []),
+          10.verticalSpace,
+          const Divider(height: 0, color: AppColors.lightGrey),
+          10.verticalSpace,
+          Column(
+            children: projectDetails
+                .map((data) => Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(data.title.tr,
+                              style:
+                                  AppTextStyle.primaryDarkGrey12spTextStyle1),
+                          65.horizontalSpace,
+                          Flexible(
+                            child: Text(data.value,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle
+                                    .secondaryPrimaryBlack12spTextStyle1),
+                          ),
+                        ],
+                      ),
+                    ))
+                .toList(),
+          ),
+          _buildSwitchBtn(service)
+        ],
+      ),
+    );
+  }
+
+  Padding _buildSwitchBtn(OurServices service) {
+    return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("enableDisable".tr,
+                  style: AppTextStyle.primaryDarkGrey12spTextStyle1),
+              CupertinoSwitchWidget(
+                value: service.isActive,
+                onChanged: controller.canEdit && service.requestStatus == 2
+                    ? (_) => controller.updateStatus(service)
+                    : null,
+              ),
+            ],
+          ),
+        );
+  }
+}
