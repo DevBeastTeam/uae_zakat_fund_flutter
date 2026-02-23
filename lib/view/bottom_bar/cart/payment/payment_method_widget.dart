@@ -32,7 +32,7 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                     children: [
                       Expanded(
                         child: Opacity(
-                          opacity: 0.4,
+                          opacity: 1,
                           child: Container(
                             height: 65.h,
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
@@ -65,7 +65,7 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                       8.horizontalSpace,
                       Expanded(
                         child: Opacity(
-                          opacity: 0.4,
+                          opacity: 1,
                           child: Container(
                             height: 65.h,
                             padding: EdgeInsets.symmetric(horizontal: 10.w),
@@ -97,31 +97,37 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                       ),
                       8.horizontalSpace,
                       Expanded(
-                        child: Container(
-                          height: 65.h,
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(color: AppColors.greyColor)),
-                          child: Image.asset(
-                            AppResources.applePayIcon,
-                            width: 58.w,
-                            height: 24.h,
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            height: 65.h,
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(color: AppColors.greyColor)),
+                            child: Image.asset(
+                              AppResources.applePayIcon,
+                              width: 58.w,
+                              height: 24.h,
+                            ),
                           ),
                         ),
                       ),
                       8.horizontalSpace,
                       Expanded(
-                        child: Container(
-                          height: 65.h,
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(color: AppColors.greyColor)),
-                          child: SvgPicture.asset(
-                            AppResources.googlePay,
-                            width: 48.w,
-                            height: 24.h,
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            height: 65.h,
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(color: AppColors.greyColor)),
+                            child: SvgPicture.asset(
+                              AppResources.googlePay,
+                              width: 48.w,
+                              height: 24.h,
+                            ),
                           ),
                         ),
                       ),
