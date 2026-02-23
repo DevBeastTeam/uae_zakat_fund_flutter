@@ -2214,7 +2214,8 @@ const Map<String, String> ar = {
   "this_week": "هذا الأسبوع",
   "other_chats": "محادثات أخرى",
   "discoverMoreAssociations": "اكتشف المزيد من الجمعيات",
-  "dubaiPay": "ذبي باي",
+  "dubaiPay": "سداد دبي",
+  // "dubaiPay": "ذبي باي",
   "chat_note":
       "نتطور بتفاعلكم… ونوظّف الذكاء الاصطناعي لخدمتكم، مع احتمال الخطأ غير المقصود لذا يُنصح بالتحقق.",
   "viewMoreLink": "الاطلاع على المزيد",
