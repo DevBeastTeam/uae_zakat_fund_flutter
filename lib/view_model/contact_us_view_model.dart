@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -87,6 +89,7 @@ class ContactUsViewModel extends GetxController {
 
     if (apiResponse.appState == AppState.onSuccess) {
       contactUs = apiResponse.data;
+      log("👉🏻 contactUs: ${contactUs.map((e) => e.key + ": ${e.value}").toList()}");
       for (SmtpConfig config in contactUs) {
         switch (config.key) {
           case "Email":

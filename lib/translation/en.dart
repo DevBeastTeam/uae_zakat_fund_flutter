@@ -2159,7 +2159,7 @@ const Map<String, String> en = {
   "onBoardingMessage3": "Digitally sign and validate documents",
   "skip": "Skip",
   "copyrightZakatFund":
-      "Copyright © 2025. General Authority for Islamic Affairs, Endowments and Zakat",
+      "Copyright © 2026. General Authority for Islamic Affairs, Endowments and Zakat",
   "uaePassSignInMessage":
       "A single trusted digital identity for all citizens, residents and visitors.",
   "haveLegacyAccount": "Have a legacy account?  ",
@@ -2238,9 +2238,9 @@ const Map<String, String> en = {
   "dubaiPay": "DubaiPay",
   "chat_note":
       "We are evolving through your interaction… and employing artificial intelligence to serve you, with the possibility of unintentional errors, so verification is advised.",
-  "viewMoreLink":"View more link",
-  "fullName":"Full Name",
-  "bankTransfer":"Bank\nTransfer",
-  "credit/DebitCard":"Credit/Debit\nCard",
-  "paymentFailed":"Your payment could not be processed. Please try again."
+  "viewMoreLink": "View more link",
+  "fullName": "Full Name",
+  "bankTransfer": "Bank\nTransfer",
+  "credit/DebitCard": "Credit/Debit\nCard",
+  "paymentFailed": "Your payment could not be processed. Please try again."
 };

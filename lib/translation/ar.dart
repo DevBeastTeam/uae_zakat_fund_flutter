@@ -264,7 +264,8 @@ const Map<String, String> ar = {
   'orderSummary': 'ملخص الطلب',
   'total': 'المجموع',
   'completePayment': 'إستكمال الدفع',
-  'paymentSecureMessage': 'جميع عمليات الدفع امنة ١٠٠٪ تحت اشراف المنصة الوطنية للزكاة',
+  'paymentSecureMessage':
+      'جميع عمليات الدفع امنة ١٠٠٪ تحت اشراف المنصة الوطنية للزكاة',
   'modifyTheAmount': 'تعديل المبلغ',
   'update': 'تعديل',
   'allProjects': 'جميع المشاريع',
@@ -497,7 +498,8 @@ const Map<String, String> ar = {
   'topUpSuccessMessage': 'تم تحديث رصيد محفظتك',
   'totalBalance': 'إجمالي الرصيد',
   'payNow': 'ادفع الآن',
-  'creditDebitCard': 'دبي باي',
+  'creditDebitCard': 'سداد دبي',
+  // 'creditDebitCard': 'دبي باي',
   'pleasePayAttention': 'يرجى الانتباه',
   'onlinePayMessage':
       'يرجى إدخال التفاصيل الدقيقة لصندوق الزكاة وذكر الاسم الدقيق للمستفيد لتسهيل عملية تحويل الأموال. شكرًا لتعاونكم.',
@@ -2215,9 +2217,9 @@ const Map<String, String> ar = {
   "dubaiPay": "ذبي باي",
   "chat_note":
       "نتطور بتفاعلكم… ونوظّف الذكاء الاصطناعي لخدمتكم، مع احتمال الخطأ غير المقصود لذا يُنصح بالتحقق.",
-  "viewMoreLink":"الاطلاع على المزيد",
-  "fullName":"الاسم الكامل",
-  "bankTransfer":"تحويل\nبنكي",
-  "credit/DebitCard":"بطاقة ائتمان/\nسحب آلي",
-  "paymentFailed":"لم نتمكن من معالجة عملية الدفع. يرجى إعادة المحاولة لاحقًا"
+  "viewMoreLink": "الاطلاع على المزيد",
+  "fullName": "الاسم الكامل",
+  "bankTransfer": "تحويل\nبنكي",
+  "credit/DebitCard": "بطاقة ائتمان/\nسحب آلي",
+  "paymentFailed": "لم نتمكن من معالجة عملية الدفع. يرجى إعادة المحاولة لاحقًا"
 };

@@ -309,6 +309,8 @@ class LogInViewModel extends GetxController {
       } else {
         // Get.toNamed(AppRoutes.userSelectionScreen);
         uaeSocialMedia(true);
+        // User doesn't exist - show error message instead of auto-registering
+        // Utils.showGlobalSnackBar(message: "pleaseSignUp".tr);
       }
     }
   }

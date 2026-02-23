@@ -31,59 +31,67 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Container(
-                          height: 65.h,
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(color: AppColors.greyColor)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                AppResources.cardPayIcon,
-                                width: 20.w,
-                                height: 20.h,
-                                color: AppColors.darkGreyColor1,
-                              ),
-                              4.verticalSpace,
-                              FittedBox(
-                                child: Text(
-                                  "credit/DebitCard".tr,
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyle.darkGreyOne12spTextStyle3,
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            height: 65.h,
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(color: AppColors.greyColor)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  AppResources.cardPayIcon,
+                                  width: 20.w,
+                                  height: 20.h,
+                                  color: AppColors.darkGreyColor1,
                                 ),
-                              )
-                            ],
+                                4.verticalSpace,
+                                FittedBox(
+                                  child: Text(
+                                    "credit/DebitCard".tr,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        AppTextStyle.darkGreyOne12spTextStyle3,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       8.horizontalSpace,
                       Expanded(
-                        child: Container(
-                          height: 65.h,
-                          padding: EdgeInsets.symmetric(horizontal: 10.w),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.r),
-                              border: Border.all(color: AppColors.greyColor)),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SvgPicture.asset(
-                                AppResources.bankTransferIcon,
-                                width: 20.w,
-                                height: 20.h,
-                                color: AppColors.darkGreyColor1,
-                              ),
-                              4.verticalSpace,
-                              FittedBox(
-                                child: Text(
-                                  "bankTransfer".tr,
-                                  textAlign: TextAlign.center,
-                                  style: AppTextStyle.darkGreyOne12spTextStyle3,
+                        child: Opacity(
+                          opacity: 0.4,
+                          child: Container(
+                            height: 65.h,
+                            padding: EdgeInsets.symmetric(horizontal: 10.w),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8.r),
+                                border: Border.all(color: AppColors.greyColor)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AppResources.bankTransferIcon,
+                                  width: 20.w,
+                                  height: 20.h,
+                                  color: AppColors.darkGreyColor1,
                                 ),
-                              )
-                            ],
+                                4.verticalSpace,
+                                FittedBox(
+                                  child: Text(
+                                    "bankTransfer".tr,
+                                    textAlign: TextAlign.center,
+                                    style:
+                                        AppTextStyle.darkGreyOne12spTextStyle3,
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),

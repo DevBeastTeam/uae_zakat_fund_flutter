@@ -142,10 +142,10 @@ class ContactUsScreenThree extends GetView<ContactUsViewModel> {
           style: AppTextStyle.secondaryPrimaryBlack16spTextStyle,
         ),
         16.verticalSpace,
-        Text(
-          "socialMedia".tr,
-          style: AppTextStyle.darkGreyOne16spTextStyle1,
-        ),
+        // Text(
+        //   "socialMedia".tr,
+        //   style: AppTextStyle.darkGreyOne16spTextStyle1,
+        // ),
         _buildSocialMediaRow(),
         20.verticalSpace,
         ContentHelpfulWidget(
@@ -457,7 +457,8 @@ class ContactUsScreenOne extends GetView<ContactUsViewModel> {
     if (trimmed.isEmpty) return;
 
     final cleaned = trimmed.replaceAll(RegExp(r'[^0-9+]+'), '');
-    final telUri = Uri(scheme: 'tel', path: cleaned.isEmpty ? trimmed : cleaned);
+    final telUri =
+        Uri(scheme: 'tel', path: cleaned.isEmpty ? trimmed : cleaned);
     if (await canLaunchUrl(telUri)) {
       await launchUrl(telUri, mode: LaunchMode.externalApplication);
       return;

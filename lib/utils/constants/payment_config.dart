@@ -2,10 +2,8 @@ library;
 
 import 'package:pay/pay.dart';
 
-
 final defaultApplePayConfig =
-PaymentConfiguration.fromJsonString(defaultApplePay);
-
+    PaymentConfiguration.fromJsonString(defaultApplePay);
 
 const String defaultApplePay = '''{
   "provider": "apple_pay",
@@ -41,10 +39,8 @@ const String defaultApplePay = '''{
   }
 }''';
 
-
 final defaultGooglePayConfig =
-PaymentConfiguration.fromJsonString(defaultGooglePay);
-
+    PaymentConfiguration.fromJsonString(defaultGooglePay);
 
 const String defaultGooglePay = '''{
   "provider": "google_pay",

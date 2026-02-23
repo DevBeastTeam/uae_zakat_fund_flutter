@@ -33,8 +33,9 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Column(
         children: [
-          if(controller.request == null)...[
-            Obx(()=>activityLogBtn(model: 1,
+          if (controller.request == null) ...[
+            Obx(() => activityLogBtn(
+                model: 1,
                 status: 1,
                 id: controller.accountId.value,
                 type: controller.isAssociation ? "Association" : "Company")),
@@ -61,8 +62,7 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
   }
 
   Widget _buildBankInformation() {
-    return Obx(() =>
-        Column(
+    return Obx(() => Column(
           children: [
             expansionTileHeader(
               title: "bankInformation",
@@ -97,8 +97,7 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
   }
 
   Widget _buildRepresentativeInformation() {
-    return Obx(() =>
-        Column(
+    return Obx(() => Column(
           children: [
             expansionTileHeader(
               title: "representativeInformation",
@@ -254,15 +253,13 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
                 ],
                 textFieldLabel(label: "firstSupportDocument"),
                 4.verticalSpace,
-                Obx(() =>
-                    fileViewWidget(
-                        isImage: false, value: controller.fDocument.value)),
+                Obx(() => fileViewWidget(
+                    isImage: false, value: controller.fDocument.value)),
                 10.verticalSpace,
                 textFieldLabel(label: "secondSupportDocument"),
                 4.verticalSpace,
-                Obx(() =>
-                    fileViewWidget(
-                        isImage: false, value: controller.sDocument.value)),
+                Obx(() => fileViewWidget(
+                    isImage: false, value: controller.sDocument.value)),
                 if (controller.isAssociation)
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,10 +311,9 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
     return Column(
         children: List.generate(
             controller.addresses.length,
-                (index) =>
-                Container(
+            (index) => Container(
                   padding:
-                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
                   margin: EdgeInsets.only(bottom: 16.h),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -334,25 +330,22 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
-                        "${index == 0 ? "address1".tr : "address2"
-                            .tr} ${controller.addresses[index].isDefault
-                            ? "primary".tr
-                            : ""}",
+                        "${index == 0 ? "address1".tr : "address2".tr} ${controller.addresses[index].isDefault ? "primary".tr : ""}",
                         style: AppTextStyle.secondaryPrimaryBlack16spTextStyle,
                       ),
                       8.verticalSpace,
                       Text(controller.addresses[index].street,
                           maxLines: 1,
                           style:
-                          AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
                       Text(controller.addresses[index].building,
                           maxLines: 1,
                           style:
-                          AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
                       Text(controller.addresses[index].landmark,
                           maxLines: 1,
                           style:
-                          AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
                     ],
                   ),
                 )));
@@ -378,219 +371,211 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
   }
 
   Widget _buildCompanyInformation() {
-    return Obx(() =>
-    controller.company.value != null
+    return Obx(() => controller.company.value != null
         ? Column(
-      children: [
-        expansionTileHeader(
-          title: "companyInformation",
-          isExpanded: controller.showAssociationInfo.value,
-          onTap: () => controller.onAssociationInfoTap(),
-        ),
-        if (controller.showAssociationInfo.value)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              16.verticalSpace,
-              textFieldLabel(label: "companyLogo"),
-              6.verticalSpace,
-              CachedNetworkImage(
-                imageUrl:
-                "${FlavorConfig.storageUrl}/${controller.company.value
-                    ?.accountInfo?.accountLogo}",
+              expansionTileHeader(
+                title: "companyInformation",
+                isExpanded: controller.showAssociationInfo.value,
+                onTap: () => controller.onAssociationInfoTap(),
               ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyNameInEnglish,
-                readOnly: true,
-                label: "companyNameInEnglish",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyNameInArabic,
-                readOnly: true,
-                label: "companyNameInArabic",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyDateOfEstablishment,
-                readOnly: true,
-                label: "dateOfEstablishment",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyField,
-                readOnly: true,
-                label: "companyType",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyIssuingAuthority,
-                readOnly: true,
-                label: "issuingAuthority",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.companyIssuingDate,
-                readOnly: true,
-                isDate: true,
-                label: "licenseExpiryDate",
-              ),
-              10.verticalSpace,
-              textFieldLabel(label: "companyLicense"),
-              4.verticalSpace,
-              fileViewWidget(
-                  isImage: true,
-                  value:
-                  "${controller.company.value?.accountInfo?.license}"),
-              if (controller.additionalDocuments.isNotEmpty)...[
-                16.verticalSpace,
-                expansionTileHeader(
-                  title: "additionalDocuments",
-                  isExpanded: controller.showAdditionalDocuments.value,
-                  onTap: () {
-                    controller.showAdditionalDocuments.value =
-                    !controller.showAdditionalDocuments.value;
-                  },
+              if (controller.showAssociationInfo.value)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    16.verticalSpace,
+                    textFieldLabel(label: "companyLogo"),
+                    6.verticalSpace,
+                    CachedNetworkImage(
+                      imageUrl:
+                          "${FlavorConfig.storageUrl}/${controller.company.value?.accountInfo?.accountLogo}",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyNameInEnglish,
+                      readOnly: true,
+                      label: "companyNameInEnglish",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyNameInArabic,
+                      readOnly: true,
+                      label: "companyNameInArabic",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyDateOfEstablishment,
+                      readOnly: true,
+                      label: "dateOfEstablishment",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyField,
+                      readOnly: true,
+                      label: "companyType",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyIssuingAuthority,
+                      readOnly: true,
+                      label: "issuingAuthority",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.companyIssuingDate,
+                      readOnly: true,
+                      isDate: true,
+                      label: "licenseExpiryDate",
+                    ),
+                    10.verticalSpace,
+                    textFieldLabel(label: "companyLicense"),
+                    4.verticalSpace,
+                    fileViewWidget(
+                        isImage: true,
+                        value:
+                            "${controller.company.value?.accountInfo?.license}"),
+                    if (controller.additionalDocuments.isNotEmpty) ...[
+                      16.verticalSpace,
+                      expansionTileHeader(
+                        title: "additionalDocuments",
+                        isExpanded: controller.showAdditionalDocuments.value,
+                        onTap: () {
+                          controller.showAdditionalDocuments.value =
+                              !controller.showAdditionalDocuments.value;
+                        },
+                      )
+                    ],
+                    if (controller.showAdditionalDocuments.value &&
+                        controller.additionalDocuments.isNotEmpty)
+                      ...List.generate(
+                          controller.additionalDocuments.length,
+                          (index) => additionalDocumentViewWidget(
+                              controller.additionalDocuments[index])),
+                  ],
                 )
-              ],
-              if (controller.showAdditionalDocuments.value &&
-                  controller.additionalDocuments.isNotEmpty)
-                ...List.generate(
-                    controller.additionalDocuments.length,
-                        (index) =>
-                        additionalDocumentViewWidget(
-                            controller.additionalDocuments[index])),
             ],
           )
-      ],
-    )
         : const SizedBox.shrink());
   }
 
   Widget _buildAssociationInformation() {
-    return Obx(() =>
-    controller.association.value != null
+    return Obx(() => controller.association.value != null
         ? Column(
-      children: [
-        expansionTileHeader(
-          title: "associationInformation",
-          isExpanded: controller.showAssociationInfo.value,
-          onTap: () => controller.onAssociationInfoTap(),
-        ),
-        if (controller.showAssociationInfo.value)
-          Column(
             children: [
-              16.verticalSpace,
-              textFieldLabel(label: "associationLogo"),
-              6.verticalSpace,
-              if (controller.association.value?.associationInfo != null)
-                CachedNetworkImage(
-                  imageUrl:
-                  "${FlavorConfig.storageUrl}/${controller.association.value
-                      ?.associationInfo!.accountLogo}",
-                  placeholder: (context, url) =>
-                      Image.asset(
-                        AppResources.placeholder,
-                        fit: BoxFit.cover,
+              expansionTileHeader(
+                title: "associationInformation",
+                isExpanded: controller.showAssociationInfo.value,
+                onTap: () => controller.onAssociationInfoTap(),
+              ),
+              if (controller.showAssociationInfo.value)
+                Column(
+                  children: [
+                    16.verticalSpace,
+                    textFieldLabel(label: "associationLogo"),
+                    6.verticalSpace,
+                    if (controller.association.value?.associationInfo != null)
+                      CachedNetworkImage(
+                        imageUrl:
+                            "${FlavorConfig.storageUrl}/${controller.association.value?.associationInfo!.accountLogo}",
+                        placeholder: (context, url) => Image.asset(
+                          AppResources.placeholder,
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.associationNameInEnglish,
-                readOnly: true,
-                label: "associationNameInEnglish",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.associationNameInArabic,
-                readOnly: true,
-                label: "associationNameInArabic",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.associationDescInEnglish,
-                readOnly: true,
-                maxLines: 4,
-                label: "associationDescInEnglish",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.associationDescInArabic,
-                readOnly: true,
-                maxLines: 4,
-                label: "associationDescInArabic",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.dateOfEstablishment,
-                readOnly: true,
-                isDate: true,
-                label: "dateOfEstablishment",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.associationType,
-                readOnly: true,
-                label: "associationType",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.licensingAuthority,
-                readOnly: true,
-                label: "licensingAuthority",
-              ),
-              10.verticalSpace,
-              LabelTextField(
-                controller: controller.licenseExpiryDate,
-                readOnly: true,
-                label: "licenseExpiryDate",
-                isDate: true,
-              ),
-              10.verticalSpace,
-              textFieldLabel(label: "associationCoverPhoto"),
-              4.verticalSpace,
-              if (controller.association.value!.associationInfo != null)
-                fileViewWidget(
-                    isImage: true,
-                    value: controller.association.value!.associationInfo!
-                        .associationCoverPhoto!),
-              10.verticalSpace,
-              textFieldLabel(label: "associationLicense"),
-              4.verticalSpace,
-              if (controller.association.value!.associationInfo != null)
-                fileViewWidget(
-                    isImage: false,
-                    value: controller
-                        .association.value!.associationInfo!.license!),
-              if (controller.additionalDocuments.isNotEmpty)...[
-                16.verticalSpace,
-                expansionTileHeader(
-                  title: "additionalDocuments",
-                  isExpanded: controller.showAdditionalDocuments.value,
-                  onTap: () {
-                    controller.showAdditionalDocuments.value =
-                    !controller.showAdditionalDocuments.value;
-                  },
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.associationNameInEnglish,
+                      readOnly: true,
+                      label: "associationNameInEnglish",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.associationNameInArabic,
+                      readOnly: true,
+                      label: "associationNameInArabic",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.associationDescInEnglish,
+                      readOnly: true,
+                      maxLines: 4,
+                      label: "associationDescInEnglish",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.associationDescInArabic,
+                      readOnly: true,
+                      maxLines: 4,
+                      label: "associationDescInArabic",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.dateOfEstablishment,
+                      readOnly: true,
+                      isDate: true,
+                      label: "dateOfEstablishment",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.associationType,
+                      readOnly: true,
+                      label: "associationType",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.licensingAuthority,
+                      readOnly: true,
+                      label: "licensingAuthority",
+                    ),
+                    10.verticalSpace,
+                    LabelTextField(
+                      controller: controller.licenseExpiryDate,
+                      readOnly: true,
+                      label: "licenseExpiryDate",
+                      isDate: true,
+                    ),
+                    10.verticalSpace,
+                    textFieldLabel(label: "associationCoverPhoto"),
+                    4.verticalSpace,
+                    if (controller.association.value!.associationInfo != null)
+                      fileViewWidget(
+                          isImage: true,
+                          value: controller.association.value!.associationInfo!
+                              .associationCoverPhoto!),
+                    10.verticalSpace,
+                    textFieldLabel(label: "associationLicense"),
+                    4.verticalSpace,
+                    if (controller.association.value!.associationInfo != null)
+                      fileViewWidget(
+                          isImage: false,
+                          value: controller
+                              .association.value!.associationInfo!.license!),
+                    if (controller.additionalDocuments.isNotEmpty) ...[
+                      16.verticalSpace,
+                      expansionTileHeader(
+                        title: "additionalDocuments",
+                        isExpanded: controller.showAdditionalDocuments.value,
+                        onTap: () {
+                          controller.showAdditionalDocuments.value =
+                              !controller.showAdditionalDocuments.value;
+                        },
+                      )
+                    ],
+                    if (controller.showAdditionalDocuments.value &&
+                        controller.additionalDocuments.isNotEmpty)
+                      ...List.generate(
+                          controller.additionalDocuments.length,
+                          (index) => additionalDocumentViewWidget(
+                              controller.additionalDocuments[index])),
+                  ],
                 )
-              ],
-              if (controller.showAdditionalDocuments.value &&
-                  controller.additionalDocuments.isNotEmpty)
-                ...List.generate(
-                    controller.additionalDocuments.length,
-                        (index) =>
-                        additionalDocumentViewWidget(
-                            controller.additionalDocuments[index])),
             ],
           )
-      ],
-    )
         : const SizedBox.shrink());
   }
 
   Widget _buildMetaDataInformation() {
-    return Obx(() =>
-        Column(
+    return Obx(() => Column(
           children: [
             expansionTileHeader(
               title: "metaData",
@@ -636,30 +621,28 @@ class AssociationPreviewScreen extends GetView<AssociationPreviewViewModel> {
         return acceptRejectBottomBar(
           onAccept: controller.showAccept
               ? () {
-            Utils.showLoadingDialog();
-            Get.find<RequestsViewModel>().approveRejectRequest(
-                accountId: controller.isAssociation
-                    ? controller
-                    .association.value?.associationInfo?.accountId
-                    : controller.company.value?.accountInfo?.accountId,
-                request: controller.request!,
-                message: controller.isAssociation
-                    ? "associationAccepted"
-                    : "companyAccepted");
-          }
+                  Utils.showLoadingDialog();
+                  Get.find<RequestsViewModel>().approveRejectRequest(
+                      accountId: controller.isAssociation
+                          ? controller
+                              .association.value?.associationInfo?.accountId
+                          : controller.company.value?.accountInfo?.accountId,
+                      request: controller.request!,
+                      message: controller.isAssociation
+                          ? "associationAccepted"
+                          : "companyAccepted");
+                }
               : null,
           onReturn: controller.showReturn
-              ? () =>
-              Utils.openRejectionScreen(
-                title: controller.isAssociation
-                    ? "associationReturn"
-                    : "companyReturn",
-                request: controller.request!,
-              )
+              ? () => Utils.openRejectionScreen(
+                    title: controller.isAssociation
+                        ? "associationReturn"
+                        : "companyReturn",
+                    request: controller.request!,
+                  )
               : null,
           onReject: controller.showReject
-              ? () =>
-              Utils.openRejectionScreen(
+              ? () => Utils.openRejectionScreen(
                   title: controller.isAssociation
                       ? "associationRejection"
                       : "companyRejection",
