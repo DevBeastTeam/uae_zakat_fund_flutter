@@ -307,6 +307,11 @@ abstract class AppTextStyle {
       fontSize: 14.sp,
       fontWeight: FontWeight.w500);
 
+  static TextStyle primaryDarkBlack10spTextStyle = TextStyle(
+      color: AppColors.primaryDarkBlackColor,
+      fontSize: 10.sp,
+      fontWeight: FontWeight.w500);
+
   static TextStyle primaryDarkBlack12spTextStyle = TextStyle(
       color: AppColors.primaryDarkBlackColor,
       fontSize: 12.sp,
