@@ -86,8 +86,9 @@ Widget _buildBottomActions(MainViewModel viewModel) {
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
-                    side:
-                        BorderSide(width: 2.w, color: AppColors.darkBrownColor),
+                    side: BorderSide(color: themeViewModel.color),
+                    // side:
+                    //     BorderSide(width: 2.w, color: AppColors.darkBrownColor),
                     minimumSize: Size(Get.width, 45.h),
                   ),
                   onPressed: () {
@@ -98,7 +99,9 @@ Widget _buildBottomActions(MainViewModel viewModel) {
                   child: Text(
                     "back".tr,
                     maxLines: 1,
-                    style: AppTextStyle.primaryDarkBrown16spTextStyle1,
+                    style: TextStyle(color: themeViewModel.color),
+
+                    // style: AppTextStyle.primaryDarkBrown16spTextStyle1,
                   ),
                 ),
               ),
@@ -227,11 +230,21 @@ Widget _selectedProjects() {
                                               BorderRadius.circular(8.r)),
                                       side: BorderSide(
                                           color: data == project.price
-                                              ? AppColors.brownPrimaryColor
-                                              : AppColors.borderColor),
+                                              ? themeViewModel.color
+                                              : AppColors.remindColor),
+                                      // shape: RoundedRectangleBorder(
+                                      //   borderRadius: BorderRadius.circular(8.r),
+                                      // ),
                                       backgroundColor: data == project.price
-                                          ? AppColors.brownPrimaryColor
-                                          : Colors.white,
+                                          ? themeViewModel.color
+                                          : AppColors.greyBackColor,
+                                      // side: BorderSide(
+                                      //     color: data == project.price
+                                      //         ? AppColors.brownPrimaryColor
+                                      //         : AppColors.borderColor),
+                                      // backgroundColor: data == project.price
+                                      //     ? AppColors.brownPrimaryColor
+                                      //     : Colors.white,
                                       label: Text("$data ${"currency".tr}"),
                                       labelStyle: data == project.price
                                           ? AppTextStyle.white14spTextStyle

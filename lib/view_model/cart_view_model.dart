@@ -100,15 +100,18 @@ class CartViewModel extends GetxController {
       }
     }
 
-    addToCart(project: project, totalAmount: amount.text, isDonate: isDonate,fromDialog: true);
+    addToCart(
+        project: project,
+        totalAmount: amount.text,
+        isDonate: isDonate,
+        fromDialog: true);
   }
 
-  Future<void> addToCart({
-    required ProjectElements project,
-    required String totalAmount,
-    bool isDonate = false,
-    bool fromDialog=false
-  }) async {
+  Future<void> addToCart(
+      {required ProjectElements project,
+      required String totalAmount,
+      bool isDonate = false,
+      bool fromDialog = false}) async {
     final existing =
         cart.firstWhereOrNull((e) => e.projectId == project.projectId);
     if (existing != null) {
@@ -133,7 +136,7 @@ class CartViewModel extends GetxController {
     );
     Utils.hideLoadingDialog();
     if (apiResponse.appState == AppState.onSuccess) {
-      if(fromDialog){
+      if (fromDialog) {
         Get.back();
       }
       cartCount.value++;

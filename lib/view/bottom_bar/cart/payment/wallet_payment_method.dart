@@ -26,7 +26,7 @@ class WalletPaymentMethodWidget extends GetView<PaymentMethodViewModel> {
     return Column(
       children: [
         Container(
-          margin: horizontalPadding.copyWith(top: 16.h,bottom: 16.h),
+          margin: horizontalPadding.copyWith(top: 16.h, bottom: 16.h),
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 22.h),
           decoration: const BoxDecoration(
             color: AppColors.chipBackgroundColor,
@@ -140,4 +140,3 @@ class WalletPaymentMethodWidget extends GetView<PaymentMethodViewModel> {
     );
   }
 }
-

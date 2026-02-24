@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
       body: Obx(() => _buildBody(controller.currentIndex.value)),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.quickDonateColor,
-        onPressed: ()=>quickDonationBottomSheet(),
+        onPressed: () => quickDonationBottomSheet(),
         shape: const CircleBorder(),
         child: SvgPicture.asset(
           AppResources.quickDonate,
@@ -62,9 +62,7 @@ class MainScreen extends StatelessWidget {
         return ValueListenableBuilder(
           valueListenable: userBox.listenable(),
           builder: (BuildContext context, Box<dynamic> value, Widget? child) {
-            return  value.isEmpty
-                ? GuestAccountScreen()
-                : const AccountScreen();
+            return value.isEmpty ? GuestAccountScreen() : const AccountScreen();
           },
         );
       default:

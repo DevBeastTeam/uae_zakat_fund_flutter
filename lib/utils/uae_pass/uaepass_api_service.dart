@@ -3,12 +3,18 @@ import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
 import 'package:uaepass_api/uaepass_api.dart';
 
 class UaepassApiService {
-  static const String _clientId = 'fed_zakatfund_mob_prod';
-  static const String _clientSecret = 'PX9nNY42gMbEAnNt';
+  static const bool _isProduction = false;
   static const String _appScheme = 'uaepassZakatPlatformDS';
+  // 👉🏻 stage state
+  static const String _clientId = 'zf_mobile_stage';
+  static const String _clientSecret = 'gFWkKtbGlADdAwZg';
   static const String _redirectUri =
-      'https://www.zakatfund.gov.ae/zfp/web/default.aspx';
-  static const bool _isProduction = true;
+      'https://oauthtest.com/authorization/return';
+  // 👉🏻 production state
+  // static const String _clientId = 'fed_zakatfund_mob_prod';
+  // static const String _clientSecret = 'PX9nNY42gMbEAnNt';
+  // static const String _redirectUri =
+  //     'https://www.zakatfund.gov.ae/zfp/web/default.aspx';
 
   final String language;
 
