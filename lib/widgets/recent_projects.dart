@@ -32,8 +32,9 @@ class ProjectsCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>projects.isNotEmpty?Column(
-          children: [
+    return Obx(() => projects.isNotEmpty
+        ? Column(
+            children: [
               CarouselSlider.builder(
                 carouselController: carouselController,
                 options: CarouselOptions(
@@ -42,18 +43,19 @@ class ProjectsCarousel extends StatelessWidget {
                   onPageChanged: onPageChanged,
                   enableInfiniteScroll: false,
                 ),
-                itemCount: projects.length>4?4:projects.length,
+                itemCount: projects.length > 4 ? 4 : projects.length,
                 itemBuilder: (context, index, _) {
                   final project = projects[index];
                   return ProjectCard(project: project);
                 },
               ),
               8.verticalSpace,
-              buildSliderIndicator(projectIndex.value, length: projects.length>4?4:projects.length),
+              buildSliderIndicator(projectIndex.value,
+                  length: projects.length > 4 ? 4 : projects.length),
               10.verticalSpace,
-
-          ],
-        ):SizedBox.shrink());
+            ],
+          )
+        : SizedBox.shrink());
   }
 }
 
@@ -61,7 +63,8 @@ class ProjectCard extends StatelessWidget {
   final ProjectElements project;
   final bool isVertical;
 
-  const ProjectCard({super.key, required this.project,this.isVertical=false});
+  const ProjectCard(
+      {super.key, required this.project, this.isVertical = false});
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,8 @@ class ProjectCard extends StatelessWidget {
         "isPreview": false,
       }),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: isVertical?0:16.h),
+        margin: EdgeInsets.symmetric(
+            horizontal: 16.w, vertical: isVertical ? 0 : 16.h),
         padding: EdgeInsets.only(bottom: 16.h),
         decoration: BoxDecoration(
           color: Colors.white,

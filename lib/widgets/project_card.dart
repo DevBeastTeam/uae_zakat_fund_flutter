@@ -31,7 +31,7 @@ class ProjectCard extends StatelessWidget {
       }),
       child: Container(
         width: 127.w,
-        padding: EdgeInsets.symmetric(horizontal: 8.w,vertical: 8.h),
+        padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10.r),
@@ -53,7 +53,7 @@ class ProjectCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(2.63.r),
               ),
               child: Text(
-                "${Utils.isArabic?project.associationNameArabic:project.associationName}",
+                "${Utils.isArabic ? project.associationNameArabic : project.associationName}",
                 style: AppTextStyle.secondaryDarkBrownColor8spTextStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -63,7 +63,9 @@ class ProjectCard extends StatelessWidget {
             SizedBox(
               height: 42.h,
               child: Text(
-                Utils.isArabic?project.projectNameArabic:project.projectName,
+                Utils.isArabic
+                    ? project.projectNameArabic
+                    : project.projectName,
                 style: AppTextStyle.secondaryPrimaryBlack12spTextStyle1,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
@@ -117,9 +119,9 @@ class ProjectCard extends StatelessWidget {
               final hasData = snapshot.hasData && snapshot.data != null;
               return hasData
                   ? Image.file(File(snapshot.data!),
-                  height: 84.h, width: 117.w, fit: BoxFit.cover)
+                      height: 84.h, width: 117.w, fit: BoxFit.cover)
                   : Image.asset(AppResources.placeholder,
-                  height: 84.h, width: 117.w, fit: BoxFit.cover);
+                      height: 84.h, width: 117.w, fit: BoxFit.cover);
             },
           ),
           Center(
@@ -129,8 +131,6 @@ class ProjectCard extends StatelessWidget {
       );
     }
 
-    return CachedImage(
-        image: image.mediaUrl, height: 84.h, width: 117.w);
+    return CachedImage(image: image.mediaUrl, height: 84.h, width: 117.w);
   }
-
 }

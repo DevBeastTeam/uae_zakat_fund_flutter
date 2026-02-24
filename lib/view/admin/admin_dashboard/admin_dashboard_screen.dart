@@ -317,38 +317,36 @@ class AdminDashboardScreen extends GetView<AdminDashboardViewModel> {
 
   Obx _buildAdminAndOperationsData() {
     return Obx(() => buildContainer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeadingRow(
-            "adminAndOperations",
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildHeadingRow(
+                "adminAndOperations",
                 () => Get.toNamed(AppRoutes.adminAndOperationsScreen),
+              ),
+              _buildChartSection(
+                titleKey: "associationsDetails",
+                chartDataRx: controller.associationsChart,
+                totalKey: "totalAssociations",
+                totalValueRx: controller.totalAssociations,
+              ),
+              16.verticalSpace,
+              _buildChartSection(
+                titleKey: "companiesDetails",
+                chartDataRx: controller.companiesChart,
+                totalKey: "totalCompanies",
+                totalValueRx: controller.totalCompanies,
+              ),
+              16.verticalSpace,
+              _buildChartSection(
+                titleKey: "projectsDetails",
+                chartDataRx: controller.projectsChart,
+                totalKey: "totalProjects",
+                totalValueRx: controller.totalProjects,
+              ),
+            ],
           ),
-          _buildChartSection(
-            titleKey: "associationsDetails",
-            chartDataRx: controller.associationsChart,
-            totalKey: "totalAssociations",
-            totalValueRx: controller.totalAssociations,
-
-          ),
-          16.verticalSpace,
-          _buildChartSection(
-            titleKey: "companiesDetails",
-            chartDataRx: controller.companiesChart,
-            totalKey: "totalCompanies",
-            totalValueRx: controller.totalCompanies,
-
-          ),
-          16.verticalSpace,
-          _buildChartSection(
-            titleKey: "projectsDetails",
-            chartDataRx: controller.projectsChart,
-            totalKey: "totalProjects",
-            totalValueRx: controller.totalProjects,
-          ),
-        ],
-      ),
-    ));
+        ));
   }
 
   Widget _buildChartSection({
@@ -386,7 +384,7 @@ class AdminDashboardScreen extends GetView<AdminDashboardViewModel> {
             runSpacing: 16.h,
             children: List.generate(
               chartDataRx.length,
-                  (index) {
+              (index) {
                 final data = chartDataRx[index];
                 return Indicator(
                   color: data.backColor ?? Colors.grey,

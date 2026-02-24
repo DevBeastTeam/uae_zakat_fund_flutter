@@ -33,7 +33,7 @@ class ProjectsDonatedScreen extends GetView<ProjectsDonatedViewModel> {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child: CupertinoSearchField(
               controller: controller.donatedSearchController,
-              onChanged: (_)  => controller.searchProjects(),
+              onChanged: (_) => controller.searchProjects(),
             ),
           ),
           Expanded(
@@ -130,7 +130,6 @@ class ServiceSidebar extends GetView<ProjectsDonatedViewModel> {
                     style: isSelected
                         ? AppTextStyle.secondaryDarkBrownColor10spTextStyle
                         : AppTextStyle.greyColor10spTextStyle,
-
                   ),
                   40.verticalSpace,
                 ],

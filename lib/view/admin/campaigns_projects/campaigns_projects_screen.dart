@@ -135,8 +135,11 @@ class CampaignsProjectsScreen extends GetView<CampaignsAndProjectsViewModel> {
             ),
             if (controller.topPerformingProjects.isNotEmpty)
               viewAllButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.projectManagementScreen, arguments: {"code":ModuleCodes.adminProjectManagementCode}))
+                  onPressed: () => Get.toNamed(
+                          AppRoutes.projectManagementScreen,
+                          arguments: {
+                            "code": ModuleCodes.adminProjectManagementCode
+                          }))
           ],
         ),
         8.verticalSpace,
@@ -190,8 +193,11 @@ class CampaignsProjectsScreen extends GetView<CampaignsAndProjectsViewModel> {
             ),
             if (controller.campaignFundingGap.isNotEmpty)
               viewAllButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.projectManagementScreen, arguments: {"code":ModuleCodes.adminProjectManagementCode}))
+                  onPressed: () => Get.toNamed(
+                          AppRoutes.projectManagementScreen,
+                          arguments: {
+                            "code": ModuleCodes.adminProjectManagementCode
+                          }))
           ],
         ),
         8.verticalSpace,
@@ -266,8 +272,11 @@ class CampaignsProjectsScreen extends GetView<CampaignsAndProjectsViewModel> {
             ),
             if (controller.projectsReachingEnd.isNotEmpty)
               viewAllButton(
-                  onPressed: () =>
-                      Get.toNamed(AppRoutes.projectManagementScreen, arguments: {"code":ModuleCodes.adminProjectManagementCode}))
+                  onPressed: () => Get.toNamed(
+                          AppRoutes.projectManagementScreen,
+                          arguments: {
+                            "code": ModuleCodes.adminProjectManagementCode
+                          }))
           ],
         ),
         8.verticalSpace,

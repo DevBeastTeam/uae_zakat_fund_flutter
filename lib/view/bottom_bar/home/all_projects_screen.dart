@@ -50,9 +50,11 @@ class AllProjectsScreen extends GetView<AllProjectsViewModel> {
       separatorBuilder: (_, __) => 16.verticalSpace,
       itemBuilder: (context, index) {
         final project = controller.projects[index];
-        return ProjectCard(project: project,isVertical: true,);
+        return ProjectCard(
+          project: project,
+          isVertical: true,
+        );
       },
     );
   }
 }
-

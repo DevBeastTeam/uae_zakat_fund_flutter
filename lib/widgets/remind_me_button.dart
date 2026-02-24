@@ -16,13 +16,14 @@ class RemindMeButton extends StatelessWidget {
     return SizedBox(
       height: 35.h,
       child: ElevatedButton.icon(
-        onPressed:onPressed,
+        onPressed: onPressed,
         iconAlignment: IconAlignment.end,
         style: ElevatedButton.styleFrom(
             elevation: 0,
             side: BorderSide(color: AppColors.lightBrownColor2),
             backgroundColor: AppColors.warningBackColor,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.r))),
         icon: SvgPicture.asset(AppResources.timerIcon),
         label: Text(
           "remindMe".tr,
@@ -31,6 +32,4 @@ class RemindMeButton extends StatelessWidget {
       ),
     );
   }
-
-
 }

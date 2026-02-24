@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 
+import '../my_app/my_app.dart';
+
 class SectionHeader extends StatelessWidget {
   final String title;
   final VoidCallback onViewAll;
@@ -21,7 +23,8 @@ class SectionHeader extends StatelessWidget {
         children: [
           Text(
             title.tr,
-            style: AppTextStyle.secondaryPrimaryBlack20spTextStyle1.copyWith(height: 0),
+            style: AppTextStyle.secondaryPrimaryBlack20spTextStyle1
+                .copyWith(height: 0),
           ),
           GestureDetector(
             onTap: onViewAll,
@@ -32,7 +35,8 @@ class SectionHeader extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: const Color(0xFF8B7355),
+                    // color: const Color(0xFF8B7355),
+                    color: themeViewModel.color,
                   ),
                 ),
                 const SizedBox(width: 4),

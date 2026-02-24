@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/flavor/flavor_config.dart';
 import 'package:zakat_fund/model/project.dart';
+import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
@@ -253,7 +254,8 @@ class ProjectCard extends GetView<CampaignsViewModel> {
                   cartViewModel.quickDonateDialog(project);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryDarkBrownColor,
+                  // backgroundColor: AppColors.secondaryDarkBrownColor,
+                  backgroundColor: themeViewModel.color,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.r),
