@@ -69,11 +69,16 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
   }
 
   Widget _buildProjectListView() {
-    return Obx(() => ListView.separated(
+    return Obx(() => GridView.builder(
           padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 230.h,
+            crossAxisSpacing: 10.h,
+            mainAxisSpacing: 10.h,
+          ),
           itemCount: controller.projects.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              16.verticalSpace,
           itemBuilder: (BuildContext context, int index) {
             FavouriteProject project = controller.projects[index];
             return _buildProjectItem(project, context, index);
@@ -86,85 +91,81 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
     return GestureDetector(
       onTap: () => controller.openProjectDetailsScreen(project.projectId),
       child: Container(
-        height: 116.h,
+        padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20.r)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              offset: const Offset(0.0, 4.0),
-              blurRadius: 150.0,
-            ),
-          ],
+          borderRadius: BorderRadius.circular(12.r),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImage(project.projectImage),
-            Expanded(
-                child: Padding(
-              padding: EdgeInsets.only(
-                  left: Utils.isArabic ? 0 : 16.w,
-                  right: Utils.isArabic ? 16.w : 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Utils.isArabic
-                        ? project.projectNameArabic
-                        : project.projectName,
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: AppColors.darkBrownColor,
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  8.verticalSpace,
-                  ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(50.r)),
-                      child: LinearProgressIndicator(
-                        minHeight: 4.h,
-                        color: AppColors.darkBrownColor,
-                        backgroundColor: AppColors.progressBarBackgroundColor,
-                        value: project.percentOfCompletion != null
-                            ? project.percentOfCompletion / 100
-                            : 0,
-                      )),
-                  8.verticalSpace,
-                  RichText(
-                    text: TextSpan(
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .copyWith(fontFamily: 'Alexandria'),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: "remaining".tr,
-                          style: TextStyle(
-                              color: AppColors.secondaryDarkGreyColor,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Alexandria',
-                              fontSize: 12.sp),
-                        ),
-                        TextSpan(
-                          text:
-                              " ${Utils.getCurrency(project.remainingAmount.toInt())} ${"currency".tr}",
-                          style: TextStyle(
-                              fontFamily: "Inter",
-                              color: AppColors.secondaryBlackColor,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 14.sp),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.r),
+                child: _buildImage(project.projectImage),
               ),
-            )),
-            IconButton(
-                onPressed: () => controller.addProjectFavorite(index),
-                icon: SvgPicture.asset(AppResources.starFillIcon))
+            ),
+            GestureDetector(
+              onTap: () {
+                // TODO: Implement remind me functionality if available
+              },
+              child: Container(
+                height: 20.h,
+                margin: EdgeInsets.symmetric(vertical: 10.h),
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.remindColor),
+                  borderRadius: BorderRadius.circular(4.r),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "remindMe".tr,
+                      style: AppTextStyle.tealGreyColor8spTextStyle,
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(Icons.access_time,
+                        size: 10, color: AppColors.tealGreyColor),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 45.h,
+              child: Text(
+                Utils.isArabic
+                    ? project.projectNameArabic
+                    : project.projectName,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.secondaryPrimaryBlack12spTextStyle2,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            SizedBox(
+              width: double.infinity,
+              height: 28.h,
+              child: ElevatedButton(
+                onPressed: () {
+                  // TODO: Implement quick donate functionality if available
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.secondaryDarkBrownColor,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  padding: EdgeInsets.zero,
+                  elevation: 0,
+                ),
+                child: Text("quickDonate".tr,
+                    style: TextStyle(
+                        fontSize: 10.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white)),
+              ),
+            ),
           ],
         ),
       ),
@@ -314,15 +315,9 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
   }
 
   Widget _buildImage(String url) {
-    return ClipRRect(
-      borderRadius: BorderRadius.horizontal(
-        left: !Utils.isArabic ? Radius.circular(20.r) : Radius.zero,
-        right: Utils.isArabic ? Radius.circular(20.r) : Radius.zero,
-      ),
-      child: url.isEmpty
-          ? Image.asset(AppResources.placeholder,
-              width: 120.w, height: 116.h, fit: BoxFit.cover)
-          : CachedImage(image: url, width: 120.w, height: 116.h),
-    );
+    return url.isEmpty
+        ? Image.asset(AppResources.placeholder,
+            height: 84.h, width: 117.w, fit: BoxFit.cover)
+        : CachedImage(image: url, height: 84.h, width: 117.w);
   }
 }
