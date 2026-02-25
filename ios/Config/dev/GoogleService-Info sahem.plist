@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAouALIRFA9F4gW9fYvZjjDz4eqRDLcSck</string>
+	<key>GCM_SENDER_ID</key>
+	<string>216968415230</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>ae.zakatfund.sahem.staging</string>
+	<key>PROJECT_ID</key>
+	<string>sahem-6c798</string>
+	<key>STORAGE_BUCKET</key>
+	<string>sahem-6c798.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:216968415230:ios:c262b6f0579ca288aaa2af</string>
+</dict>
+</plist>
