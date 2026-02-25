@@ -6,11 +6,13 @@ import 'package:zakat_fund/flavor/flavor_config.dart';
 import 'package:zakat_fund/model/favourite_project.dart';
 import 'package:zakat_fund/model/news.dart';
 import 'package:zakat_fund/model/our_services.dart';
+import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/favourite_view_model.dart';
+import 'package:zakat_fund/view_model/theme_view_model.dart';
 import 'package:zakat_fund/widgets/cache_image.dart';
 import 'package:zakat_fund/widgets/icon_btn.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
@@ -99,11 +101,43 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Center(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.r),
-                child: _buildImage(project.projectImage),
-              ),
+            Stack(
+              children: [
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.r),
+                    child: _buildImage(project.projectImage),
+                  ),
+                ),
+                Positioned(
+                  top: 2.w,
+                  left: 2.w,
+                  child: GestureDetector(
+                    onTap: () => controller.addProjectFavorite(index),
+                    child: Container(
+                      width: 24.w,
+                      height: 28.h,
+                      decoration: BoxDecoration(
+                        color: themeViewModel.color,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.bookmark,
+                          color: AppColors.lightWhiteColor,
+                          size: 18.w,
+                        ),
+                        // child: SvgPicture.asset(
+                        //   AppResources.favIcon,
+                        //   width: 18.w,
+                        //   height: 18.h,
+                        //   color: Colors.white,
+                        // ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
             GestureDetector(
               onTap: () {
@@ -173,11 +207,16 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
   }
 
   Widget _buildNewsListView() {
-    return Obx(() => ListView.separated(
+    return Obx(() => GridView.builder(
           padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 16.h),
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisExtent: 230.h,
+            crossAxisSpacing: 10.h,
+            mainAxisSpacing: 10.h,
+          ),
           itemCount: controller.news.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              16.verticalSpace,
           itemBuilder: (BuildContext context, int index) {
             News news = controller.news[index];
             return _buildNewsItem(news, index);
@@ -189,53 +228,80 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
     return GestureDetector(
       onTap: () => controller.openNewsDetailsScreen(news.newsId!),
       child: Container(
-        height: 116.h,
+        padding: EdgeInsets.all(8.r),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(20.r)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              offset: const Offset(0.0, 4.0),
-              blurRadius: 150.0,
-            ),
-          ],
+          borderRadius: BorderRadius.circular(12.r),
         ),
-        child: Row(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildImage(news.thumbNail),
-            Expanded(
-                child: Padding(
-              padding: EdgeInsets.only(
-                  left: Utils.isArabic ? 0 : 16.w,
-                  right: Utils.isArabic ? 16.w : 0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    Utils.isArabic ? news.titleAr : news.titleEn,
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: AppColors.darkBrownColor,
-                        overflow: TextOverflow.ellipsis,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500),
+            Stack(
+              children: [
+                Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.r),
+                    child: _buildImage(news.thumbNail),
                   ),
-                  8.verticalSpace,
-                  Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Text(
-                      controller.dateFormat.format(news.createdDate),
-                      style: AppTextStyle.darkGreyOne12spTextStyle,
+                ),
+                Positioned(
+                  top: 8.w,
+                  right: 8.w,
+                  child: GestureDetector(
+                    onTap: () => controller.addNewsFavorite(index),
+                    child: Container(
+                      width: 28.w,
+                      height: 28.h,
+                      decoration: BoxDecoration(
+                        color: AppColors.secondaryDarkBrownColor,
+                        borderRadius: BorderRadius.circular(4.r),
+                      ),
+                      child: Center(
+                        child: SvgPicture.asset(
+                          AppResources.favIcon,
+                          width: 18.w,
+                          height: 18.h,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ],
+                ),
+              ],
+            ),
+            SizedBox(height: 10.h),
+            Directionality(
+              textDirection: TextDirection.ltr,
+              child: Text(
+                controller.dateFormat.format(news.createdDate),
+                style: AppTextStyle.darkGreyOne12spTextStyle,
               ),
-            )),
-            IconButton(
-                onPressed: () => controller.addNewsFavorite(index),
-                icon: SvgPicture.asset(AppResources.starFillIcon))
+            ),
+            SizedBox(height: 8.h),
+            SizedBox(
+              height: 50.h,
+              child: Text(
+                Utils.isArabic ? news.titleAr : news.titleEn,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.secondaryPrimaryBlack12spTextStyle2,
+              ),
+            ),
+            SizedBox(height: 8.h),
+            Row(
+              children: [
+                Text(
+                  "View Details".tr,
+                  style: AppTextStyle.secondaryDarkBrownColor12spTextStyle,
+                ),
+                SizedBox(width: 4.w),
+                Icon(
+                  Utils.isArabic ? Icons.arrow_left : Icons.arrow_right,
+                  size: 14.sp,
+                  color: AppColors.secondaryDarkBrownColor,
+                ),
+              ],
+            ),
           ],
         ),
       ),
