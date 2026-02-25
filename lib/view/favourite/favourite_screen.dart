@@ -339,40 +339,67 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Text(
-              Utils.isArabic ? service.titleAr : service.titleEn,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.secondaryBlack20spTextStyle,
-            ),
-            8.verticalSpace,
-            Row(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildIconButton(
-                  icon: service.isFavorite
-                      ? AppResources.starFillIcon
-                      : AppResources.starIcon,
-                  onPressed: () => controller.addServiceFavorite(index),
+                Text(
+                  Utils.isArabic ? service.titleAr : service.titleEn,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.secondaryBlack20spTextStyle,
                 ),
-                buildIconButton(
-                  color: AppColors.darkBrownColor,
-                  icon: AppResources.shareColorIcon,
-                  onPressed: () => Utils.sharePlainText(
-                      "${FlavorConfig.webSiteUrl}service/${service.serviceId}"),
+                8.verticalSpace,
+                Row(
+                  children: [
+                    buildIconButton(
+                      icon: service.isFavorite
+                          ? AppResources.starFillIcon
+                          : AppResources.starIcon,
+                      onPressed: () => controller.addServiceFavorite(index),
+                    ),
+                    buildIconButton(
+                      color: AppColors.darkBrownColor,
+                      icon: AppResources.shareColorIcon,
+                      onPressed: () => Utils.sharePlainText(
+                          "${FlavorConfig.webSiteUrl}service/${service.serviceId}"),
+                    ),
+                  ],
+                ),
+                8.verticalSpace,
+                Text(
+                  Utils.htmlToPlainText(Utils.isArabic
+                      ? service.descriptionAr
+                      : service.descriptionEn),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.darkGrey16spTextStyle,
                 ),
               ],
             ),
-            8.verticalSpace,
-            Text(
-              Utils.htmlToPlainText(Utils.isArabic
-                  ? service.descriptionAr
-                  : service.descriptionEn),
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.darkGrey16spTextStyle,
+            Positioned(
+              top: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () => controller.addServiceFavorite(index),
+                child: Container(
+                  width: 28.w,
+                  height: 28.h,
+                  decoration: BoxDecoration(
+                    color: AppColors.secondaryDarkBrownColor,
+                    borderRadius: BorderRadius.circular(4.r),
+                  ),
+                  child: Center(
+                    child: SvgPicture.asset(
+                      AppResources.favIcon,
+                      width: 18.w,
+                      height: 18.h,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
             ),
           ],
         ),
