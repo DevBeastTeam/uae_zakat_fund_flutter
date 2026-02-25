@@ -264,19 +264,6 @@ class LogInViewModel extends GetxController {
 
       profileData = await _uaePassApiService.getProfile(accessToken);
 
-      // BUG FIX: Guard against null profileData or empty email from UAE Pass
-      // if (profileData == null) {
-      //   Utils.showGlobalSnackBar(
-      //       message: "Failed to retrieve UAE Pass profile");
-      //   return;
-      // }
-      // if (profileData!.email == null || profileData!.email!.isEmpty) {
-      //   Utils.showGlobalSnackBar(
-      //       message:
-      //           "UAE Pass profile does not have a linked email. Please contact support.");
-      //   return;
-      // }
-
       uaeSocialMedia(forRegister);
     } catch (e) {
       Utils.showGlobalSnackBar(message: e.toString());

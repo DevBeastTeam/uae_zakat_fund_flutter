@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/model/categories.dart';
-import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 
@@ -35,22 +34,24 @@ TabBar tabBarWidget(
 
 TextStyle _getLabelStyle(bool isCustom) {
   return isCustom
-      ? AppTextStyle.white12spTextStyle.copyWith(fontFamily: "Alexandria")
+      ? AppTextStyle.secondaryDarkBrownColor14spTextStyle
+          .copyWith(fontFamily: "Alexandria")
       : AppTextStyle.secondaryBlack14spTextStyle2
           .copyWith(fontFamily: "Alexandria");
 }
 
 TextStyle _getUnselectedLabelStyle(bool isCustom) {
   return isCustom
-      ? AppTextStyle.newGreyColor12spTextStyle
-          .copyWith(fontFamily: "Roboto")
+      ? AppTextStyle.greyColor14spTextStyle.copyWith(fontFamily: "Roboto")
       : AppTextStyle.darkGrey14spTextStyle.copyWith(fontFamily: "Roboto");
 }
 
 Decoration _buildIndicator(bool isCustom) {
   return ShapeDecoration(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(100.r)),
-    color: isCustom ? themeViewModel.color : Colors.white,
+    color: isCustom
+        ? AppColors.secondaryDarkBrownColor.withValues(alpha: 0.12)
+        : Colors.white,
     shadows: isCustom
         ? null
         : [

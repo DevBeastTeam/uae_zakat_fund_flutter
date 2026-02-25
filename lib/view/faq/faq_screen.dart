@@ -9,7 +9,7 @@ import 'package:zakat_fund/view_model/faq_view_model.dart';
 import 'package:zakat_fund/widgets/cupertino_search_field.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class FaqScreen extends GetView<FaqViewModel> {
   const FaqScreen({super.key});
@@ -34,12 +34,12 @@ class FaqScreen extends GetView<FaqViewModel> {
         children: [
           if (!controller.isPreview) _buildSearchField(),
           if (controller.isPreview) 16.verticalSpace,
-          tabBarWidget(
-            controller.tabController,
-            controller.tabs,
-            controller.currentTabIndex.value,
-            newTab: true,
-          ),
+          Obx(() => TabBarWidgetV2(
+                tabs: controller.tabs,
+                currentIndex: controller.currentTabIndex.value,
+                onTabChanged: (index) =>
+                    controller.tabController.animateTo(index),
+              )),
           16.verticalSpace,
           if (controller.subFaqs.isNotEmpty) _buildExpansionPanelList()
         ],
