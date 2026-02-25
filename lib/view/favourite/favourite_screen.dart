@@ -14,7 +14,7 @@ import 'package:zakat_fund/view_model/favourite_view_model.dart';
 import 'package:zakat_fund/widgets/cache_image.dart';
 import 'package:zakat_fund/widgets/icon_btn.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class FavouriteScreen extends GetView<FavouriteViewModel> {
   const FavouriteScreen({super.key});
@@ -55,10 +55,15 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
   Obx _buildTabBar() {
     return Obx(
       () => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-        child: tabBarWidget(controller.tabController, controller.tabs,
-            controller.currentTabIndex.value,
-            newTab: true),
+        padding: EdgeInsets.symmetric(vertical: 16.h),
+        child: TabBarWidgetV2(
+          tabs: controller.tabs,
+          currentIndex: controller.currentTabIndex.value,
+          onTabChanged: (index) {
+            controller.currentTabIndex.value = index;
+            controller.tabViewController.animateTo(index);
+          },
+        ),
       ),
     );
   }
@@ -315,9 +320,9 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
         right: Utils.isArabic ? Radius.circular(20.r) : Radius.zero,
       ),
       child: url.isEmpty
-          ? Image.asset(AppResources.placeholder, width: 120.w, height: 116.h, fit: BoxFit.cover)
+          ? Image.asset(AppResources.placeholder,
+              width: 120.w, height: 116.h, fit: BoxFit.cover)
           : CachedImage(image: url, width: 120.w, height: 116.h),
     );
   }
-
 }

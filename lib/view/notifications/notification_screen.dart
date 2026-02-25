@@ -10,7 +10,7 @@ import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/notification_view_model.dart';
 import 'package:zakat_fund/widgets/notification_details_dialog.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class NotificationScreen extends GetView<NotificationViewModel> {
   const NotificationScreen({super.key});
@@ -53,14 +53,18 @@ class NotificationScreen extends GetView<NotificationViewModel> {
   Widget _buildTopRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.min,
       children: [
-        tabBarWidget(
-          controller.tabController,
-          ["all", "read", "unread"],
-          0,
-          newTab: true,
+        Expanded(
+          child: Obx(() => TabBarWidgetV2(
+                tabs: ["all".tr, "read".tr, "unread".tr],
+                currentIndex: controller.currentTabIndex.value,
+                onTabChanged: (index) =>
+                    controller.tabController.animateTo(index),
+              )),
         ),
-        _buildOptionsMenu()
+        _buildOptionsMenu(),
       ],
     );
   }
@@ -105,15 +109,15 @@ class NotificationScreen extends GetView<NotificationViewModel> {
   Widget _buildNotificationList() {
     return Expanded(
       child: Obx(() => GroupedListView(
-        padding: EdgeInsets.only(bottom: 16.h),
-        elements: controller.notifications.value,
-        groupBy: (e) => e.date.toString(),
-        groupComparator: (a, b) => b.compareTo(a),
-        itemComparator: (a, b) => a.date.compareTo(b.date),
-        order: GroupedListOrder.ASC,
-        groupSeparatorBuilder: _buildGroupSeparator,
-        itemBuilder: (context, item) => _buildNotificationTile(item),
-      )),
+            padding: EdgeInsets.only(bottom: 16.h),
+            elements: controller.notifications.toList(),
+            groupBy: (e) => e.date.toString(),
+            groupComparator: (a, b) => b.compareTo(a),
+            itemComparator: (a, b) => a.date.compareTo(b.date),
+            order: GroupedListOrder.ASC,
+            groupSeparatorBuilder: _buildGroupSeparator,
+            itemBuilder: (context, item) => _buildNotificationTile(item),
+          )),
     );
   }
 
@@ -124,7 +128,7 @@ class NotificationScreen extends GetView<NotificationViewModel> {
       textDirection: TextDirection.ltr,
       child: Row(
         mainAxisAlignment:
-        Utils.isArabic ? MainAxisAlignment.end : MainAxisAlignment.start,
+            Utils.isArabic ? MainAxisAlignment.end : MainAxisAlignment.start,
         children: [
           Padding(
             padding: EdgeInsets.only(bottom: 13.h, top: 18.h),
@@ -147,7 +151,7 @@ class NotificationScreen extends GetView<NotificationViewModel> {
           contentPadding: EdgeInsets.zero,
           selected: !item.isMark,
           selectedTileColor:
-          !item.isMark ? AppColors.appBarColor : Colors.white,
+              !item.isMark ? AppColors.appBarColor : Colors.white,
           visualDensity: VisualDensity.compact,
           leading: _buildLeadingIcons(item),
           title: Text(
@@ -194,4 +198,3 @@ class NotificationScreen extends GetView<NotificationViewModel> {
     );
   }
 }
-

@@ -23,10 +23,10 @@ class TabBarWidgetV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
       child: Container(
-        height: 52.h,
-        padding: EdgeInsets.symmetric(vertical: 8.h),
+        height: 50.h,
+        padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10),
         decoration: BoxDecoration(
           border: Border.all(color: AppColors.lightGrey),
           borderRadius: BorderRadius.circular(40.r),

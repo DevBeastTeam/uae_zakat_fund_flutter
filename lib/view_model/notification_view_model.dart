@@ -12,9 +12,10 @@ import 'package:zakat_fund/utils/constants/event_constant.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/main_view_model.dart';
 
-class NotificationViewModel extends GetxController with GetTickerProviderStateMixin {
-
+class NotificationViewModel extends GetxController
+    with GetTickerProviderStateMixin {
   late final TabController tabController;
+  final RxInt currentTabIndex = 0.obs;
 
   final notifications = <Notifications>[].obs;
   List<Notifications> allNotifications = [];
@@ -31,7 +32,7 @@ class NotificationViewModel extends GetxController with GetTickerProviderStateMi
     super.onInit();
   }
 
-  _initializeData(){
+  _initializeData() {
     Utils.logEvent(name: EventConstant.myNotificationsScreen);
     dateTime = DateTime.now();
     tabController = TabController(vsync: this, length: 3);
@@ -42,16 +43,16 @@ class NotificationViewModel extends GetxController with GetTickerProviderStateMi
     }
   }
 
-
   fetchNotifications() async {
     Utils.showLoadingDialog();
     ApiResponse apiResponse = await repo.userNotifications(
-        request: RequestBody(endPoint: "${ApiConstant.userNotifications}/${user.empId}"));
+        request: RequestBody(
+            endPoint: "${ApiConstant.userNotifications}/${user.empId}"));
     Utils.hideLoadingDialog();
     if (apiResponse.appState == AppState.onSuccess) {
       allNotifications = apiResponse.data;
       notifications.assignAll(allNotifications);
-    }else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -82,13 +83,11 @@ class NotificationViewModel extends GetxController with GetTickerProviderStateMi
         allNotifications
             .where((n) => !n.isMark)
             .forEach((n) => n.isMark = true);
-        notifications
-            .where((n) => !n.isMark)
-            .forEach((n) => n.isMark = true);
-        mainViewModel.notificationCount.value=0;
+        notifications.where((n) => !n.isMark).forEach((n) => n.isMark = true);
+        mainViewModel.notificationCount.value = 0;
       }
       _tabListener();
-    }else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -99,24 +98,30 @@ class NotificationViewModel extends GetxController with GetTickerProviderStateMi
     }
     Utils.showLoadingDialog();
     ApiResponse apiResponse = await repo.deleteNotification(
-        request: RequestBody(endPoint: "${ApiConstant.deleteAllNotification}/${user.empId}"));
+        request: RequestBody(
+            endPoint: "${ApiConstant.deleteAllNotification}/${user.empId}"));
     Utils.hideLoadingDialog();
     if (apiResponse.appState == AppState.onSuccess) {
       allNotifications.clear();
       notifications.clear();
       notifications.refresh();
-    }else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
 
   void _tabListener() {
+    currentTabIndex.value = tabController.index;
     if (tabController.index == 0) {
       notifications.value = List.from(allNotifications);
     } else if (tabController.index == 1) {
-      notifications.value = allNotifications.where((notification) => notification.isMark).toList();
+      notifications.value = allNotifications
+          .where((notification) => notification.isMark)
+          .toList();
     } else {
-      notifications.value = allNotifications.where((notification) => !notification.isMark).toList();
+      notifications.value = allNotifications
+          .where((notification) => !notification.isMark)
+          .toList();
     }
   }
 
@@ -128,5 +133,4 @@ class NotificationViewModel extends GetxController with GetTickerProviderStateMi
     notifications.close();
     super.onClose();
   }
-
 }
