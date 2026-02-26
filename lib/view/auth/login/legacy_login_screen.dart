@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/routes/app_routes.dart';
@@ -50,8 +51,10 @@ class LegacyLoginScreen extends StatelessWidget {
                         ? Container(
                             padding: const EdgeInsets.all(16),
                             decoration: BoxDecoration(
-                              color: AppColors.secondaryDarkBrownColor
-                                  .withValues(alpha: 0.10),
+                              color:
+                                  themeViewModel.color.withValues(alpha: 0.10),
+                              // color: AppColors.secondaryDarkBrownColor
+                              //     .withValues(alpha: 0.10),
                               borderRadius: BorderRadius.circular(12.r),
                             ),
                             child: Row(
@@ -62,7 +65,8 @@ class LegacyLoginScreen extends StatelessWidget {
                                     "legacyLoginMessage".tr,
                                     textAlign: TextAlign.center,
                                     style: AppTextStyle
-                                        .secondaryDarkBrownColor12spTextStyle,
+                                        .themeTextColor14spTextStyle,
+                                    // .secondaryDarkBrownColor12spTextStyle,
                                   ),
                                 ),
                                 8.horizontalSpace,
