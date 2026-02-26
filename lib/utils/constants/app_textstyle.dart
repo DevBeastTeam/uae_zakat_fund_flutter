@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 
 abstract class AppTextStyle {
@@ -1496,6 +1497,10 @@ abstract class AppTextStyle {
   static TextStyle secondaryDarkBrownColor14spTextStyle = TextStyle(
       fontSize: 14.sp,
       color: AppColors.secondaryDarkBrownColor,
+      fontWeight: FontWeight.w500);
+  static TextStyle themeTextColor14spTextStyle = TextStyle(
+      fontSize: 14.sp,
+      color: themeViewModel.color,
       fontWeight: FontWeight.w500);
 
   static TextStyle secondaryDarkBrownColor10spTextStyle = TextStyle(

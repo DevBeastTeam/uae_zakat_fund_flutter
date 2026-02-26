@@ -1009,6 +1009,8 @@ class AccountViewModel extends GetxController
     switch (code) {
       case ModuleCodes.companyDashboardCode:
         Get.toNamed(AppRoutes.donorDashboardScreen, arguments: code);
+      case ModuleCodes.companyProfileCode:
+        openCompanyProfileScreen(true);
       case ModuleCodes.favouritesCode:
         Get.toNamed(AppRoutes.favouriteScreen);
       case ModuleCodes.companyRequestsCode:

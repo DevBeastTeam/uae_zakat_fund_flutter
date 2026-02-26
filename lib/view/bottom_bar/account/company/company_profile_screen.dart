@@ -3,14 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/model/company.dart';
 import 'package:zakat_fund/model/lookup_data.dart';
+import 'package:zakat_fund/utils/constants/app_colors.dart';
+import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/account_view_model.dart';
 import 'package:zakat_fund/view_model/company_view_model.dart';
 import 'package:zakat_fund/widgets/circle_image.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/profile_text_widget.dart';
-import 'package:zakat_fund/widgets/profile_view_widget.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class CompanyProfileScreen extends GetView<AccountViewModel> {
   const CompanyProfileScreen({super.key});
@@ -19,49 +20,144 @@ class CompanyProfileScreen extends GetView<AccountViewModel> {
   Widget build(BuildContext context) {
     controller.currentTabIndex.value = 0;
     controller.tabController.animateTo(0);
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          16.verticalSpace,
-          _buildImage(),
-          16.verticalSpace,
-          _buildTabBar(),
-          _buildTabView()
-        ],
-      ),
+    return Column(
+      children: [
+        16.verticalSpace,
+        _buildHeaderCard(),
+        16.verticalSpace,
+        _buildTabBar(),
+        16.verticalSpace,
+        Expanded(child: _buildContentCard()),
+      ],
     );
   }
 
-  Widget _buildTabView() {
+  // ── Header card: avatar + name + email ──────────────────────────────────
+  Widget _buildHeaderCard() {
+    return Obx(() {
+      final info = controller.company.value.accountInfo;
+      final name = Utils.isArabic
+          ? (info?.accountNameArabic ?? '')
+          : (info?.accountName ?? '');
+      final email = controller.company.value.accountContact?.email ?? '';
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColors.lightGrey),
+        ),
+        child: Row(
+          children: [
+            circleImage(
+              controller.profilePhoto.value,
+              profile: true,
+              onPressed: () {},
+              showAdd: false,
+            ),
+            16.horizontalSpace,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: AppTextStyle.secondaryPrimaryBlack16spTextStyle2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  4.verticalSpace,
+                  Text(
+                    email,
+                    style: AppTextStyle.darkGreyOne12spTextStyle2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  // ── TabBarWidgetV2 ────────────────────────────────────────────────────────
+  Widget _buildTabBar() {
+    return Obx(() => TabBarWidgetV2(
+          tabs: controller.tabs,
+          currentIndex: controller.currentTabIndex.value,
+          onTabChanged: (index) {
+            controller.tabController.animateTo(index);
+            controller.currentTabIndex.value = index;
+          },
+        ));
+  }
+
+  // ── Scrollable content card ───────────────────────────────────────────────
+  Widget _buildContentCard() {
+    return Obx(() {
+      final isOwner =
+          controller.company.value.accountInfo?.userId == controller.user.id;
+      return Column(
+        children: [
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: AppColors.lightGrey),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.r),
+                child: SingleChildScrollView(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  child: _buildTabContent(),
+                ),
+              ),
+            ),
+          ),
+          if (isOwner) ...[
+            16.verticalSpace,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: elevatedButton(
+                text: 'editInformation',
+                onPressed: () => controller
+                    .updateComTabIndexForEdit(controller.currentTabIndex.value),
+              ),
+            ),
+          ],
+          16.verticalSpace,
+        ],
+      );
+    });
+  }
+
+  Widget _buildTabContent() {
     return Obx(() {
       final index = controller.currentTabIndex.value;
       switch (index) {
         case 0:
-          return companyInfo();
+          return _buildCompanyInfoContent();
         case 1:
-          return genericInfo(true, controller.companyStatus);
+          return _buildContactInfoContent();
         case 2:
-          return representativeInfo(true, controller.companyStatus);
+          return _buildRepresentativeInfoContent();
         case 3:
         default:
-          return bankInfo(true, controller.companyStatus);
+          return _buildBankInfoContent();
       }
     });
   }
 
-  Obx _buildTabBar() {
-    return Obx(() => tabBarWidget(controller.tabController, controller.tabs,
-        controller.currentTabIndex.value));
-  }
-
-  Widget _buildImage() {
-    return circleImage(controller.profilePhoto.value, onPressed: () {});
-  }
-
-  Widget companyInfo() {
+  // ── Company info tab content ──────────────────────────────────────────────
+  Widget _buildCompanyInfoContent() {
     final viewModel = Get.find<CompanyViewModel>();
-    CompanyInfo? accountInfo = controller.company.value.accountInfo!;
+    CompanyInfo? accountInfo = controller.company.value.accountInfo;
     LookupData? typeData = viewModel.selectedCompanyField.value;
     LookupData? authorityData = viewModel.selectedIssuingAuthority.value;
     String type = "", authority = "";
@@ -71,45 +167,130 @@ class CompanyProfileScreen extends GetView<AccountViewModel> {
     if (authorityData != null) {
       authority = Utils.isArabic ? authorityData.nameAr : authorityData.name;
     }
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          profileTextWidget(
-              label: "companyNameInEnglish", value: accountInfo.accountName),
-          profileTextWidget(
-              label: "companyNameInArabic",
-              value: accountInfo.accountNameArabic),
-          profileTextWidget(
-              label: "dateOfEstablishment",
-              value: accountInfo.establishmentDate != null
-                  ? Utils.dateFormat1.format(
-                      controller.company.value.accountInfo!.establishmentDate!)
-                  : ""),
-          profileTextWidget(label: "companyType", value: type),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(
+            label: "companyNameInEnglish",
+            value: accountInfo?.accountName ?? ''),
+        profileTextWidget(
+            label: "companyNameInArabic",
+            value: accountInfo?.accountNameArabic ?? ''),
+        profileTextWidget(
+            label: "dateOfEstablishment",
+            value: accountInfo?.establishmentDate != null
+                ? Utils.dateFormat1.format(accountInfo!.establishmentDate!)
+                : ""),
+        profileTextWidget(label: "companyType", value: type),
+        profileAttachWidget(
+            label: "companyLicense", value: accountInfo?.license ?? ''),
+        profileTextWidget(label: "issuingAuthority", value: authority),
+        profileTextWidget(
+            label: "licenseExpiryDate",
+            value: accountInfo?.licenseExpiryDate != null
+                ? Utils.dateFormat1.format(accountInfo!.licenseExpiryDate!)
+                : ""),
+        if (accountInfo?.agreementUrl != null)
           profileAttachWidget(
-              label: "companyLicense", value: accountInfo.license!),
-          profileTextWidget(label: "issuingAuthority", value: authority),
-          profileTextWidget(
-              label: "licenseExpiryDate",
-              value: accountInfo.licenseExpiryDate != null
-                  ? Utils.dateFormat1.format(
-                      controller.company.value.accountInfo!.licenseExpiryDate!)
-                  : ""),
-          if (accountInfo.agreementUrl != null)
-            profileAttachWidget(
-                label: "agreement",
-                value: "Agreements/${accountInfo.agreementUrl!}"),
-          if (viewModel.additionalDocuments.isNotEmpty)
-            profileAdditionDocWidget(viewModel.additionalDocuments),
-          if (controller.company.value.accountInfo!.userId ==
-              controller.user.id)
-            elevatedButton(
-                text: "editInformation",
-                onPressed: () => controller.updateComTabIndexForEdit(0)),
-        ],
-      ),
+              label: "agreement",
+              value: "Agreements/${accountInfo!.agreementUrl!}"),
+        if (viewModel.additionalDocuments.isNotEmpty)
+          profileAdditionDocWidget(viewModel.additionalDocuments),
+      ],
+    );
+  }
+
+  // ── Contact info tab content ──────────────────────────────────────────────
+  Widget _buildContactInfoContent() {
+    final viewModel = Get.find<CompanyViewModel>();
+    final contactInfo = controller.company.value.accountContact;
+    final countryData = viewModel.selectedCountry.value;
+    final emirateData = viewModel.selectedEmirate.value;
+    final cityData = viewModel.selectedCity.value;
+    final country = countryData != null
+        ? (Utils.isArabic ? countryData.nameAr : countryData.name)
+        : '';
+    final emirate = emirateData != null
+        ? (Utils.isArabic ? emirateData.nameAr : emirateData.name)
+        : '';
+    final city = cityData != null
+        ? (Utils.isArabic ? cityData.nameAr : cityData.name)
+        : '';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(label: 'email', value: contactInfo?.email ?? ''),
+        profileTextWidget(label: 'mobile', value: contactInfo?.mobile ?? ''),
+        profileTextWidget(label: 'fax', value: contactInfo?.fax ?? ''),
+        profileTextWidget(label: 'website', value: contactInfo?.website ?? ''),
+        profileTextWidget(label: 'country', value: country),
+        if (emirateData != null)
+          profileTextWidget(label: 'emirate', value: emirate),
+        profileTextWidget(label: 'city', value: city),
+        profileTextWidget(label: 'poBox', value: contactInfo?.poBox ?? ''),
+        profileTextWidget(label: 'address', value: contactInfo?.address ?? ''),
+        profileTextWidget(
+            label: 'addressInArabic', value: contactInfo?.addressArabic ?? ''),
+        if (contactInfo?.facebook != null && contactInfo!.facebook!.isNotEmpty)
+          profileTextWidget(label: 'facebook', value: contactInfo.facebook!),
+        if (contactInfo?.linkedIn != null && contactInfo!.linkedIn!.isNotEmpty)
+          profileTextWidget(label: 'linkedIn', value: contactInfo.linkedIn!),
+        if (contactInfo?.twitter != null && contactInfo!.twitter!.isNotEmpty)
+          profileTextWidget(label: 'twitter', value: contactInfo.twitter!),
+        if (contactInfo?.instagram != null &&
+            contactInfo!.instagram!.isNotEmpty)
+          profileTextWidget(label: 'instagram', value: contactInfo.instagram!),
+      ],
+    );
+  }
+
+  // ── Representative info tab content ───────────────────────────────────────
+  Widget _buildRepresentativeInfoContent() {
+    final viewModel = Get.find<CompanyViewModel>();
+    final representative = controller.company.value.accountRepresentative;
+    final nationalityData = viewModel.selectedNationality.value;
+    final nationality = nationalityData != null
+        ? (Utils.isArabic ? nationalityData.nameAr : nationalityData.name)
+        : '';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(
+            label: 'firstNameInEnglish', value: representative?.firstName ?? ''),
+        profileTextWidget(
+            label: 'lastNameInEnglish', value: representative?.lastName ?? ''),
+        profileTextWidget(
+            label: 'firstNameInArabic',
+            value: representative?.firstNameArabic ?? ''),
+        profileTextWidget(
+            label: 'lastNameInArabic',
+            value: representative?.lastNameArabic ?? ''),
+        profileTextWidget(label: 'email', value: representative?.email ?? ''),
+        profileTextWidget(label: 'mobile', value: representative?.phone ?? ''),
+        profileTextWidget(
+            label: 'jobDescription', value: representative?.jobDescription ?? ''),
+        profileTextWidget(label: 'nationality', value: nationality),
+        profileTextWidget(
+            label: 'uaeId', value: representative?.emirateId ?? ''),
+      ],
+    );
+  }
+
+  // ── Bank info tab content ─────────────────────────────────────────────────
+  Widget _buildBankInfoContent() {
+    final bankAccount = controller.company.value.bankAccount;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(
+            label: 'bankName', value: bankAccount?.bankName ?? ''),
+        profileTextWidget(
+            label: 'swiftCode', value: bankAccount?.swiftCode ?? ''),
+        profileTextWidget(label: 'ibanNumber', value: bankAccount?.iban ?? ''),
+      ],
     );
   }
 }

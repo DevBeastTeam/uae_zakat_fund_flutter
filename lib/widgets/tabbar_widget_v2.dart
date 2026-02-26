@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
+import 'package:zakat_fund/view_model/theme_view_model.dart';
 
 class TabBarWidgetV2 extends StatelessWidget {
   /// List of tab label strings to display.
@@ -44,11 +47,6 @@ class TabBarWidgetV2 extends StatelessWidget {
     );
   }
 
-  String _truncate(String text, {int maxLength = 14}) {
-    if (text.length <= maxLength) return text;
-    return '${text.substring(0, maxLength)}…';
-  }
-
   Widget _buildTabItem(String text, int index) {
     final isSelected = currentIndex == index;
     return GestureDetector(
@@ -59,17 +57,20 @@ class TabBarWidgetV2 extends StatelessWidget {
         margin: EdgeInsets.symmetric(horizontal: 2.w),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.secondaryDarkBrownColor.withValues(alpha: 0.12)
+              ? themeViewModel.color.withValues(alpha: 0.12)
               : Colors.transparent,
+          // color: isSelected
+          //     ? AppColors.secondaryDarkBrownColor.withValues(alpha: 0.12)
+          //     : Colors.transparent,
           borderRadius: BorderRadius.circular(24.r),
         ),
         alignment: Alignment.center,
         child: Text(
-          _truncate(text),
+          text.tr,
           style: isSelected
-              ? AppTextStyle.secondaryDarkBrownColor14spTextStyle
+              ? AppTextStyle.themeTextColor14spTextStyle
+              // ? AppTextStyle.secondaryDarkBrownColor14spTextStyle
               : AppTextStyle.greyColor14spTextStyle,
-          overflow: TextOverflow.ellipsis,
           maxLines: 1,
         ),
       ),
