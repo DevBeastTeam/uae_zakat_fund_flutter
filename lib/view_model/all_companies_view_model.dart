@@ -507,9 +507,11 @@ class AllCompaniesViewModel extends ModulePermissionsViewModel
       fieldHintText: "dd/mm/yyyy",
       lastDate: dateTime,
     );
-    String date = Utils.dateFormat1.format(picked!);
-    pickedExpiry = picked;
-    dateController.text = date;
+    if (picked != null) {
+      String date = Utils.dateFormat1.format(picked);
+      pickedExpiry = picked;
+      dateController.text = date;
+    }
   }
 
   enableDisableAssociation(Association associationDetails) async {

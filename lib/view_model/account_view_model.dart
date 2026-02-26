@@ -809,32 +809,23 @@ class AccountViewModel extends GetxController
       case 0:
         Get.toNamed(AppRoutes.donorDashboardScreen);
       case 1:
-        Get.toNamed(AppRoutes.favouriteScreen);
+        openDonorProfileScreen(true);
       case 2:
+        Get.toNamed(AppRoutes.favouriteScreen);
+      case 3:
         Get.toNamed(AppRoutes.requestsScreen,
             arguments: ModuleCodes.adminRequestManagementCode);
-      case 3:
+      case 4:
         Get.toNamed(AppRoutes.feedbackScreen,
             arguments: {"code": ModuleCodes.adminFeedbackManagementCode});
-      // case 4 || 5:
-      //   Get.toNamed(AppRoutes.allCompanyScreen, arguments: {
-      //     "isAssociation": index == 4,
-      //     "code": index == 4
-      //         ? ModuleCodes.adminAllAssociationsCode
-      //         : ModuleCodes.adminAllCompaniesCode
-      //   });
-      case 4:
+      case 5:
         Get.toNamed(AppRoutes.transactionScreen,
             arguments: {"code": ModuleCodes.companyDonationsCode});
-      // case 7:
-      //   Get.toNamed(AppRoutes.myWalletScreen);
-      // case 8:
-      //   Get.toNamed(AppRoutes.myRefundsScreen);
-      case 5:
-        Get.toNamed(AppRoutes.accessibilityScreen);
       case 6:
-        Get.toNamed(AppRoutes.notificationScreen);
+        Get.toNamed(AppRoutes.accessibilityScreen);
       case 7:
+        Get.toNamed(AppRoutes.notificationScreen);
+      case 8:
         Get.toNamed(AppRoutes.settingsScreen,
                 arguments: {"individual": individual.value})!
             .then((_) {

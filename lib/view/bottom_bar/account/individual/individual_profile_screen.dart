@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/model/individual.dart';
-import 'package:zakat_fund/model/lookup_data.dart';
+import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/account_view_model.dart';
@@ -10,7 +10,7 @@ import 'package:zakat_fund/view_model/individual_view_model.dart';
 import 'package:zakat_fund/widgets/circle_image.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/profile_text_widget.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class IndividualProfileScreen extends GetView<AccountViewModel> {
   const IndividualProfileScreen({super.key});
@@ -23,167 +23,244 @@ class IndividualProfileScreen extends GetView<AccountViewModel> {
     return Column(
       children: [
         16.verticalSpace,
-        _buildImageView(),
+        _buildHeaderCard(),
         16.verticalSpace,
         _buildTabBar(),
-        _buildTabView(viewModel)
+        16.verticalSpace,
+        Expanded(child: _buildContentCard(viewModel)),
       ],
     );
   }
 
-  Obx _buildTabView(IndividualViewModel viewModel) {
-    return Obx(() => Expanded(
-        child: controller.currentTabIndex.value == 0
-            ? donorAccountInfo(viewModel)
-            : donorContactInfo()));
+  // ── Header card: avatar + name + email ──────────────────────────────────
+  Widget _buildHeaderCard() {
+    return Obx(() {
+      final info = controller.individual.value.accountInfo;
+      final firstName = Utils.isArabic
+          ? (info?.firstNameArabic ?? '')
+          : (info?.firstName ?? '');
+      final lastName = Utils.isArabic
+          ? (info?.lastNameArabic ?? '')
+          : (info?.lastName ?? '');
+      return Container(
+        margin: EdgeInsets.symmetric(horizontal: 16.w),
+        padding: EdgeInsets.all(16.r),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(color: AppColors.lightGrey),
+        ),
+        child: Row(
+          children: [
+            circleImage(
+              controller.profilePhoto.value,
+              profile: true,
+              onPressed: () => controller.addImage(),
+              // showAdd: info?.userId == controller.user.id,
+              showAdd: false,
+            ),
+            16.horizontalSpace,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '$firstName $lastName'.trim(),
+                    style: AppTextStyle.secondaryPrimaryBlack16spTextStyle2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  4.verticalSpace,
+                  Text(
+                    info?.email ?? '',
+                    style: AppTextStyle.darkGreyOne12spTextStyle2,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 
-  Obx _buildTabBar() {
-    return Obx(() => tabBarWidget(controller.tabController, controller.tabs,
-        controller.currentTabIndex.value));
+  // ── TabBarWidgetV2 ────────────────────────────────────────────────────────
+  Widget _buildTabBar() {
+    return Obx(() => TabBarWidgetV2(
+          tabs: controller.tabs,
+          currentIndex: controller.currentTabIndex.value,
+          onTabChanged: (index) {
+            controller.tabController.animateTo(index);
+            controller.currentTabIndex.value = index;
+          },
+        ));
   }
 
-  Obx _buildImageView() {
-    return Obx(() => circleImage(controller.profilePhoto.value,
-        onPressed: () => controller.addImage(),
-        profile: true,
-        showAdd: controller.individual.value.accountInfo!.userId ==
-            controller.user.id));
-  }
-
-  Widget donorAccountInfo(IndividualViewModel viewModel) {
-    AccountInfo? accountInfo = controller.individual.value.accountInfo;
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+  // ── Scrollable content card ───────────────────────────────────────────────
+  Widget _buildContentCard(IndividualViewModel viewModel) {
+    return Obx(() {
+      final isOwner =
+          controller.individual.value.accountInfo?.userId == controller.user.id;
+      return Column(
         children: [
-          profileTextWidget(label: "email", value: accountInfo?.email),
-          profileTextWidget(label: "userName", value: accountInfo!.userName),
-          profileTextWidget(
-              label: "firstNameInEnglish", value: accountInfo.firstName),
-          profileTextWidget(
-              label: "lastNameInEnglish", value: accountInfo.lastName),
-          profileTextWidget(
-              label: "firstNameInArabic", value: accountInfo.firstNameArabic),
-          profileTextWidget(
-              label: "lastNameInArabic", value: accountInfo.lastNameArabic),
-          profileTextWidget(
-              label: "dob",
-              value: accountInfo.dob != null
-                  ? Utils.dateFormat1.format(accountInfo.dob!)
-                  : ""),
-          profileTextWidget(
-              label: "gender",
-              value: accountInfo.gender == null
-                  ? ""
-                  : accountInfo.gender == 1
-                      ? "male".tr
-                      : "female".tr),
-          profileTextWidget(label: "uaeId", value: accountInfo.emirateId),
-          profileTextWidget(
-              label: "nationality", value: controller.nationality.value),
-          Obx(() => viewModel.additionalDocuments.isNotEmpty
-              ? profileAdditionDocWidget(viewModel.additionalDocuments)
-              : SizedBox.shrink()),
-          if (controller.individual.value.accountInfo!.userId ==
-              controller.user.id)
-            elevatedButton(
-                text: "editInformation",
-                onPressed: () => controller.updateIndTabIndexForEdit(0)),
-        ],
-      ),
-    );
-  }
-
-  Widget donorContactInfo() {
-    final viewModel = Get.find<IndividualViewModel>();
-    DonorContactInfo? contactInfo = controller.individual.value.contactInfo;
-    LookupData? countryData = viewModel.selectedCountry.value;
-    LookupData? emirateData = viewModel.selectedEmirate.value;
-    LookupData? cityData = viewModel.selectedCity.value;
-    String country = "", emirate = "", city = "";
-    if (countryData != null) {
-      country = Utils.isArabic ? countryData.nameAr : countryData.name;
-    }
-    if (emirateData != null) {
-      emirate = Utils.isArabic ? emirateData.nameAr : emirateData.name;
-    }
-    if (cityData != null) {
-      city = Utils.isArabic ? cityData.nameAr : cityData.name;
-    }
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          profileTextWidget(
-              label: "mobileNumberPrimary", value: contactInfo?.mobile),
-          profileTextWidget(
-              label: "mobileNumberSecondary",
-              value: contactInfo?.additionalMobileNumber),
-          profileTextWidget(label: "country", value: country),
-          if (viewModel.selectedEmirate.value != null)
-            profileTextWidget(label: "emirate", value: emirate),
-          profileTextWidget(label: "city", value: city),
-          profileTextWidget(label: "poBox", value: contactInfo?.poBox),
-          Text(
-            "address".tr,
-            style: AppTextStyle.primaryDarkGrey14spTextStyle1,
-          ),
-          8.verticalSpace,
-          _buildAddressListView(contactInfo),
-          if (controller.individual.value.accountInfo!.userId ==
-              controller.user.id)
-            elevatedButton(
-                text: "editInformation",
-                onPressed: () => controller.updateIndTabIndexForEdit(1)),
-        ],
-      ),
-    );
-  }
-
-  Column _buildAddressListView(DonorContactInfo? contactInfo) {
-    return Column(
-        children: List.generate(
-            contactInfo!.addresses.length,
-            (index) => Container(
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 16.w),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12.r),
+                border: Border.all(color: AppColors.lightGrey),
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.r),
+                child: SingleChildScrollView(
                   padding:
                       EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                  margin: EdgeInsets.only(bottom: 16.h),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
-                        offset: const Offset(0.0, 4.0),
-                        blurRadius: 50.0,
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Text(
-                        "${index == 0 ? "address1".tr : "address2".tr} ${contactInfo.addresses[index].isDefault ? "primary".tr : ""}",
-                        style: AppTextStyle.secondaryPrimaryBlack16spTextStyle,
-                      ),
-                      8.verticalSpace,
-                      Text(contactInfo.addresses[index].street,
-                          maxLines: 1,
-                          style:
-                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
-                      Text(contactInfo.addresses[index].building,
-                          maxLines: 1,
-                          style:
-                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
-                      Text(contactInfo.addresses[index].landmark,
-                          maxLines: 1,
-                          style:
-                              AppTextStyle.secondaryPrimaryBlack14spTextStyle),
-                    ],
-                  ),
-                )));
+                  child: controller.currentTabIndex.value == 0
+                      ? _buildAccountInfoContent(viewModel)
+                      : _buildContactInfoContent(viewModel),
+                ),
+              ),
+            ),
+          ),
+          if (isOwner) ...[
+            16.verticalSpace,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: elevatedButton(
+                text: 'editInformation',
+                onPressed: () => controller
+                    .updateIndTabIndexForEdit(controller.currentTabIndex.value),
+              ),
+            ),
+          ],
+          16.verticalSpace,
+        ],
+      );
+    });
+  }
+
+  // ── Account info tab content ──────────────────────────────────────────────
+  Widget _buildAccountInfoContent(IndividualViewModel viewModel) {
+    final accountInfo = controller.individual.value.accountInfo;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(label: 'email', value: accountInfo?.email ?? ''),
+        profileTextWidget(
+            label: 'userName', value: accountInfo?.userName ?? ''),
+        profileTextWidget(
+            label: 'firstNameInEnglish', value: accountInfo?.firstName ?? ''),
+        profileTextWidget(
+            label: 'lastNameInEnglish', value: accountInfo?.lastName ?? ''),
+        profileTextWidget(
+            label: 'firstNameInArabic',
+            value: accountInfo?.firstNameArabic ?? ''),
+        profileTextWidget(
+            label: 'lastNameInArabic',
+            value: accountInfo?.lastNameArabic ?? ''),
+        profileTextWidget(
+            label: 'dob',
+            value: accountInfo?.dob != null
+                ? Utils.dateFormat1.format(accountInfo!.dob!)
+                : ''),
+        profileTextWidget(
+            label: 'gender',
+            value: accountInfo?.gender == null
+                ? ''
+                : accountInfo?.gender == 1
+                    ? 'male'.tr
+                    : 'female'.tr),
+        profileTextWidget(label: 'uaeId', value: accountInfo?.emirateId ?? ''),
+        profileTextWidget(
+            label: 'nationality', value: controller.nationality.value),
+        Obx(() => viewModel.additionalDocuments.isNotEmpty
+            ? profileAdditionDocWidget(viewModel.additionalDocuments)
+            : const SizedBox.shrink()),
+      ],
+    );
+  }
+
+  // ── Contact info tab content ──────────────────────────────────────────────
+  Widget _buildContactInfoContent(IndividualViewModel viewModel) {
+    final contactInfo = controller.individual.value.contactInfo;
+    final countryData = viewModel.selectedCountry.value;
+    final emirateData = viewModel.selectedEmirate.value;
+    final cityData = viewModel.selectedCity.value;
+    final country = countryData != null
+        ? (Utils.isArabic ? countryData.nameAr : countryData.name)
+        : '';
+    final emirate = emirateData != null
+        ? (Utils.isArabic ? emirateData.nameAr : emirateData.name)
+        : '';
+    final city = cityData != null
+        ? (Utils.isArabic ? cityData.nameAr : cityData.name)
+        : '';
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        profileTextWidget(
+            label: 'mobileNumberPrimary', value: contactInfo?.mobile ?? ''),
+        profileTextWidget(
+            label: 'mobileNumberSecondary',
+            value: contactInfo?.additionalMobileNumber ?? ''),
+        profileTextWidget(label: 'country', value: country),
+        if (emirateData != null)
+          profileTextWidget(label: 'emirate', value: emirate),
+        profileTextWidget(label: 'city', value: city),
+        profileTextWidget(label: 'poBox', value: contactInfo?.poBox ?? ''),
+        Text('address'.tr, style: AppTextStyle.primaryDarkGrey14spTextStyle1),
+        8.verticalSpace,
+        _buildAddresses(contactInfo),
+      ],
+    );
+  }
+
+  Widget _buildAddresses(DonorContactInfo? contactInfo) {
+    if (contactInfo == null || contactInfo.addresses.isEmpty) {
+      return const SizedBox.shrink();
+    }
+    return Column(
+      children: List.generate(contactInfo.addresses.length, (i) {
+        final addr = contactInfo.addresses[i];
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+          margin: EdgeInsets.only(bottom: 16.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12.r),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.06),
+                offset: const Offset(0, 4),
+                blurRadius: 20,
+              ),
+            ],
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                '${i == 0 ? "address1".tr : "address2".tr} ${addr.isDefault ? "primary".tr : ""}',
+                style: AppTextStyle.secondaryPrimaryBlack16spTextStyle,
+              ),
+              8.verticalSpace,
+              Text(addr.street,
+                  maxLines: 1,
+                  style: AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+              Text(addr.building,
+                  maxLines: 1,
+                  style: AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+              Text(addr.landmark,
+                  maxLines: 1,
+                  style: AppTextStyle.secondaryPrimaryBlack14spTextStyle),
+            ],
+          ),
+        );
+      }),
+    );
   }
 }

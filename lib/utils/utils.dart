@@ -229,8 +229,7 @@ abstract class Utils {
     }
   }
 
-  static void showGlobalSnackBar(
-      {required String message, SnackBarAction? action}) {
+  static void showGlobalSnackBar({required String message}) {
     globalKey.currentState!.hideCurrentSnackBar();
     final SnackBar snackBar = SnackBar(
       content: Text(
@@ -240,13 +239,11 @@ abstract class Utils {
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
       duration: const Duration(seconds: 3),
-      action: action,
     );
     globalKey.currentState?.showSnackBar(snackBar);
   }
 
-  static showFrontEndSnackBar(
-      {required String message, TextButton? mainButton}) {
+  static showFrontEndSnackBar({required String message}) {
     if (Get.isSnackbarOpen) {
       return;
     }
@@ -262,7 +259,6 @@ abstract class Utils {
       borderRadius: 10.r,
       margin: const EdgeInsets.all(12),
       duration: const Duration(seconds: 2),
-      mainButton: mainButton,
     );
   }
 
@@ -349,11 +345,6 @@ abstract class Utils {
   }
 
   static logInAgain() async {
-    if (userBox.isNotEmpty &&
-        userBox.getAt(0).userName.toLowerCase() == "dev@gmail.com") {
-      debugPrint("Bypassing session logout for developer account");
-      return;
-    }
     showGlobalSnackBar(message: "sessionExpired".tr);
     await userBox.clear();
     await switchAccountBox.clear();
@@ -1261,11 +1252,6 @@ abstract class Utils {
     if (apiResponse.appState == AppState.onFailure) {
       Utils.showGlobalSnackBar(message: apiResponse.message!);
     } else if (apiResponse.appState == AppState.onUnauthorized) {
-      if (userBox.isNotEmpty &&
-          userBox.getAt(0).userName.toLowerCase() == "dev@gmail.com") {
-        debugPrint("Bypassing 401 logout for developer account");
-        return;
-      }
       Utils.logInAgain();
     }
   }

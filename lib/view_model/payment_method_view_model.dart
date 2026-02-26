@@ -233,19 +233,21 @@ class PaymentMethodViewModel extends GetxController
       firstDate: DateTime(dateTime.year, dateTime.month, dateTime.day + 1),
       lastDate: DateTime(dateTime.year + 50),
     );
-    String date = Utils.dateFormat1.format(picked!);
-    if (collection) {
-      pickedChequeCollectionDate = picked;
-      chequeCollectionDateController.text = date;
-    } else if (transfer) {
-      pickedExpiry = picked;
-      transferDateController.text = date;
-    } else if (cash) {
-      pickedCashDate = picked;
-      cashCollectionDateController.text = date;
-    } else if (chequeDate) {
-      pickedChequeDate = picked;
-      chequeDateController.text = date;
+    if (picked != null) {
+      String date = Utils.dateFormat1.format(picked);
+      if (collection) {
+        pickedChequeCollectionDate = picked;
+        chequeCollectionDateController.text = date;
+      } else if (transfer) {
+        pickedExpiry = picked;
+        transferDateController.text = date;
+      } else if (cash) {
+        pickedCashDate = picked;
+        cashCollectionDateController.text = date;
+      } else if (chequeDate) {
+        pickedChequeDate = picked;
+        chequeDateController.text = date;
+      }
     }
   }
 

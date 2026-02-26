@@ -445,6 +445,10 @@ abstract class AppConstant {
 
   static List<Categories> individualAccountTabs = [
     Categories(name: "dashboard", icon: AppResources.dashboardIcon),
+    Categories(
+        name: "myProfile",
+        icon: AppResources.profileCircleOutlined,
+        code: "myProfile"),
     favAccountTab,
     Categories(name: "requests", icon: AppResources.requestsIcon),
     Categories(name: "feedback", icon: AppResources.feedbackIcon),
