@@ -494,6 +494,10 @@ abstract class AppConstant {
         name: "dashboard",
         icon: AppResources.dashboardIcon,
         code: ModuleCodes.associationDashboardCode),
+    Categories(
+        name: "myProfile",
+        icon: AppResources.profileCircleOutlined,
+        code: ModuleCodes.associationProfileCode),
     favAccountTab,
     Categories(
         name: "requests",

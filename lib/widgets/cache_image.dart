@@ -11,6 +11,7 @@ class CachedImage extends StatelessWidget {
   final bool profile;
   final Color? color;
   final bool showPlaceHolder;
+  final BoxFit? fit;
 
   const CachedImage({
     super.key,
@@ -21,6 +22,7 @@ class CachedImage extends StatelessWidget {
     this.profile = false,
     this.color,
     this.showPlaceHolder = false,
+    this.fit = BoxFit.cover,
   });
 
   String get imageUrl => profile ? image : '${FlavorConfig.storageUrl}$image';
@@ -30,7 +32,8 @@ class CachedImage extends StatelessWidget {
     return profile ? AppResources.userAvatar : AppResources.placeholder;
   }
 
-  String get errorAsset => profile ? AppResources.userAvatar : AppResources.placeholder;
+  String get errorAsset =>
+      profile ? AppResources.userAvatar : AppResources.placeholder;
 
   @override
   Widget build(BuildContext context) {
@@ -39,17 +42,19 @@ class CachedImage extends StatelessWidget {
       width: width,
       height: height,
       color: color,
-      fit: isCover ? BoxFit.cover : null,
+      fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
       placeholder: (context, url) => Image.asset(
         placeholderAsset,
-        fit: BoxFit.cover,
+        // fit: BoxFit.cover,
+        fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
         color: color,
         width: width,
         height: height,
       ),
       errorWidget: (context, url, error) => Image.asset(
         errorAsset,
-        fit: BoxFit.cover,
+        // fit: BoxFit.cover,
+        fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
         width: width,
         height: height,
       ),

@@ -23,7 +23,7 @@ class ProjectsDonatedViewModel extends GetxController {
 
   @override
   Future<void> onInit() async {
-    if(!Get.arguments){
+    if (!Get.arguments) {
       selectedDonatedCategory.value = 1;
     }
     try {
@@ -54,9 +54,8 @@ class ProjectsDonatedViewModel extends GetxController {
         await homeRepo.expirySoonProjects(request: RequestBody());
     if (apiResponse.appState == AppState.onSuccess) {
       allExpiryProjects = apiResponse.data;
-      if(selectedDonatedCategory.value==1){
+      if (selectedDonatedCategory.value == 1) {
         projects.value = List.from(allExpiryProjects);
-
       }
     } else if (apiResponse.appState == AppState.onUnauthorized) {
       Utils.logInAgain();

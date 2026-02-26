@@ -771,6 +771,7 @@ const Map<String, String> en = {
   'otherLinks': 'Other Links',
   'profileIsNotApproved': 'Your profile is not approved.',
   'myAssociations': 'My Associations',
+  'myProfile': 'My Profile',
   'cardPayment': 'Card Payment',
   'receipt': 'Receipt',
   'totalTransactions': 'Total Transactions',

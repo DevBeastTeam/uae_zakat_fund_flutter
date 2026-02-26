@@ -12,8 +12,10 @@ Widget elevatedIconButton(
     bool next = true,
     Color? backgroundColor}) {
   final Color bgColor = backgroundColor ?? themeViewModel.color;
-  final IconData icon = next ? CupertinoIcons.right_chevron : CupertinoIcons.left_chevron;
-  final IconAlignment iconAlignment = next ? IconAlignment.end : IconAlignment.start;
+  final IconData icon =
+      next ? CupertinoIcons.right_chevron : CupertinoIcons.left_chevron;
+  final IconAlignment iconAlignment =
+      next ? IconAlignment.end : IconAlignment.start;
 
   return ElevatedButton.icon(
     style: ButtonStyle(
@@ -26,7 +28,9 @@ Widget elevatedIconButton(
       text.tr,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
-      style: next?AppTextStyle.white18spTextStyle1:AppTextStyle.btnText18spTextStyle,
+      style: next
+          ? AppTextStyle.white18spTextStyle1
+          : AppTextStyle.btnText18spTextStyle,
     ),
     iconAlignment: iconAlignment,
     icon: Icon(

@@ -43,9 +43,9 @@ class ProjectManagementScreen extends GetView<ProjectManagementViewModel> {
               _buildSummary(),
               if (controller.canView) 16.verticalSpace,
               if (controller.isAdmin.value && controller.canView) ...[
-                Obx(() => buildStatsRow(0,controller.stats)),
+                Obx(() => buildStatsRow(0, controller.stats)),
                 10.verticalSpace,
-                Obx(() => buildStatsRow(3,controller.stats)),
+                Obx(() => buildStatsRow(3, controller.stats)),
                 16.verticalSpace,
               ],
               _buildAddProjectBtn(),
@@ -130,7 +130,6 @@ class ProjectManagementScreen extends GetView<ProjectManagementViewModel> {
     }
     return SizedBox.shrink();
   }
-
 
   Widget _buildSummary() {
     if (!controller.canView) {

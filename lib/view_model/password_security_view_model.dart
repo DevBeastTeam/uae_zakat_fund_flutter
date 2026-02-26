@@ -1,4 +1,3 @@
-
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:zakat_fund/model/notification_preference.dart';
@@ -9,7 +8,6 @@ import 'package:zakat_fund/utils/constants/event_constant.dart';
 import 'package:zakat_fund/utils/utils.dart';
 
 class PasswordSecurityViewModel extends GetxController {
-
   RxList<NotificationPreference> options = <NotificationPreference>[].obs;
 
   bool showChangePassword = false;
@@ -24,37 +22,44 @@ class PasswordSecurityViewModel extends GetxController {
     super.onInit();
   }
 
-  _initializeData(){
+  _initializeData() {
     Utils.logEvent(name: EventConstant.passwordSecurityScreen);
     user = userBox.getAt(0);
-    userId =user.empId??user.id;
-    if(biometricsBox.isNotEmpty){
+    userId = user.empId ?? user.id;
+    if (biometricsBox.isNotEmpty) {
       biometricUser = biometricsBox.getAt(0);
-      if(userId==biometricUser?.userId)showChangePasswordBox.add(biometricUser!.showChangePassword);
+      if (userId == biometricUser?.userId) {
+        showChangePasswordBox.add(biometricUser!.showChangePassword);
+      }
     }
     initBiometricAuth();
   }
 
-  enableDisable(bool val,NotificationPreference preference) async {
+  enableDisable(bool val, NotificationPreference preference) async {
     bool didAuthenticate = await BiometricAuthHelper.enableDisableBiometric();
-    if(didAuthenticate){
+    if (didAuthenticate) {
       preference.enable = val;
       options.refresh();
-      if(val){
+      if (val) {
         await biometricsBox.clear();
-        BiometricUser biometric = BiometricUser(userName: user.email, type: preference.title,userId: userId,showChangePassword:showChangePasswordBox.isNotEmpty);
+        BiometricUser biometric = BiometricUser(
+            userName: user.email,
+            type: preference.title,
+            userId: userId,
+            showChangePassword: showChangePasswordBox.isNotEmpty);
         await biometricsBox.add(biometric);
-      }else{
+      } else {
         biometricsBox.clear();
       }
     }
   }
 
   initBiometricAuth() async {
-    List<BiometricType> availableBiometrics = await BiometricAuthHelper.checkAvailabilityOfBiometrics();
+    List<BiometricType> availableBiometrics =
+        await BiometricAuthHelper.checkAvailabilityOfBiometrics();
     if (availableBiometrics.isNotEmpty) {
       bool enable = false;
-      if(userId==biometricUser?.userId){
+      if (userId == biometricUser?.userId) {
         enable = true;
       }
       options.value = [
@@ -72,5 +77,4 @@ class PasswordSecurityViewModel extends GetxController {
     options.close();
     super.onClose();
   }
-
 }

@@ -46,7 +46,8 @@ class DonorPreviewViewModel extends GetxController with GenericMixin {
     setData();
     try {
       Utils.showLoadingDialog();
-      await Future.wait([fetchAdditionalDocuments(), fetchNationality(), fetchMetaData()]);
+      await Future.wait(
+          [fetchAdditionalDocuments(), fetchNationality(), fetchMetaData()]);
     } finally {
       Utils.hideLoadingDialog();
     }

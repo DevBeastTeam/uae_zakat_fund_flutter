@@ -5,6 +5,9 @@ abstract class ApiConstant {
       'https://npzapi.npz.gov.ae/'; //'https://stgnpzapi.npz.gov.ae/'; //'https://npzapi.npz.gov.ae/';
   static const String devBaseUrl = '${devUrl}api/';
   static const String prodBaseUrl = '${prodUrl}api/';
+
+  // UaepassApiService uaepassApiService = UaepassApiService(language: 'en');
+
   static const String devWebSiteUrl =
       'https://zakatfundweb.eventoclients.com/'; //'https://www.npz.gov.ae/';//
   static const String prodWebSiteUrl =
@@ -445,5 +448,6 @@ abstract class ApiConstant {
   static const String getExpirySoonProjects = 'Project/getExpirySoonProjects';
   static const String mobileDashboardStats =
       'AdminDashboard/MobileDashboardStats';
-  static const String sendSmsEmailMobileApp = 'DubaiPayIntegration/sendSmsEmailMobileApp';
+  static const String sendSmsEmailMobileApp =
+      'DubaiPayIntegration/sendSmsEmailMobileApp';
 }

@@ -831,19 +831,21 @@ class ProjectViewModel extends GetxController with GenericMixin {
           ? DateTime(dateTime.year + 50)
           : dateTime,
     );
-    String date = Utils.dateFormat1.format(picked!);
-    if (startDate) {
-      pickedStartDate = picked;
-      startDateController.text = date;
-    } else if (endDate) {
-      pickedExpiryDate = picked;
-      endDateController.text = date;
-    } else if (licenseStart) {
-      pickedLicenseStart = picked;
-      licenseStartDateController.text = date;
-    } else if (licenseEnd) {
-      pickedLicenseExpirt = picked;
-      licenseEndDateController.text = date;
+    if (picked != null) {
+      String date = Utils.dateFormat1.format(picked);
+      if (startDate) {
+        pickedStartDate = picked;
+        startDateController.text = date;
+      } else if (endDate) {
+        pickedExpiryDate = picked;
+        endDateController.text = date;
+      } else if (licenseStart) {
+        pickedLicenseStart = picked;
+        licenseStartDateController.text = date;
+      } else if (licenseEnd) {
+        pickedLicenseExpirt = picked;
+        licenseEndDateController.text = date;
+      }
     }
   }
 

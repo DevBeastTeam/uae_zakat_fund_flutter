@@ -268,4 +268,5 @@ abstract class AppResources {
   static const String quickDonate = "$iconsPath/quick_donate.svg";
   static const String pdfLeftLogo = "$imagesPath/pdf-left-logo.png";
   static const String pdfLeftLogo2 = "$imagesPath/pdf-left-logo.jpeg";
+  static const String profileCircleOutlined = "$iconsPath/profile-circle.png";
 }

@@ -767,6 +767,7 @@ const Map<String, String> ar = {
   'answerArabic': 'الإجابة باللغة العربية',
   'titleArabic': 'العنوان عربي',
   'myAssociations': 'جمعياتي',
+  'myProfile': 'ملفي الشخصي',
   'cardPayment': 'دفع بالبطاقة',
   'receipt': 'إيصال',
   'totalTransactions': 'إجمالي المعاملات',

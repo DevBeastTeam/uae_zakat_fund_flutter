@@ -50,8 +50,8 @@ Widget profileAttachWidget({required String label, required String value}) {
       if (value != "")
         GestureDetector(
           onTap: () {
-            if(Utils.isImageFile(value)){
-              Get.toNamed(AppRoutes.photoViewScreen,arguments: value);
+            if (Utils.isImageFile(value)) {
+              Get.toNamed(AppRoutes.photoViewScreen, arguments: value);
               return;
             }
             Utils.openUrl("${FlavorConfig.storageUrl}$value");
@@ -61,14 +61,14 @@ Widget profileAttachWidget({required String label, required String value}) {
             children: [
               Image.asset(
                 AppResources.attachIcon,
-                width: 16.w,
-                height: 16.h,
-                color: AppColors.blueColor,
+                width: 14.w,
+                height: 14.h,
+                color: AppColors.quickDonateColor,
               ),
               6.horizontalSpace,
               Text(
                 "attachment".tr,
-                style: AppTextStyle.blue14spTextStyle,
+                style: AppTextStyle.lightBrown12spTextStyle2,
               ),
             ],
           ),

@@ -273,14 +273,16 @@ class AddNotificationViewModel extends GetxController with GenericMixin {
       lastDate: DateTime(now.year + 10),
       firstDate: now,
     );
-    selectedDate = selectedDateTime;
-    TimeOfDay? time = await Utils.timePickerDialog();
-    if (time != null) {
-      String formattedDateTime =
-          Utils.formatDateAndTime(selectedDateTime!, time);
-      if (Utils.isDateAfter(formattedDateTime)) {
-        selectedTime = time;
-        publishDateTime.text = formattedDateTime;
+    if (selectedDateTime != null) {
+      selectedDate = selectedDateTime;
+      TimeOfDay? time = await Utils.timePickerDialog();
+      if (time != null) {
+        String formattedDateTime =
+            Utils.formatDateAndTime(selectedDateTime, time);
+        if (Utils.isDateAfter(formattedDateTime)) {
+          selectedTime = time;
+          publishDateTime.text = formattedDateTime;
+        }
       }
     }
   }

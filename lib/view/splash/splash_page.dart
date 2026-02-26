@@ -13,7 +13,6 @@ import 'package:zakat_fund/widgets/elevated_button.dart';
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

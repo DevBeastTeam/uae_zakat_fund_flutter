@@ -9,7 +9,7 @@ import 'package:zakat_fund/view_model/association_view_model.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/profile_text_widget.dart';
 import 'package:zakat_fund/widgets/profile_view_widget.dart';
-import 'package:zakat_fund/widgets/tab_bar_widget.dart';
+import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class AssociationProfileScreen extends GetView<AccountViewModel> {
   const AssociationProfileScreen({super.key});
@@ -46,8 +46,14 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
   }
 
   Obx _buildTabBar() {
-    return Obx(() => tabBarWidget(controller.tabController, controller.tabs,
-        controller.currentTabIndex.value));
+    return Obx(() => TabBarWidgetV2(
+          tabs: controller.tabs,
+          currentIndex: controller.currentTabIndex.value,
+          onTabChanged: (index) {
+            controller.tabController.animateTo(index);
+            controller.currentTabIndex.value = index;
+          },
+        ));
   }
 
   Widget _buildAssociationPic() {
@@ -112,7 +118,8 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
                 value: "agreements/${associationInfo.agreementUrl!}"),
           if (viewModel.additionalDocuments.isNotEmpty)
             profileAdditionDocWidget(viewModel.additionalDocuments),
-          if (controller.association.value.associationInfo!.userId == controller.user.id)
+          if (controller.association.value.associationInfo!.userId ==
+              controller.user.id)
             elevatedButton(
                 text: "editInformation",
                 onPressed: () => controller.updateAssTabIndexForEdit(0)),

@@ -70,7 +70,7 @@ class AccountViewModel extends GetxController
   List<Categories> myFundingSubTabs = [];
   List<Categories> myContentSubTabs = [];
 
-  List<int> associationMenus = [1, 2, 4, 8, 9, 10];
+  List<int> associationMenus = [0, 1, 2, 4, 8, 9, 10];
   List<int> companyMenus = [1, 2, 3, 7, 8, 9];
 
   late MainViewModel mainViewModel;
@@ -754,6 +754,8 @@ class AccountViewModel extends GetxController
         return true;
       case ModuleCodes.settingsCode:
         return true;
+      case ModuleCodes.associationProfileCode:
+        return true;
       case ModuleCodes.associationMyContentCode:
         return myContentSubTabs.isNotEmpty;
       case ModuleCodes.associationMyFundingCode:
@@ -991,6 +993,11 @@ class AccountViewModel extends GetxController
       return;
     }
 
+    if (code == ModuleCodes.associationProfileCode) {
+      openAssociationProfileScreen(true);
+      return;
+    }
+
     if (code == ModuleCodes.settingsCode) {
       Get.toNamed(AppRoutes.settingsScreen,
           arguments: {"association": association.value});
@@ -1040,6 +1047,15 @@ class AccountViewModel extends GetxController
         .then((_) {
       Utils.showLoadingDialog();
       fetchCompanyProfile(notUpdate: false);
+    });
+  }
+
+  openAssociationProfileScreen(isEdit) {
+    Get.toNamed(AppRoutes.associationScreen,
+            arguments: {"data": association.value, "isEdit": isEdit})!
+        .then((_) {
+      Utils.showLoadingDialog();
+      fetchAssociationProfile(notUpdate: false);
     });
   }
 

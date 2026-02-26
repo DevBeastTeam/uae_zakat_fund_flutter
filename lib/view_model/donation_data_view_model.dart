@@ -21,7 +21,6 @@ import 'package:zakat_fund/utils/mixins/generic_mixin.dart';
 import 'package:zakat_fund/utils/utils.dart';
 
 class DonationDataViewModel extends GetxController with GenericMixin {
-
   final DonationsRepoImpl repo = DonationsRepoImpl();
   final GenericRepoImpl genericRepo = GenericRepoImpl();
   final HomeRepoImpl homeRepo = HomeRepoImpl();
@@ -93,14 +92,13 @@ class DonationDataViewModel extends GetxController with GenericMixin {
         style: AppTextStyle.darkGreenColor16spTextStyle1),
   ];
 
-
   @override
   onInit() {
     _initializeData();
     super.onInit();
   }
 
-  _initializeData(){
+  _initializeData() {
     Utils.logEvent(name: EventConstant.donationsDataDashboardScreen);
     pieChartData.value = [
       DashboardData(
@@ -137,15 +135,15 @@ class DonationDataViewModel extends GetxController with GenericMixin {
     );
     selectedDateRange = DateTimeRange(
         start:
-        DateTime(currentDate.year, currentDate.month - 2, currentDate.day),
+            DateTime(currentDate.year, currentDate.month - 2, currentDate.day),
         end: currentDate);
     dateRange.text =
-    "${Utils.dateFormat1.format(selectedDateRange!.start)} - ${Utils.dateFormat1.format(selectedDateRange!.end)}";
+        "${Utils.dateFormat1.format(selectedDateRange!.start)} - ${Utils.dateFormat1.format(selectedDateRange!.end)}";
     _fetchData(init: true);
   }
 
   _fetchData({bool init = false}) async {
-    try{
+    try {
       Utils.showLoadingDialog();
       await Future.wait([
         fetchDonations(),
@@ -158,7 +156,7 @@ class DonationDataViewModel extends GetxController with GenericMixin {
         fetchLineChartData(),
         fetchDonorSummary()
       ]);
-    }finally{
+    } finally {
       Utils.hideLoadingDialog();
     }
   }
@@ -168,12 +166,18 @@ class DonationDataViewModel extends GetxController with GenericMixin {
         request: RequestBody(queryParameters: _queryParameters()));
     if (apiResponse.appState == AppState.onSuccess) {
       List<AssociationDonations> donations = apiResponse.data;
-      donationProjects.value = donations.map((data) => {
-                "key": Utils.isArabic ? data.projectNameArabic : data.projectName,
-                "value": "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
-              }).toList();
-      totalDonations.value = donations.fold(0, (sum, proj) => sum! + proj.collectedAmount.toInt()) ?? 0;
-    }else{
+      donationProjects.value = donations
+          .map((data) => {
+                "key":
+                    Utils.isArabic ? data.projectNameArabic : data.projectName,
+                "value":
+                    "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
+              })
+          .toList();
+      totalDonations.value = donations.fold(
+              0, (sum, proj) => sum! + proj.collectedAmount.toInt()) ??
+          0;
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -185,10 +189,13 @@ class DonationDataViewModel extends GetxController with GenericMixin {
       List<AssociationDonations> donations = apiResponse.data;
       topProjects.value = donations
           .map((data) => {
-                "key": Utils.isArabic ? data.projectNameArabic : data.projectName,
-                "value": "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
-              }).toList();
-    } else{
+                "key":
+                    Utils.isArabic ? data.projectNameArabic : data.projectName,
+                "value":
+                    "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
+              })
+          .toList();
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -199,34 +206,42 @@ class DonationDataViewModel extends GetxController with GenericMixin {
     if (apiResponse.appState == AppState.onSuccess) {
       List<Top5Associations> association = apiResponse.data;
       topAssociations.value = association
-          .map((data) => {"key": Utils.isArabic ? data.associationNameArabic : data.associationName,
-                "value": "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
-              }).toList();
-    }else{
+          .map((data) => {
+                "key": Utils.isArabic
+                    ? data.associationNameArabic
+                    : data.associationName,
+                "value":
+                    "${"currency".tr} ${Utils.getCurrency(data.collectedAmount.toInt())}"
+              })
+          .toList();
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
 
   Future fetchAverageDonations() async {
     final result = await getAverageDonations(_queryParameters());
-    if(result!=null){
+    if (result != null) {
       AssociationAverageSummary summary = result;
-      summaryData[0].icon = "${"currency".tr} ${Utils.getCurrency(summary.totalDonations.toInt())} ";
-      summaryData[1].icon = "${"currency".tr} ${Utils.getCurrency(summary.averageDonationPerDonor.toInt())} ";
-      summaryData[2].icon = "${"currency".tr} ${Utils.getCurrency(summary.refundedDonations.toInt())} ";
+      summaryData[0].icon =
+          "${"currency".tr} ${Utils.getCurrency(summary.totalDonations.toInt())} ";
+      summaryData[1].icon =
+          "${"currency".tr} ${Utils.getCurrency(summary.averageDonationPerDonor.toInt())} ";
+      summaryData[2].icon =
+          "${"currency".tr} ${Utils.getCurrency(summary.refundedDonations.toInt())} ";
       summaryData.refresh();
     }
   }
 
   Future fetchDonorSummary() async {
-   ApiResponse apiResponse = await repo.fetchDonorSummary(
+    ApiResponse apiResponse = await repo.fetchDonorSummary(
         request: RequestBody(queryParameters: _queryParameters()));
     if (apiResponse.appState == AppState.onSuccess) {
       final List<PieChartData> data = apiResponse.data;
       _updatePieChartData(data, "First Time Donor", 0);
       _updatePieChartData(data, "Returning Donor", 1);
       pieChartData.refresh();
-    } else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -236,17 +251,20 @@ class DonationDataViewModel extends GetxController with GenericMixin {
         request: RequestBody(queryParameters: _queryParameters()));
     if (apiResponse.appState == AppState.onSuccess) {
       final List<PieChartData> data = apiResponse.data;
-      _updatePieChartData(data, "Companies", 0, targetList: donorsBreakdownChart);
-      _updatePieChartData(data, "Individuals", 1, targetList: donorsBreakdownChart);
-      totalDonors.value = data.fold(0, (sum, item) => sum + item.donorCount).toString();
+      _updatePieChartData(data, "Companies", 0,
+          targetList: donorsBreakdownChart);
+      _updatePieChartData(data, "Individuals", 1,
+          targetList: donorsBreakdownChart);
+      totalDonors.value =
+          data.fold(0, (sum, item) => sum + item.donorCount).toString();
       donorsBreakdownChart.refresh();
-
-    }else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
 
-  void _updatePieChartData(List<PieChartData> data, String type, int index, {RxList<DashboardData>? targetList}) {
+  void _updatePieChartData(List<PieChartData> data, String type, int index,
+      {RxList<DashboardData>? targetList}) {
     final donor = data.firstWhereOrNull((d) => d.donorType == type);
     final list = targetList ?? pieChartData;
     list[index].value = donor?.donorCount.toString() ?? "0";
@@ -254,7 +272,7 @@ class DonationDataViewModel extends GetxController with GenericMixin {
   }
 
   Future fetchLineChartData() async {
-   ApiResponse apiResponse = await repo.donationDataMonthWiseAODD(
+    ApiResponse apiResponse = await repo.donationDataMonthWiseAODD(
         request: RequestBody(queryParameters: _queryParameters()));
     if (apiResponse.appState == AppState.onSuccess) {
       List<LineChartModel> data = apiResponse.data;
@@ -266,7 +284,7 @@ class DonationDataViewModel extends GetxController with GenericMixin {
       }
       spots.refresh();
       months.refresh();
-    }else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -294,7 +312,7 @@ class DonationDataViewModel extends GetxController with GenericMixin {
           .toList();
       projectList.addAll(stringProjectList);
       projectList.refresh();
-    } else{
+    } else {
       Utils.handleAPIError(apiResponse);
     }
   }
@@ -347,11 +365,11 @@ class DonationDataViewModel extends GetxController with GenericMixin {
   }
 
   Map<String, dynamic> _queryParameters() => {
-    "startDate": Utils.newDateFormat.format(selectedDateRange!.start),
-    "endDate": Utils.newDateFormat.format(selectedDateRange!.end),
-    if (projectId != null) "projectId": projectId,
-    if (associationId != null) "associationId": associationId
-  };
+        "startDate": Utils.newDateFormat.format(selectedDateRange!.start),
+        "endDate": Utils.newDateFormat.format(selectedDateRange!.end),
+        if (projectId != null) "projectId": projectId,
+        if (associationId != null) "associationId": associationId
+      };
 
   @override
   void onClose() {
@@ -373,5 +391,4 @@ class DonationDataViewModel extends GetxController with GenericMixin {
     summaryData.close();
     super.onClose();
   }
-
 }

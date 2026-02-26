@@ -12,7 +12,6 @@ import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/favourite_view_model.dart';
-import 'package:zakat_fund/view_model/theme_view_model.dart';
 import 'package:zakat_fund/widgets/cache_image.dart';
 import 'package:zakat_fund/widgets/icon_btn.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';

@@ -3,7 +3,7 @@ import 'package:uaepass_api/uaepass/models/uaepass_response_model.dart';
 import 'package:uaepass_api/uaepass_api.dart';
 
 class UaepassApiService {
-  static const bool _isProduction = false;
+  static const bool isProduction = false;
   static const String _appScheme = 'uaepassZakatPlatformDS';
   // 👉🏻 stage state
   static const String _clientId = 'zf_mobile_stage';
@@ -22,7 +22,7 @@ class UaepassApiService {
 
   UaePassAPI _buildClient() {
     return UaePassAPI(
-      isProduction: _isProduction,
+      isProduction: isProduction,
       appScheme: _appScheme,
       clientId: _clientId,
       clientSecrete: _clientSecret,

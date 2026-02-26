@@ -346,49 +346,26 @@ class PaymentReceiptScreen extends GetView<PaymentReceiptViewModel> {
   }
 
   Widget _downloadButton() {
-    final details = controller.transactionDetails!;
-    bool isCompany =
-        userBox.isNotEmpty && userBox.getAt(0).roles[0] == "Companies";
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Column(
-        children: [
-          OutlinedButton.icon(
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 1.w, color: AppColors.darkBrownColor),
-              minimumSize: Size(Get.width, 45.h),
-            ),
-            onPressed: () {
-              Utils.showLoadingDialog();
-              PDFHelper.generateDonationReceiptPdf(details, isCompany,
-                  isPreview: true);
-            },
-            icon: SvgPicture.asset(AppResources.eyeIcon,
-                width: 20.w, height: 20.h, color: AppColors.darkBrownColor),
-            label: Text(
-              "view".tr,
-              style: AppTextStyle.primaryDarkBrown16spTextStyle1,
-            ),
-          ),
-          12.verticalSpace,
-          OutlinedButton.icon(
-            style: OutlinedButton.styleFrom(
-              side: BorderSide(width: 1.w, color: AppColors.darkBrownColor),
-              minimumSize: Size(Get.width, 45.h),
-            ),
-            onPressed: () {
-              Utils.showLoadingDialog();
-              PDFHelper.generateDonationReceiptPdf(details, isCompany);
-            },
-            icon: SvgPicture.asset(AppResources.downloadIcon,
-                width: 20.w, height: 20.h, color: AppColors.darkBrownColor),
-            label: Text(
-              "download".tr,
-              style: AppTextStyle.primaryDarkBrown16spTextStyle1,
-            ),
-          ),
-        ],
+      child: OutlinedButton.icon(
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(width: 1.w, color: AppColors.darkBrownColor),
+          minimumSize: Size(Get.width, 45.h),
+        ),
+        onPressed: () {
+          Utils.showLoadingDialog();
+          final details = controller.transactionDetails!;
+          bool isCompany =
+              userBox.isNotEmpty && userBox.getAt(0).roles[0] == "Companies";
+          PDFHelper.generateDonationReceiptPdf(details, isCompany);
+        },
+        icon: SvgPicture.asset(AppResources.downloadIcon,
+            width: 20.w, height: 20.h, color: AppColors.darkBrownColor),
+        label: Text(
+          "download".tr,
+          style: AppTextStyle.primaryDarkBrown16spTextStyle1,
+        ),
       ),
     );
   }

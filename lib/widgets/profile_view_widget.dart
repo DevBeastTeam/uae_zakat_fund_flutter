@@ -239,16 +239,28 @@ Widget associationHeader(controller, bool showEdit, bool showView,
           // clipBehavior: Clip.none,
           children: [
             Obx(() => controller.coverPhoto.value != null
-                ? CachedImage(
-                    image: controller.coverPhoto.value,
+                ? Image.network(
+                    controller.coverPhoto.value,
                     height: 200.h,
-                    width: Get.width,
+                    width: MediaQuery.of(Get.context!).size.width,
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stackTrace) => Image.asset(
+                      AppResources.placeholder,
+                      height: 200.h,
+                      fit: BoxFit.cover,
+                      width: MediaQuery.of(Get.context!).size.width,
+                    ),
                   )
+                // CachedImage(
+                //     image: controller.coverPhoto.value,
+                //     height: 200.h,
+                //     width: double.infinity,
+                //   )
                 : Image.asset(
                     AppResources.placeholder,
                     height: 200.h,
                     fit: BoxFit.cover,
-                    width: Get.width,
+                    width: double.infinity,
                   )),
             Positioned(
               top: 150.h,
@@ -344,7 +356,8 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                           Expanded(
                               child: elevatedButton(
                             text: "edit",
-                            onPressed: () => openAssociationScreen(controller, false),
+                            onPressed: () =>
+                                openAssociationScreen(controller, false),
                           )),
                         if (showEdit && showView) 10.horizontalSpace,
                         if (showView)
@@ -382,7 +395,8 @@ Widget associationHeader(controller, bool showEdit, bool showView,
 }
 
 openAssociationScreen(controller, isEdit) {
-  Get.toNamed(AppRoutes.associationScreen, arguments: {"data": controller.association.value, "isEdit": isEdit})!
+  Get.toNamed(AppRoutes.associationScreen,
+          arguments: {"data": controller.association.value, "isEdit": isEdit})!
       .then((_) {
     Utils.showLoadingDialog();
     controller.fetchAssociationProfile(notUpdate: false);

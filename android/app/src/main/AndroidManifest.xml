@@ -104,14 +104,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <!-- <data android:host="success" android:scheme="uaepassZakatPlatformDS" />
+                <data android:host="success" android:scheme="uaepassZakatPlatformDS" />
                 <data android:host="uaepass" android:scheme="uaepassZakatPlatformDS" />
                 <data android:host="failure" android:scheme="uaepassZakatPlatformDS" />
-                <data android:scheme="uaepassZakatPlatformDS" /> -->
-                <data android:host="success" android:scheme="appscheme" />
+                <data android:scheme="uaepassZakatPlatformDS" />
+                
+                <!-- <data android:host="success" android:scheme="appscheme" />
                 <data android:host="uaepass" android:scheme="appscheme" />
                 <data android:host="failure" android:scheme="appscheme" />
-                <data android:scheme="appscheme" />
+                <data android:scheme="appscheme" /> -->
             </intent-filter>
 
 
