@@ -97,6 +97,7 @@ abstract class EventConstant {
   static const String allDonorsScreen = 'All_Donors_Screen_Presented';
   static const String cmsFAQsScreen = 'CMS_FAQs_Screen_Presented';
   static const String cmsStaticPagesScreen = 'CMS_Static_Pages_Screen_Presented';
+  static const String cmsAboutUsScreen = 'CMS_About_Us_Screen_Presented';
   static const String addNewFAQScreen = 'Add_New_FAQ_Screen_Presented';
   static const String updateFAQScreen = 'Update_FAQ_Screen_Presented';
   static const String cmsServicesScreen = 'CMS_Services_Screen_Presented';

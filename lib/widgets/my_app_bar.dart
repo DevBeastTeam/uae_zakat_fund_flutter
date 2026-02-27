@@ -10,7 +10,7 @@ import 'package:zakat_fund/utils/routes/app_routes.dart';
 import 'package:zakat_fund/view_model/cart_view_model.dart';
 import 'package:zakat_fund/view_model/main_view_model.dart';
 
-AppBar myAppBar({required String title}) {
+AppBar myAppBar({required String title, List<Widget>? customActions}) {
   final viewModel = Get.find<MainViewModel>();
   var cartViewModel = Get.find<CartViewModel>();
 
@@ -19,6 +19,7 @@ AppBar myAppBar({required String title}) {
     title: Text(title.tr, style: AppTextStyle.darkBlack18spTextStyle),
     centerTitle: true,
     actions: [
+      if (customActions != null) ...customActions,
       if (userBox.isNotEmpty)
         Obx(() => GestureDetector(
               onTap: () {

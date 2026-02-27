@@ -72,6 +72,9 @@ abstract class GenericRepo {
   Future<ApiResponse> generateOTPForUser({required RequestBody request});
   Future<ApiResponse> createDubaiPayment({required RequestBody request});
   Future<ApiResponse> sendSmsEmailMobileApp({required RequestBody request});
+  Future<ApiResponse> getSystemConfiguration({required RequestBody request});
+
+  Future<ApiResponse> updateSystemConfiguration({required RequestBody request});
 
 }
 
@@ -262,6 +265,16 @@ class GenericRepoImpl implements GenericRepo {
   @override
   Future<ApiResponse> sendSmsEmailMobileApp({required RequestBody request}) {
     return _remoteRepo.sendSmsEmailMobileApp(request: request);
+  }
+
+  @override
+  Future<ApiResponse> getSystemConfiguration({required RequestBody request}) {
+    return _remoteRepo.getSystemConfiguration(request: request);
+  }
+
+  @override
+  Future<ApiResponse> updateSystemConfiguration({required RequestBody request}) {
+    return _remoteRepo.updateSystemConfiguration(request: request);
   }
 
 }

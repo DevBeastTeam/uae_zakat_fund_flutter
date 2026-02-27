@@ -1358,4 +1358,14 @@ class RemoteRepo {
     return response;
   }
 
+  Future<ApiResponse> getSystemConfiguration({required RequestBody request}) async {
+    final response = await _service.getSystemConfiguration(request: request);
+    return response;
+  }
+
+  Future<ApiResponse> updateSystemConfiguration({required RequestBody request}) async {
+    final response = await _service.updateSystemConfiguration(request: request);
+    return response;
+  }
+
 }

@@ -7356,4 +7356,57 @@ class NetworkServiceImpl implements NetworkService {
       return apiResponse;
     }
   }
+
+  @override
+  Future<ApiResponse> getSystemConfiguration({required RequestBody request}) async {
+    late ApiResponse<List<dynamic>> apiResponse;
+    try {
+      final Response response =
+          await _api.getRequest(request: request, endPoint: request.endPoint!);
+      BaseApiModel baseApiModel = BaseApiModel.fromJson(response.data);
+      if (baseApiModel.success) {
+        List<dynamic> data = baseApiModel.data as List<dynamic>;
+        apiResponse = ApiResponse.completed(data);
+      } else {
+        apiResponse = ApiResponse.error(baseApiModel.errors);
+      }
+      return apiResponse;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        return ApiResponse.unauthorized();
+      }
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      apiResponse = ApiResponse.error(errorMessage);
+      return apiResponse;
+    } catch (e) {
+      apiResponse = ApiResponse.error(e.toString());
+      return apiResponse;
+    }
+  }
+
+  @override
+  Future<ApiResponse> updateSystemConfiguration({required RequestBody request}) async {
+    late ApiResponse<dynamic> apiResponse;
+    try {
+      final Response response =
+          await _api.putRequest(request: request, endPoint: request.endPoint!);
+      BaseApiModel baseApiModel = BaseApiModel.fromJson(response.data);
+      if (baseApiModel.success) {
+        apiResponse = ApiResponse.completed(baseApiModel.data);
+      } else {
+        apiResponse = ApiResponse.error(baseApiModel.errors);
+      }
+      return apiResponse;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        return ApiResponse.unauthorized();
+      }
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      apiResponse = ApiResponse.error(errorMessage);
+      return apiResponse;
+    } catch (e) {
+      apiResponse = ApiResponse.error(e.toString());
+      return apiResponse;
+    }
+  }
 }

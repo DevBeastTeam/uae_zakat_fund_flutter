@@ -170,8 +170,10 @@ import 'package:zakat_fund/view/our_services/services_binding.dart';
 import 'package:zakat_fund/view/photo_view/photo_view_binding.dart';
 import 'package:zakat_fund/view/photo_view/photo_view_screen.dart';
 import 'package:zakat_fund/view/qr_scanner/qr_scanner_screen.dart';
-import 'package:zakat_fund/view/requests/about_us/about_us_binding.dart';
-import 'package:zakat_fund/view/requests/about_us/about_us_screen.dart';
+import 'package:zakat_fund/view/requests/about_us/about_us_binding.dart' as request_about_us;
+import 'package:zakat_fund/view/requests/about_us/about_us_screen.dart' as request_about_us;
+import 'package:zakat_fund/view/admin/about_us/about_us_binding.dart';
+import 'package:zakat_fund/view/admin/about_us/about_us_screen.dart';
 import 'package:zakat_fund/view/requests/ads/ad_binding.dart';
 import 'package:zakat_fund/view/requests/ads/ad_screen.dart';
 import 'package:zakat_fund/view/requests/association/association_preview_binding.dart';
@@ -460,8 +462,8 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.aboutUsScreen,
-      page: () => const AboutUsScreen(),
-      binding: AboutUsBinding(),
+      page: () => const CMSAboutUsScreen(),
+      binding: CMSAboutUsBinding(),
     ),
     GetPage(
       name: AppRoutes.newsPreviewScreen,

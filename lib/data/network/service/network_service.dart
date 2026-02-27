@@ -569,4 +569,10 @@ abstract class NetworkService {
   Future<ApiResponse> sendSmsEmailMobileApp(
       {required RequestBody request});
 
+  Future<ApiResponse> getSystemConfiguration(
+      {required RequestBody request});
+
+  Future<ApiResponse> updateSystemConfiguration(
+      {required RequestBody request});
+
 }

@@ -230,6 +230,7 @@ abstract class ApiConstant {
   static const String faqPaginated = 'FAQ/GetAllFaqPaginated';
   static const String exportFAQs = 'FAQ/ExportAllFaqToCsv';
   static const String exportStaticPages = 'StaticPage/ExportAllStaticPagesToCsv';
+  static const String exportAboutUs = 'SystemConfiguration/ExportAboutUsToCsv';
   static const String additionalDocuments =
       'Document/GetDocumentAssociatedWithById';
   static const String projectCategories =
