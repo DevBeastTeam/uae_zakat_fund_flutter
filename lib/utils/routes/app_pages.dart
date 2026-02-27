@@ -204,6 +204,8 @@ import 'package:zakat_fund/view/requests/services/service_preview_binding.dart';
 import 'package:zakat_fund/view/requests/services/service_preview_screen.dart';
 import 'package:zakat_fund/view/requests/static_pages/static_page_binding.dart';
 import 'package:zakat_fund/view/requests/static_pages/static_page_screen.dart';
+import 'package:zakat_fund/view/admin/static_pages/static_pages_binding.dart';
+import 'package:zakat_fund/view/admin/static_pages/static_pages_screen.dart';
 import 'package:zakat_fund/view/requests/survey/survey_binding.dart';
 import 'package:zakat_fund/view/requests/survey/survey_screen.dart';
 import 'package:zakat_fund/view/requests/transaction/transaction_request_binding.dart';
@@ -450,6 +452,11 @@ abstract class AppPages {
       name: AppRoutes.staticPageScreen,
       page: () => const StaticPageScreen(),
       binding: StaticPageBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.staticPagesScreen,
+      page: () => const StaticPagesScreen(),
+      binding: StaticPagesBinding(),
     ),
     GetPage(
       name: AppRoutes.aboutUsScreen,

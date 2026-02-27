@@ -398,6 +398,11 @@ class RemoteRepo {
     return response;
   }
 
+  Future<ApiResponse> fetchStaticPages({required RequestBody request}) async {
+    final response = await _service.fetchStaticPages(request: request);
+    return response;
+  }
+
   Future<ApiResponse> aboutAssociation({required RequestBody request}) async {
     final response = await _service.aboutAssociation(request: request);
     return response;

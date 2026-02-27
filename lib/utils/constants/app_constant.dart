@@ -677,6 +677,8 @@ abstract class AppConstant {
     Categories(name: "faqs", code: ModuleCodes.adminFAQCode),
     Categories(name: "services", code: ModuleCodes.adminServicesCode),
     Categories(name: "news", code: ModuleCodes.adminNewsCode),
+    Categories(name: "staticPage", code: ModuleCodes.adminStaticPageCode),
+    Categories(name: "aboutUs", code: ModuleCodes.adminAboutUsCode),
   ];
 
   static List<Categories> financialManagementSubTabs = [

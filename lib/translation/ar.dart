@@ -658,6 +658,7 @@ const Map<String, String> ar = {
   'pageDetails': 'تفاصيل الصفحة',
   'pageLink': 'رابط الصفحة',
   'pageName': 'اسم الصفحة',
+  'pageTitle': 'عنوان الصفحة',
   'parentPage': 'الصفحة الأم',
   'pageSection': 'قسم الصفحة',
   'pageOrder': 'ترتيب الظهور',

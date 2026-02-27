@@ -62,6 +62,7 @@ import 'package:zakat_fund/model/sahem_bank.dart';
 import 'package:zakat_fund/model/sla_by_approver_group.dart';
 import 'package:zakat_fund/model/smtp_config.dart';
 import 'package:zakat_fund/model/static_page.dart';
+import 'package:zakat_fund/model/static_page_paginated.dart';
 import 'package:zakat_fund/model/statics_insights.dart';
 import 'package:zakat_fund/model/survey.dart';
 import 'package:zakat_fund/model/task_collection_details.dart';
@@ -2087,6 +2088,33 @@ class NetworkServiceImpl implements NetworkService {
       if (baseApiModel.success) {
         StaticPage staticPage = StaticPage.fromJson(baseApiModel.data);
         apiResponse = ApiResponse.completed(staticPage);
+      } else {
+        apiResponse = ApiResponse.error(baseApiModel.errors);
+      }
+      return apiResponse;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        return ApiResponse.unauthorized();
+      }
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      apiResponse = ApiResponse.error(errorMessage);
+      return apiResponse;
+    } catch (e) {
+      apiResponse = ApiResponse.error(e.toString());
+      return apiResponse;
+    }
+  }
+
+  @override
+  Future<ApiResponse> fetchStaticPages({required RequestBody request}) async {
+    late ApiResponse<StaticPagePaginated> apiResponse;
+    try {
+      final Response response =
+          await _api.getRequest(request: request, endPoint: request.endPoint!);
+      BaseApiModel baseApiModel = BaseApiModel.fromJson(response.data);
+      if (baseApiModel.success) {
+        StaticPagePaginated staticPagePaginated = StaticPagePaginated.fromJson(response.data);
+        apiResponse = ApiResponse.completed(staticPagePaginated);
       } else {
         apiResponse = ApiResponse.error(baseApiModel.errors);
       }

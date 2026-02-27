@@ -20,6 +20,8 @@ abstract class ModuleCodes {
   static const String adminFAQCode = "S-15";
   static const String adminServicesCode = "S-16";
   static const String adminNewsCode = "S-17";
+  static const String adminStaticPageCode = "S-18";
+  static const String adminAboutUsCode = "S-20";
   static const String adminFundsTransferQueCode = "S-89";
   static const String adminDonationRegisterCode = "S-107";
   static const String adminRecipientsCode = "S-23";

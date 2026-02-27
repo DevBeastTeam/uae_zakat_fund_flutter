@@ -912,6 +912,8 @@ class AccountViewModel extends GetxController
       ModuleCodes.adminFAQCode: AppRoutes.faqsScreen,
       ModuleCodes.adminServicesCode: AppRoutes.cmsServicesScreen,
       ModuleCodes.adminNewsCode: AppRoutes.cmsNewsScreen,
+      ModuleCodes.adminStaticPageCode: AppRoutes.staticPagesScreen,
+      ModuleCodes.adminAboutUsCode: AppRoutes.aboutUsScreen,
       ModuleCodes.adminPublicDocumentsCode: AppRoutes.publicDocumentsScreen,
       ModuleCodes.adminUsersDocumentsCode: AppRoutes.userDocumentsScreen,
       ModuleCodes.adminPlatformDocumentsCode: AppRoutes.platformDocumentsScreen,

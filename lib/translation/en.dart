@@ -675,6 +675,7 @@ const Map<String, String> en = {
   'pageDetails': 'Page Details',
   'pageLink': 'Page Link',
   'pageName': 'Page Name',
+  'pageTitle': 'Page Title',
   'parentPage': 'Parent Page',
   'pageSection': 'Page Section',
   'pageOrder': 'Page Order',

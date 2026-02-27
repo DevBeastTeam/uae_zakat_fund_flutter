@@ -157,6 +157,8 @@ abstract class NetworkService {
 
   Future<ApiResponse> staticPageDetails({required RequestBody request});
 
+  Future<ApiResponse> fetchStaticPages({required RequestBody request});
+
   Future<ApiResponse> aboutAssociation({required RequestBody request});
 
   Future<ApiResponse> serviceDetails({required RequestBody request});

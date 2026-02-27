@@ -76,6 +76,7 @@ abstract class ApiConstant {
   static const String jobTitle = 'JobTitle/GetAllJobTitles';
   static const String featuredProject = 'Project/getFeaturedProjects';
   static const String staticPages = 'StaticPage/GetAllStaticPagesBySectionList';
+  static const String staticPagesPaginated = 'StaticPage/GetAllStaticPageListPaginated';
   static const String allEmployees =
       'Employee/GetAllEmployeeListByAccountIdPaginated';
   static const String addEmployee = 'Employee';
@@ -228,6 +229,7 @@ abstract class ApiConstant {
   static const String updateFAQ = 'FAQ/update-faq';
   static const String faqPaginated = 'FAQ/GetAllFaqPaginated';
   static const String exportFAQs = 'FAQ/ExportAllFaqToCsv';
+  static const String exportStaticPages = 'StaticPage/ExportAllStaticPagesToCsv';
   static const String additionalDocuments =
       'Document/GetDocumentAssociatedWithById';
   static const String projectCategories =

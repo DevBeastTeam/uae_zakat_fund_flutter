@@ -4,6 +4,7 @@ import 'package:zakat_fund/model/request_body.dart';
 
 abstract class StaticPageRepo {
   Future<ApiResponse> staticPageDetails({required RequestBody request});
+  Future<ApiResponse> fetchStaticPages({required RequestBody request});
 }
 
 class StaticPageRepoImpl implements StaticPageRepo {
@@ -12,6 +13,11 @@ class StaticPageRepoImpl implements StaticPageRepo {
   @override
   Future<ApiResponse> staticPageDetails({required RequestBody request}) {
     return _remoteRepo.staticPageDetails(request: request);
+  }
+
+  @override
+  Future<ApiResponse> fetchStaticPages({required RequestBody request}) {
+    return _remoteRepo.fetchStaticPages(request: request);
   }
 
 }

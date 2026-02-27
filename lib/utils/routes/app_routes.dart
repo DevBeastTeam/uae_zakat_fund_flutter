@@ -51,6 +51,7 @@ abstract class AppRoutes {
   static const String campaignScreen = "/CampaignScreen";
   static const String feedbackScreen = "/FeedbackScreen";
   static const String staticPageScreen = "/StaticPageScreen";
+  static const String staticPagesScreen = "/StaticPagesScreen";
   static const String aboutUsScreen = "/AboutUsScreen";
   static const String newsPreviewScreen = "/NewsPreviewScreen";
   static const String servicePreviewScreen = "/ServicePreviewScreen";
