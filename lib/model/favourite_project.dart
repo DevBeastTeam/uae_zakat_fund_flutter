@@ -5,8 +5,8 @@ class FavouriteProject {
   String projectName;
   String projectDescriptionShortArabic;
   String projectDescriptionShort;
-  String associationName;
-  String associationNameArabic;
+  String? associationName;
+  String? associationNameArabic;
   dynamic amount;
   String projectImage;
   dynamic minimumAmount;
@@ -32,20 +32,20 @@ class FavouriteProject {
   });
 
   factory FavouriteProject.fromJson(Map<String, dynamic> json) => FavouriteProject(
-    cartId: json["cartId"],
-    projectId: json["projectId"],
-    projectNameArabic: json["projectNameArabic"],
-    projectName: json["projectName"],
-    projectDescriptionShortArabic: json["projectDescriptionShortArabic"],
-    projectDescriptionShort: json["projectDescriptionShort"],
+    cartId: json["cartId"] ?? 0,
+    projectId: json["projectId"] ?? 0,
+    projectNameArabic: json["projectNameArabic"] ?? "",
+    projectName: json["projectName"] ?? "",
+    projectDescriptionShortArabic: json["projectDescriptionShortArabic"] ?? "",
+    projectDescriptionShort: json["projectDescriptionShort"] ?? "",
     associationName: json["associationName"],
     associationNameArabic: json["associationNameArabic"],
-    amount: json["amount"],
-    projectImage: json["projectImage"],
-    minimumAmount: json["minimumAmount"],
-    quickAmount: json["quickAmount"],
-    remainingAmount: json["remainingAmount"],
-    percentOfCompletion: json["percentOfCompletion"],
+    amount: json["amount"] ?? 0,
+    projectImage: json["projectImage"] ?? "",
+    minimumAmount: json["minimumAmount"] ?? 0,
+    quickAmount: json["quickAmount"] ?? "",
+    remainingAmount: json["remainingAmount"] ?? 0,
+    percentOfCompletion: json["percentOfCompletion"] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {

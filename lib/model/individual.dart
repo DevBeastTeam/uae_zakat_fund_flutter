@@ -65,7 +65,7 @@ class AccountInfo {
         userId: json["userId"],
         userName: json["userName"] ?? "",
         email: json["email"] ?? "",
-        emailConfirmed: json["emailConfirmed"],
+        emailConfirmed: json["emailConfirmed"] ?? false,
         firstNameArabic: json["firstNameArabic"] ?? "",
         lastNameArabic: json["lastNameArabic"] ?? "",
         firstName: json["firstName"] ?? "",
@@ -124,7 +124,7 @@ class DonorContactInfo {
   });
 
   factory DonorContactInfo.fromJson(Map<String, dynamic> json) => DonorContactInfo(
-        userId: json["userId"],
+        userId: json["userId"] ?? 0,
         mobile: json["mobile"] ?? "",
     isActive: json["isActive"] ?? false,
         additionalMobileNumber: json["additionalMobileNumber"] ?? "",
@@ -134,8 +134,8 @@ class DonorContactInfo {
         poBox: json["poBox"] ?? "",
         addresses: List<Address>.from(
             json["addresses"].map((x) => Address.fromJson(x))),
-        status: json["status"],
-        phoneNumberConfirmed: json["phoneNumberConfirmed"],
+        status: json["status"] ?? 0,
+        phoneNumberConfirmed: json["phoneNumberConfirmed"] ?? false,
       );
 
   Map<String, dynamic> toJson() => {

@@ -24,7 +24,6 @@ import 'package:zakat_fund/widgets/label_drop_down.dart';
 import 'package:zakat_fund/widgets/label_text_field.dart';
 
 class AllDonorsViewModel extends ModulePermissionsViewModel {
-
   final searchController = TextEditingController();
   final dateOfBirthController = TextEditingController();
   final registrationDateController = TextEditingController();
@@ -70,7 +69,6 @@ class AllDonorsViewModel extends ModulePermissionsViewModel {
     )
   ].obs;
 
-
   @override
   onInit() {
     _initializeData();
@@ -89,15 +87,15 @@ class AllDonorsViewModel extends ModulePermissionsViewModel {
     if (canView) fetchAllDonors();
   }
 
-  _scrollListener(){
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        if (donors.length == totalRecords) {
-          return;
-        }
-        currentPage++;
-        fetchAllDonors();
+  _scrollListener() {
+    if (scrollController.position.pixels ==
+        scrollController.position.maxScrollExtent) {
+      if (donors.length == totalRecords) {
+        return;
       }
+      currentPage++;
+      fetchAllDonors();
+    }
   }
 
   filterBottomSheet() {
@@ -194,11 +192,13 @@ class AllDonorsViewModel extends ModulePermissionsViewModel {
         "DateOfBirthEnd": Utils.newDateFormat.format(selectedDOBRange!.end)
       },
       if (selectedRDRange != null) ...{
-        "RegistrationDateStart": Utils.newDateFormat.format(selectedRDRange!.start),
+        "RegistrationDateStart":
+            Utils.newDateFormat.format(selectedRDRange!.start),
         "RegistrationDateEnd": Utils.newDateFormat.format(selectedRDRange!.end)
       },
       if (selectedNationality.value != null) "nationalityId": nationalityId,
-      if (selectedActiveStatus.value != null)"isActive": selectedActiveStatus.value == "active",
+      if (selectedActiveStatus.value != null)
+        "isActive": selectedActiveStatus.value == "active",
     };
     ApiResponse apiResponse = await repo.fetchAllDonors(
         request: RequestBody(queryParameters: queryParameters));
@@ -310,5 +310,4 @@ class AllDonorsViewModel extends ModulePermissionsViewModel {
 
     super.onClose();
   }
-
 }

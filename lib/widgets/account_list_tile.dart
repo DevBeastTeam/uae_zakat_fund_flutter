@@ -23,19 +23,25 @@ Widget accountMenuWidget(
     splashColor: Colors.transparent,
     onTap: onTap,
     contentPadding: padding,
-    leading: tab.icon!.endsWith(".svg")
-        ? SvgPicture.asset(
-            subTab ? AppResources.donationsIcon : tab.icon!,
-            width: 20.w,
-            height: 20.h,
-            color: subTab ? Colors.white : AppColors.secondaryPrimaryBlackColor,
-          )
-        : Image.asset(
-            subTab ? AppResources.donationsIcon : tab.icon!,
-            width: 20.w,
-            height: 20.h,
-            color: subTab ? Colors.white : AppColors.secondaryPrimaryBlackColor,
-          ),
+    leading: tab.icon != null
+        ? (tab.icon!.endsWith(".svg")
+            ? SvgPicture.asset(
+                subTab ? AppResources.donationsIcon : tab.icon!,
+                width: 20.w,
+                height: 20.h,
+                color: subTab
+                    ? Colors.white
+                    : AppColors.secondaryPrimaryBlackColor,
+              )
+            : Image.asset(
+                subTab ? AppResources.donationsIcon : tab.icon!,
+                width: 20.w,
+                height: 20.h,
+                color: subTab
+                    ? Colors.white
+                    : AppColors.secondaryPrimaryBlackColor,
+              ))
+        : SizedBox(width: 20.w, height: 20.h),
     dense: true,
     minVerticalPadding: subTab ? 0 : null,
     trailing: tab.isExpansion

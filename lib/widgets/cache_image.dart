@@ -42,11 +42,11 @@ class CachedImage extends StatelessWidget {
       width: width,
       height: height,
       color: color,
-      fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
+      fit: fit ?? (isCover ? BoxFit.cover : null),
       placeholder: (context, url) => Image.asset(
         placeholderAsset,
         // fit: BoxFit.cover,
-        fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
+        fit: fit ?? (isCover ? BoxFit.cover : null),
         color: color,
         width: width,
         height: height,
@@ -54,7 +54,7 @@ class CachedImage extends StatelessWidget {
       errorWidget: (context, url, error) => Image.asset(
         errorAsset,
         // fit: BoxFit.cover,
-        fit: fit == null ? (isCover ? BoxFit.cover : null) : fit,
+        fit: fit ?? (isCover ? BoxFit.cover : null),
         width: width,
         height: height,
       ),

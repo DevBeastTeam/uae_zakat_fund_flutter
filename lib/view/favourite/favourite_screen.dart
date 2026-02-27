@@ -126,12 +126,6 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
                           color: AppColors.lightWhiteColor,
                           size: 18.w,
                         ),
-                        // child: SvgPicture.asset(
-                        //   AppResources.favIcon,
-                        //   width: 18.w,
-                        //   height: 18.h,
-                        //   color: Colors.white,
-                        // ),
                       ),
                     ),
                   ),
@@ -181,10 +175,11 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
               height: 28.h,
               child: ElevatedButton(
                 onPressed: () {
-                  // TODO: Implement quick donate functionality if available
+                  controller.quickDonateFromFavourite(project);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.secondaryDarkBrownColor,
+                  // backgroundColor: AppColors.secondaryDarkBrownColor,
+                  backgroundColor: themeViewModel.color,
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8.r),
@@ -245,22 +240,21 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
                 ),
                 Positioned(
                   top: 8.w,
-                  right: 8.w,
+                  left: 8.w,
                   child: GestureDetector(
-                    onTap: () => controller.addNewsFavorite(index),
+                    onTap: () => controller.addProjectFavorite(index),
                     child: Container(
-                      width: 28.w,
+                      width: 24.w,
                       height: 28.h,
                       decoration: BoxDecoration(
-                        color: AppColors.secondaryDarkBrownColor,
+                        color: themeViewModel.color,
                         borderRadius: BorderRadius.circular(4.r),
                       ),
                       child: Center(
-                        child: SvgPicture.asset(
-                          AppResources.favIcon,
-                          width: 18.w,
-                          height: 18.h,
-                          color: Colors.white,
+                        child: Icon(
+                          Icons.bookmark,
+                          color: AppColors.lightWhiteColor,
+                          size: 18.w,
                         ),
                       ),
                     ),
@@ -295,7 +289,7 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
                 ),
                 SizedBox(width: 4.w),
                 Icon(
-                  Utils.isArabic ? Icons.arrow_left : Icons.arrow_right,
+                  Utils.isArabic ? Icons.arrow_back : Icons.arrow_forward,
                   size: 14.sp,
                   color: AppColors.secondaryDarkBrownColor,
                 ),
@@ -350,22 +344,6 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
                   style: AppTextStyle.secondaryBlack20spTextStyle,
                 ),
                 8.verticalSpace,
-                Row(
-                  children: [
-                    buildIconButton(
-                      icon: service.isFavorite
-                          ? AppResources.starFillIcon
-                          : AppResources.starIcon,
-                      onPressed: () => controller.addServiceFavorite(index),
-                    ),
-                    buildIconButton(
-                      color: AppColors.darkBrownColor,
-                      icon: AppResources.shareColorIcon,
-                      onPressed: () => Utils.sharePlainText(
-                          "${FlavorConfig.webSiteUrl}service/${service.serviceId}"),
-                    ),
-                  ],
-                ),
                 8.verticalSpace,
                 Text(
                   Utils.htmlToPlainText(Utils.isArabic
@@ -380,24 +358,24 @@ class FavouriteScreen extends GetView<FavouriteViewModel> {
             Positioned(
               top: 0,
               right: 0,
-              child: GestureDetector(
-                onTap: () => controller.addServiceFavorite(index),
-                child: Container(
-                  width: 28.w,
-                  height: 28.h,
-                  decoration: BoxDecoration(
-                    color: AppColors.secondaryDarkBrownColor,
-                    borderRadius: BorderRadius.circular(4.r),
+              child: Row(
+                children: [
+                  buildIconButton(
+                    color: themeViewModel.color,
+                    icon: AppResources.shareColorIcon,
+                    onPressed: () => Utils.sharePlainText(
+                        "${FlavorConfig.webSiteUrl}service/${service.serviceId}"),
                   ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AppResources.favIcon,
-                      width: 18.w,
-                      height: 18.h,
-                      color: Colors.white,
+                  IconButton(
+                    icon: Icon(
+                      service.isFavorite
+                          ? Icons.bookmark
+                          : Icons.bookmark_border,
+                      color: themeViewModel.color,
                     ),
+                    onPressed: () => controller.addServiceFavorite(index),
                   ),
-                ),
+                ],
               ),
             ),
           ],

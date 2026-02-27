@@ -11,7 +11,6 @@ import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/account_view_model.dart';
 import 'package:zakat_fund/view_model/association_view_model.dart';
 import 'package:zakat_fund/view_model/company_view_model.dart';
-import 'package:zakat_fund/widgets/cache_image.dart';
 import 'package:zakat_fund/widgets/circle_image.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/icon_btn.dart';
@@ -292,9 +291,11 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                   Text(
                     Utils.isArabic
                         ? controller.association.value.associationInfo!
-                            .associationDescriptionAR!
+                                .associationDescriptionAR ??
+                            ""
                         : controller.association.value.associationInfo!
-                            .associationDescriptionEN!,
+                                .associationDescriptionEN ??
+                            "",
                     style: AppTextStyle.darkGrey14spTextStyle,
                     maxLines: showLess ? 3 : null,
                     overflow: showLess ? TextOverflow.ellipsis : null,
@@ -303,7 +304,7 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                   Row(
                     children: [
                       if (controller
-                              .association.value.accountContact!.facebook !=
+                              .association.value.accountContact?.facebook !=
                           null)
                         buildIconButton(
                           isLink: true,
@@ -314,7 +315,7 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                           },
                         ),
                       if (controller
-                              .association.value.accountContact!.instagram !=
+                              .association.value.accountContact?.instagram !=
                           null)
                         buildIconButton(
                           isLink: true,
@@ -325,7 +326,7 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                           },
                         ),
                       if (controller
-                              .association.value.accountContact!.linkedIn !=
+                              .association.value.accountContact?.linkedIn !=
                           null)
                         buildIconButton(
                           isLink: true,
@@ -336,7 +337,7 @@ Widget associationHeader(controller, bool showEdit, bool showView,
                           },
                         ),
                       if (controller
-                              .association.value.accountContact!.twitter !=
+                              .association.value.accountContact?.twitter !=
                           null)
                         buildIconButton(
                           isLink: true,

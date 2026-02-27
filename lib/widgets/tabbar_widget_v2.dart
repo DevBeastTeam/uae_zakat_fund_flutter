@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:zakat_fund/my_app/my_app.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
-import 'package:zakat_fund/view_model/theme_view_model.dart';
 
 class TabBarWidgetV2 extends StatelessWidget {
   /// List of tab label strings to display.

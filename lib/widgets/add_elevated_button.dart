@@ -21,6 +21,9 @@ Widget addElevatedButton(
       text.tr,
       style: AppTextStyle.white14spTextStyle1,
     ),
-    icon: SvgPicture.asset(icon),
+    icon: SvgPicture.asset(
+      icon,
+      color: Colors.white,
+    ),
   );
 }

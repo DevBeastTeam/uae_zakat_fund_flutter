@@ -15,6 +15,7 @@ import 'package:zakat_fund/utils/constants/event_constant.dart';
 import 'package:zakat_fund/utils/mixins/generic_mixin.dart';
 import 'package:zakat_fund/utils/routes/app_routes.dart';
 import 'package:zakat_fund/utils/utils.dart';
+import 'package:zakat_fund/view_model/cart_view_model.dart';
 
 class FavouriteViewModel extends GetxController with GetTickerProviderStateMixin, GenericMixin {
   final RxList<FavouriteProject> projects = <FavouriteProject>[].obs;
@@ -151,6 +152,11 @@ class FavouriteViewModel extends GetxController with GetTickerProviderStateMixin
 
   openServiceDetailsScreen(OurServices service) {
     Get.toNamed(AppRoutes.serviceDetails, arguments: {"service": service});
+  }
+
+  quickDonateFromFavourite(FavouriteProject project) {
+    final cart = Get.find<CartViewModel>();
+    cart.quickDonateDialog(project);
   }
 
   @override
