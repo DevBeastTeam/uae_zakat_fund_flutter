@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:zakat_fund/data/response/app_state.dart';
-import 'package:zakat_fund/model/campaign_template.dart';
 import 'package:zakat_fund/data/network/service/network_service_impl.dart';
-import 'package:zakat_fund/utils/mixins/generic_mixin.dart';
-import 'package:zakat_fund/utils/utils.dart';
-import 'package:zakat_fund/model/request_body.dart';
+import 'package:zakat_fund/data/response/app_state.dart';
 import 'package:zakat_fund/model/base_api_model.dart';
+import 'package:zakat_fund/model/campaign_template.dart';
+import 'package:zakat_fund/model/request_body.dart';
+import 'package:zakat_fund/model/stats_data.dart';
+import 'package:zakat_fund/utils/constants/app_textstyle.dart';
+import 'package:zakat_fund/utils/utils.dart';
+import 'package:zakat_fund/utils/mixins/generic_mixin.dart';
 
 class CampaignTemplatesViewModel extends GetxController with GenericMixin {
   final NetworkServiceImpl _networkService = NetworkServiceImpl();
@@ -22,6 +24,27 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
     active: 0,
     inActive: 0,
   ).obs;
+
+  RxList<StatsData> statsList = <StatsData>[
+    StatsData(
+        title: "Total",
+        value: "0",
+        titleStyle: AppTextStyle.darkBrown12spTextStyle1,
+        valueStyle: AppTextStyle.darkBrown20spTextStyle1,
+        backgroundColor: const Color.fromARGB(255, 255, 236, 202)),
+    StatsData(
+        title: "Active",
+        value: "0",
+        titleStyle: AppTextStyle.darkGreenColor12spTextStyle1,
+        valueStyle: AppTextStyle.darkGreen16spTextStyle1,
+        backgroundColor: const Color.fromARGB(255, 204, 255, 170)),
+    StatsData(
+        title: "InActive",
+        value: "0",
+        titleStyle: AppTextStyle.red12spTextStyle,
+        valueStyle: AppTextStyle.red16spTextStyle,
+        backgroundColor: const Color.fromARGB(255, 255, 168, 168)),
+  ].obs;
 
   RxInt currentPage = 1.obs;
   RxInt pageSize = 10.obs;
@@ -56,7 +79,8 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
     }
   }
 
-  Future<void> fetchTemplates({bool loadMore = false, bool clear = false}) async {
+  Future<void> fetchTemplates(
+      {bool loadMore = false, bool clear = false}) async {
     if (clear) {
       currentPage.value = 1;
       templates.clear();
@@ -70,6 +94,10 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
       String endpoint =
           "emailer/GetAllEmailTemplateListPaginated?pageNumber=${currentPage.value}&pageSize=${pageSize.value}";
 
+      if (searchController.text.isNotEmpty) {
+        endpoint += "&templateName=${searchController.text}";
+      }
+
       final apiResponse = await _networkService.fetchLookUpData(
         request: RequestBody(endPoint: endpoint),
       );
@@ -78,21 +106,30 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
         BaseApiModel baseApiModel = apiResponse.data;
         totalRecords.value = baseApiModel.totalRecords ?? 0;
 
-        // Parse stats from the response
+        // Parse stats from the response, with fallback to top-level counts
         stats.value = CampaignTemplateStats(
-          total: baseApiModel.stats?.total ?? 0,
-          accepted: baseApiModel.stats?.accepted ?? 0,
-          pending: baseApiModel.stats?.pending ?? 0,
-          rejected: baseApiModel.stats?.rejected ?? 0,
-          returned: baseApiModel.stats?.returned ?? 0,
+          total: baseApiModel.stats.total != 0
+              ? baseApiModel.stats.total
+              : (baseApiModel.totalRecords ?? 0),
+          accepted: baseApiModel.stats.accepted,
+          pending: baseApiModel.stats.pending,
+          rejected: baseApiModel.stats.rejected,
+          returned: baseApiModel.stats.returned,
           drafted: 0,
-          active: baseApiModel.stats?.active ?? 0,
-          inActive: baseApiModel.stats?.inActive ?? 0,
+          active: baseApiModel.stats.active != 0
+              ? baseApiModel.stats.active
+              : (baseApiModel.activeCount ?? 0),
+          inActive: baseApiModel.stats.inActive != 0
+              ? baseApiModel.stats.inActive
+              : (baseApiModel.inactiveCount ?? 0),
         );
+
+        _updateStatsList();
 
         // Parse templates from the data list
         List<CampaignTemplate> templatesList = List<CampaignTemplate>.from(
-            baseApiModel.data.map((x) => CampaignTemplate.fromJson(x as Map<String, dynamic>)));
+            baseApiModel.data.map(
+                (x) => CampaignTemplate.fromJson(x as Map<String, dynamic>)));
 
         if (loadMore) {
           templates.addAll(templatesList);
@@ -108,6 +145,29 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
       Utils.showGlobalSnackBar(message: "Error loading templates: $e");
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  void _updateStatsList() {
+    statsList[0].value = stats.value.total.toString();
+    statsList[1].value = stats.value.active.toString();
+    statsList[2].value = stats.value.inActive.toString();
+    statsList.refresh();
+  }
+
+  void createTemplate() {
+    Utils.showGlobalSnackBar(
+        message: "Create template functionality coming soon");
+  }
+
+  void toggleTemplateStatus(CampaignTemplate template) {
+    // Optimistic UI update
+    int index = templates.indexWhere((element) => element.id == template.id);
+    if (index != -1) {
+      // Create a copy with toggled status if your model supports it,
+      // otherwise fetch again or update manually
+      Utils.showGlobalSnackBar(
+          message: "Status update functionality coming soon");
     }
   }
 
@@ -140,9 +200,11 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
               Text('Category: ${template.category ?? "N/A"}'),
               const SizedBox(height: 8),
               if (template.emailerDescriptionHtml != null) ...[
-                Text('Description:', style: const TextStyle(fontWeight: FontWeight.bold)),
+                Text('Description:',
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Text(template.emailerDescriptionHtml ?? '', maxLines: 5, overflow: TextOverflow.ellipsis),
+                Text(template.emailerDescriptionHtml ?? '',
+                    maxLines: 5, overflow: TextOverflow.ellipsis),
               ]
             ],
           ),
@@ -165,7 +227,8 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
     Get.dialog(
       AlertDialog(
         title: const Text('Delete Template'),
-        content: Text('Are you sure you want to delete "${template.templateName}"?'),
+        content:
+            Text('Are you sure you want to delete "${template.templateName}"?'),
         actions: [
           TextButton(
             onPressed: () => Get.back(),
@@ -174,7 +237,8 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
           TextButton(
             onPressed: () {
               Get.back();
-              Utils.showGlobalSnackBar(message: "Delete functionality coming soon");
+              Utils.showGlobalSnackBar(
+                  message: "Delete functionality coming soon");
             },
             child: const Text('Delete', style: TextStyle(color: Colors.red)),
           ),
@@ -198,4 +262,3 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
     super.onClose();
   }
 }
-

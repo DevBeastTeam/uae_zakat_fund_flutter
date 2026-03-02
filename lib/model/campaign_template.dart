@@ -1,3 +1,5 @@
+import '../utils/utils.dart';
+
 class CampaignTemplateResponse {
   final int totalRecords;
   final int pageNumber;
@@ -49,28 +51,73 @@ class CampaignTemplateResponse {
 class CampaignTemplate {
   final int id;
   final String templateName;
-  final String? language;
+  final String? templateTitle;
+  final String? creationDate;
+  final String? lastModifiedDate;
+  final String? creatorName;
+  final String? category;
+  final String? status;
   final bool isActive;
-  final int? category;
+  final String? language;
   final String? emailerDescriptionHtml;
 
   CampaignTemplate({
     required this.id,
     required this.templateName,
-    this.language,
-    required this.isActive,
+    this.templateTitle,
+    this.creationDate,
+    this.lastModifiedDate,
+    this.creatorName,
     this.category,
+    this.status,
+    required this.isActive,
+    this.language,
     this.emailerDescriptionHtml,
   });
 
   factory CampaignTemplate.fromJson(Map<String, dynamic> json) {
+    String? formatDate(dynamic value) {
+      if (value == null) return null;
+      String stringValue = value.toString();
+      try {
+        DateTime? dateTime = DateTime.tryParse(stringValue);
+        if (dateTime != null) {
+          return Utils.dateFormat1.format(dateTime);
+        }
+      } catch (_) {}
+      return stringValue;
+    }
+
     return CampaignTemplate(
       id: json['id'] ?? 0,
-      templateName: json['templateName'] ?? '',
+      templateName: (json['templateName'] ??
+                  json['nameEN'] ??
+                  json['emailerName'] ??
+                  json['name'])
+              ?.toString() ??
+          '',
+      templateTitle: (json['templateSubject'] ??
+              json['titleEN'] ??
+              json['title'] ??
+              json['subject'])
+          ?.toString(),
+      creationDate: formatDate(json['creationDate'] ?? json['createdDate']),
+      lastModifiedDate:
+          formatDate(json['lastModifiedDate'] ?? json['modifiedDate']),
+      creatorName: (json['creatorName'] ??
+              json['createdBy'] ??
+              json['creator'] ??
+              json['createdByName'])
+          ?.toString(),
+      category: (json['category'] ??
+              json['categoryName'] ??
+              json['emailerCategoryName'])
+          ?.toString(),
+      status: (json['status'] ?? json['statusName'])?.toString(),
+      isActive: json['isActive'] ?? json['isTemplateActive'] ?? false,
       language: json['language']?.toString(),
-      isActive: json['isActive'] ?? false,
-      category: json['category'],
-      emailerDescriptionHtml: json['emailerDescriptionHtml'],
+      emailerDescriptionHtml:
+          json['emailerDescriptionHtml'] ?? json['description'],
     );
   }
 }
@@ -112,4 +159,3 @@ class CampaignTemplateStats {
     );
   }
 }
-

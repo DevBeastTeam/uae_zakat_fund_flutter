@@ -20,6 +20,8 @@ import 'package:zakat_fund/view/admin/campaign_templates/campaign_templates_bind
 import 'package:zakat_fund/view/admin/campaign_templates/campaign_templates_screen.dart';
 import 'package:zakat_fund/view/admin/campaigns_projects/campaigns_projects_binding.dart';
 import 'package:zakat_fund/view/admin/campaigns_projects/campaigns_projects_screen.dart';
+import 'package:zakat_fund/view/admin/campaigns/campaigns_admin_binding.dart';
+import 'package:zakat_fund/view/admin/campaigns/campaigns_admin_screen.dart';
 import 'package:zakat_fund/view/admin/cms_news/add_news/add_news_binding.dart';
 import 'package:zakat_fund/view/admin/cms_news/add_news/add_news_screen.dart';
 import 'package:zakat_fund/view/admin/cms_news/cms_news_binding.dart';
@@ -713,6 +715,11 @@ abstract class AppPages {
       name: AppRoutes.campaignTemplatesScreen,
       page: () => const CampaignTemplatesScreen(),
       binding: CampaignTemplatesBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.campaignsScreen,
+      page: () => const CampaignsAdminScreen(),
+      binding: CampaignsAdminBinding(),
     ),
     GetPage(
       name: AppRoutes.recipientsCampaignScreen,

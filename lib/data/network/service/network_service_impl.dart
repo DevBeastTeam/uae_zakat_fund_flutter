@@ -2113,7 +2113,8 @@ class NetworkServiceImpl implements NetworkService {
           await _api.getRequest(request: request, endPoint: request.endPoint!);
       BaseApiModel baseApiModel = BaseApiModel.fromJson(response.data);
       if (baseApiModel.success) {
-        StaticPagePaginated staticPagePaginated = StaticPagePaginated.fromJson(response.data);
+        StaticPagePaginated staticPagePaginated =
+            StaticPagePaginated.fromJson(response.data);
         apiResponse = ApiResponse.completed(staticPagePaginated);
       } else {
         apiResponse = ApiResponse.error(baseApiModel.errors);
@@ -7325,7 +7326,8 @@ class NetworkServiceImpl implements NetworkService {
   }
 
   @override
-  Future<ApiResponse> sendSmsEmailMobileApp({required RequestBody request}) async {
+  Future<ApiResponse> sendSmsEmailMobileApp(
+      {required RequestBody request}) async {
     late ApiResponse<BaseApiModel> apiResponse;
     try {
       // final dio = Dio(BaseOptions(baseUrl: "https://stgnpzapi.npz.gov.ae/"))
@@ -7358,7 +7360,8 @@ class NetworkServiceImpl implements NetworkService {
   }
 
   @override
-  Future<ApiResponse> getSystemConfiguration({required RequestBody request}) async {
+  Future<ApiResponse> getSystemConfiguration(
+      {required RequestBody request}) async {
     late ApiResponse<List<dynamic>> apiResponse;
     try {
       final Response response =
@@ -7385,7 +7388,8 @@ class NetworkServiceImpl implements NetworkService {
   }
 
   @override
-  Future<ApiResponse> updateSystemConfiguration({required RequestBody request}) async {
+  Future<ApiResponse> updateSystemConfiguration(
+      {required RequestBody request}) async {
     late ApiResponse<dynamic> apiResponse;
     try {
       final Response response =

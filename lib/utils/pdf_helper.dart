@@ -156,13 +156,19 @@ abstract class PDFHelper {
 
   static Future<bool> _requestStoragePermission(
       {bool hideLoader = true}) async {
-    final status = Platform.isAndroid
-        ? await Permission.manageExternalStorage.request()
-        : await Permission.storage.request();
-    if (!status.isGranted) {
-      if (hideLoader) Utils.hideLoadingDialog();
-      Utils.showFrontEndSnackBar(message: 'Storage permission denied');
-      return false;
+    if (Platform.isAndroid) {
+      // For Android 13 and above, we use media permissions if needed,
+      // but for app-specific directories, no permission is required.
+      // If you were accessing shared storage, you'd need READ_MEDIA_IMAGES etc.
+      // For PDF generation in app-specific folders, we can return true.
+      return true;
+    } else {
+      final status = await Permission.storage.request();
+      if (!status.isGranted) {
+        if (hideLoader) Utils.hideLoadingDialog();
+        Utils.showFrontEndSnackBar(message: 'Storage permission denied');
+        return false;
+      }
     }
     return true;
   }
@@ -188,13 +194,11 @@ abstract class PDFHelper {
 
   static Future<Directory> _getDirectory() async {
     if (Platform.isAndroid) {
-      final baseDir = await getExternalStorageDirectory();
-      final pathSegments =
-          baseDir!.path.split("/").takeWhile((e) => e != "Android").join("/");
-      final newPath = "$pathSegments/Download/npz";
-      final directory = Directory(newPath);
-      if (!await directory.exists()) await directory.create(recursive: true);
-      return directory;
+      final directory = await getExternalStorageDirectory();
+      final newPath = "${directory!.path}/npz";
+      final dir = Directory(newPath);
+      if (!await dir.exists()) await dir.create(recursive: true);
+      return dir;
     } else {
       return await getApplicationDocumentsDirectory();
     }

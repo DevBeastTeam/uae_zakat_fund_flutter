@@ -22,7 +22,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:zakat_fund/data/network/client/dio_client.dart';
 import 'package:zakat_fund/data/network/service/firebase_messaging_service.dart';
@@ -1001,75 +1000,57 @@ abstract class Utils {
     // required Function(int, int) onProgress,
   }) async {
     Dio dio = DioClient.instance!.dio;
-    var status = Platform.isAndroid
-        ? await Permission.manageExternalStorage.request()
-        : await Permission.storage.request();
-
-    if (status.isGranted) {
-      try {
-        Directory? directory;
-        if (Platform.isAndroid) {
-          directory = await getExternalStorageDirectory();
-          String newPath = "";
-          debugPrint("$directory");
-          List<String> paths = directory!.path.split("/");
-          for (int x = 1; x < paths.length; x++) {
-            String folder = paths[x];
-            if (folder != "Android") {
-              newPath += "/$folder";
-            } else {
-              break;
-            }
-          }
-          newPath = "$newPath/Sahem";
-          directory = Directory(newPath);
-          if (!await directory.exists()) {
-            await directory.create(recursive: true);
-          }
-        } else {
-          directory = await getApplicationDocumentsDirectory();
-        }
-
-        if (filename == "") {
-          filename = url;
-        }
-        final savePath = '${directory.path}/$filename';
-        showLoadingDialog();
-        File file = File(savePath);
-
-        if (!await file.exists() || isExport) {
-          try {
-            String baseUrl = FlavorConfig.baseUrl;
-            if (taxCertificate) {
-              baseUrl = baseUrl.replaceAll("/api", "");
-            }
-            http.Response response = await dio.download(
-              "${isExport ? baseUrl : FlavorConfig.storageUrl}$url",
-              savePath,
-              onReceiveProgress: (received, total) {
-                if (total != -1) {
-                  // onProgress(received, total);
-                  debugPrint("$received/$total");
-                }
-              },
-            );
-            debugPrint("${response.realUri}");
-            showGlobalSnackBar(message: 'downloadedSuccessfully'.tr);
-          } on DioException catch (e) {
-            if (e.response?.statusCode == 401) {
-              Utils.logInAgain();
-            }
-          }
-        } else {
-          showGlobalSnackBar(message: 'downloadedSuccessfully'.tr);
-        }
-        hideLoadingDialog();
-      } catch (e) {
-        hideLoadingDialog();
-        showGlobalSnackBar(message: 'Error downloading file: $e');
+    try {
+      Directory? directory;
+      if (Platform.isAndroid) {
+        directory = await getExternalStorageDirectory();
+        String newPath = "${directory!.path}/Sahem";
+        directory = Directory(newPath);
+      } else {
+        directory = await getApplicationDocumentsDirectory();
       }
-    } else {
-      showGlobalSnackBar(message: 'Storage permission denied');
+
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
+
+      if (filename == "") {
+        filename = url;
+      }
+      final savePath = '${directory.path}/$filename';
+      showLoadingDialog();
+      File file = File(savePath);
+
+      if (!await file.exists() || isExport) {
+        try {
+          String baseUrl = FlavorConfig.baseUrl;
+          if (taxCertificate) {
+            baseUrl = baseUrl.replaceAll("/api", "");
+          }
+          http.Response response = await dio.download(
+            "${isExport ? baseUrl : FlavorConfig.storageUrl}$url",
+            savePath,
+            onReceiveProgress: (received, total) {
+              if (total != -1) {
+                // onProgress(received, total);
+                debugPrint("$received/$total");
+              }
+            },
+          );
+          debugPrint("${response.realUri}");
+          showGlobalSnackBar(message: 'downloadedSuccessfully'.tr);
+        } on DioException catch (e) {
+          if (e.response?.statusCode == 401) {
+            Utils.logInAgain();
+          }
+        }
+      } else {
+        showGlobalSnackBar(message: 'downloadedSuccessfully'.tr);
+      }
+      hideLoadingDialog();
+    } catch (e) {
+      hideLoadingDialog();
+      showGlobalSnackBar(message: 'Error downloading file: $e');
     }
   }
 

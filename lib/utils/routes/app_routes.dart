@@ -136,4 +136,5 @@ abstract class AppRoutes {
   static const String accountScreen = "/AccountScreen";
   static const String staticsScreen = "/StatisticsScreen";
   static const String pdfPreviewScreen = "/PdfPreviewScreen";
+  static const String campaignsScreen = "/CampaignsScreen";
 }

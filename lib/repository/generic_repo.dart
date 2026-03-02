@@ -57,9 +57,11 @@ abstract class GenericRepo {
 
   Future<ApiResponse> auditLogByEntityId({required RequestBody request});
 
-  Future<ApiResponse> adminOperationsDashboardData({required RequestBody request});
+  Future<ApiResponse> adminOperationsDashboardData(
+      {required RequestBody request});
 
-  Future<ApiResponse> adminDashboardGetHeaderDataFDD({required RequestBody request});
+  Future<ApiResponse> adminDashboardGetHeaderDataFDD(
+      {required RequestBody request});
 
   Future<ApiResponse> fetchAverageDonations({required RequestBody request});
 
@@ -67,7 +69,8 @@ abstract class GenericRepo {
 
   Future<ApiResponse> fetchDonorHeaderData({required RequestBody request});
 
-  Future<ApiResponse> adminDashboardGetHeaderDataUEIDD({required RequestBody request});
+  Future<ApiResponse> adminDashboardGetHeaderDataUEIDD(
+      {required RequestBody request});
 
   Future<ApiResponse> generateOTPForUser({required RequestBody request});
   Future<ApiResponse> createDubaiPayment({required RequestBody request});
@@ -76,6 +79,7 @@ abstract class GenericRepo {
 
   Future<ApiResponse> updateSystemConfiguration({required RequestBody request});
 
+  Future<ApiResponse> fetchCampaignsList({required RequestBody request});
 }
 
 class GenericRepoImpl implements GenericRepo {
@@ -218,12 +222,14 @@ class GenericRepoImpl implements GenericRepo {
   }
 
   @override
-  Future<ApiResponse> adminOperationsDashboardData({required RequestBody request}) {
+  Future<ApiResponse> adminOperationsDashboardData(
+      {required RequestBody request}) {
     return _remoteRepo.adminOperationsDashboardData(request: request);
   }
 
   @override
-  Future<ApiResponse> adminDashboardGetHeaderDataFDD({required RequestBody request}) {
+  Future<ApiResponse> adminDashboardGetHeaderDataFDD(
+      {required RequestBody request}) {
     return _remoteRepo.adminDashboardGetHeaderDataFDD(request: request);
   }
 
@@ -243,7 +249,8 @@ class GenericRepoImpl implements GenericRepo {
   }
 
   @override
-  Future<ApiResponse> adminDashboardGetHeaderDataUEIDD({required RequestBody request}) {
+  Future<ApiResponse> adminDashboardGetHeaderDataUEIDD(
+      {required RequestBody request}) {
     return _remoteRepo.adminDashboardGetHeaderDataUEIDD(request: request);
   }
 
@@ -273,8 +280,13 @@ class GenericRepoImpl implements GenericRepo {
   }
 
   @override
-  Future<ApiResponse> updateSystemConfiguration({required RequestBody request}) {
+  Future<ApiResponse> updateSystemConfiguration(
+      {required RequestBody request}) {
     return _remoteRepo.updateSystemConfiguration(request: request);
   }
 
+  @override
+  Future<ApiResponse> fetchCampaignsList({required RequestBody request}) {
+    return _remoteRepo.allCampaignListPaginated(request: request);
+  }
 }
