@@ -20,6 +20,10 @@
 // dev@gmail.com
 // 12345678
 
+// admin login
+admin@zakatfund.com
+Admin@12345
+
 
 //// temporary
 // 1. 

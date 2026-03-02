@@ -16,6 +16,8 @@ import 'package:zakat_fund/view/admin/ads_management/ads_management_binding.dart
 import 'package:zakat_fund/view/admin/ads_management/ads_management_screen.dart';
 import 'package:zakat_fund/view/admin/audit_log/audit_log_binding.dart';
 import 'package:zakat_fund/view/admin/audit_log/audit_log_screen.dart';
+import 'package:zakat_fund/view/admin/campaign_templates/campaign_templates_binding.dart';
+import 'package:zakat_fund/view/admin/campaign_templates/campaign_templates_screen.dart';
 import 'package:zakat_fund/view/admin/campaigns_projects/campaigns_projects_binding.dart';
 import 'package:zakat_fund/view/admin/campaigns_projects/campaigns_projects_screen.dart';
 import 'package:zakat_fund/view/admin/cms_news/add_news/add_news_binding.dart';
@@ -170,8 +172,6 @@ import 'package:zakat_fund/view/our_services/services_binding.dart';
 import 'package:zakat_fund/view/photo_view/photo_view_binding.dart';
 import 'package:zakat_fund/view/photo_view/photo_view_screen.dart';
 import 'package:zakat_fund/view/qr_scanner/qr_scanner_screen.dart';
-import 'package:zakat_fund/view/requests/about_us/about_us_binding.dart' as request_about_us;
-import 'package:zakat_fund/view/requests/about_us/about_us_screen.dart' as request_about_us;
 import 'package:zakat_fund/view/admin/about_us/about_us_binding.dart';
 import 'package:zakat_fund/view/admin/about_us/about_us_screen.dart';
 import 'package:zakat_fund/view/requests/ads/ad_binding.dart';
@@ -708,6 +708,11 @@ abstract class AppPages {
       name: AppRoutes.addAdsScreen,
       page: () => const AddAdsScreen(),
       binding: AddAdsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.campaignTemplatesScreen,
+      page: () => const CampaignTemplatesScreen(),
+      binding: CampaignTemplatesBinding(),
     ),
     GetPage(
       name: AppRoutes.recipientsCampaignScreen,

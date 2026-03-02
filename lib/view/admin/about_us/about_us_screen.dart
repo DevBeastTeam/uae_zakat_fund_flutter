@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
-import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/view_model/cms_about_us_view_model.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';

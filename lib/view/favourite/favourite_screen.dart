@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/flavor/flavor_config.dart';
 import 'package:zakat_fund/model/favourite_project.dart';

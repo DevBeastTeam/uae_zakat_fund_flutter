@@ -689,6 +689,7 @@ abstract class AppConstant {
   ];
 
   static List<Categories> campaignSubTabs = [
+    Categories(name: "campaignTemplates", code: ModuleCodes.adminCampaignTemplatesCode),
     Categories(name: "recipients", code: ModuleCodes.adminRecipientsCode),
   ];
 

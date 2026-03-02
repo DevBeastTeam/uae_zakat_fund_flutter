@@ -25,7 +25,7 @@ abstract class ModuleCodes {
   static const String adminFundsTransferQueCode = "S-89";
   static const String adminDonationRegisterCode = "S-107";
   static const String adminRecipientsCode = "S-23";
-
+  static const String adminCampaignTemplatesCode = "S-24";
 
   static const String adminRequestManagementCode = "S-67";
   static const String adminAllAssociationsCode = "S-10";

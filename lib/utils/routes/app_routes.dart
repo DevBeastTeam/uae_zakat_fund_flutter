@@ -110,6 +110,7 @@ abstract class AppRoutes {
   static const String adsManagementScreen = "/AdsManagementScreen";
   static const String addAdsScreen = "/AddAdsScreen";
   static const String massCampaignScreen = "/MassCampaignScreen";
+  static const String campaignTemplatesScreen = "/CampaignTemplatesScreen";
   static const String recipientsCampaignScreen = "/RecipientsCampaignScreen";
   static const String addGroupScreen = "/AddGroupScreen";
   static const String recipientDetailsScreen = "/RecipientDetailsScreen";

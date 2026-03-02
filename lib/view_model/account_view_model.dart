@@ -921,6 +921,7 @@ class AccountViewModel extends GetxController
       ModuleCodes.adminSMTPConfigCode: AppRoutes.smtpConfigScreen,
       ModuleCodes.adminFundsTransferQueCode: AppRoutes.transferQueueScreen,
       ModuleCodes.adminDonationRegisterCode: AppRoutes.transactionScreen,
+      ModuleCodes.adminCampaignTemplatesCode: AppRoutes.campaignTemplatesScreen,
       ModuleCodes.adminRecipientsCode: AppRoutes.recipientsCampaignScreen,
       ModuleCodes.adminApproverGroupCode: AppRoutes.approverGroupScreen,
       ModuleCodes.adminWorkflowConfigCode: AppRoutes.workflowConfigScreen,
