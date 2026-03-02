@@ -194,11 +194,13 @@ abstract class PDFHelper {
 
   static Future<Directory> _getDirectory() async {
     if (Platform.isAndroid) {
-      final directory = await getExternalStorageDirectory();
-      final newPath = "${directory!.path}/npz";
-      final dir = Directory(newPath);
-      if (!await dir.exists()) await dir.create(recursive: true);
-      return dir;
+      final baseDir = await getExternalStorageDirectory();
+      final pathSegments =
+          baseDir!.path.split("/").takeWhile((e) => e != "Android").join("/");
+      final newPath = "$pathSegments/Download/npz";
+      final directory = Directory(newPath);
+      if (!await directory.exists()) await directory.create(recursive: true);
+      return directory;
     } else {
       return await getApplicationDocumentsDirectory();
     }

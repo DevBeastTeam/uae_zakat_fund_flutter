@@ -1003,8 +1003,10 @@ abstract class Utils {
     try {
       Directory? directory;
       if (Platform.isAndroid) {
-        directory = await getExternalStorageDirectory();
-        String newPath = "${directory!.path}/Sahem";
+        final baseDir = await getExternalStorageDirectory();
+        final pathSegments =
+            baseDir!.path.split("/").takeWhile((e) => e != "Android").join("/");
+        final newPath = "$pathSegments/Download/npz";
         directory = Directory(newPath);
       } else {
         directory = await getApplicationDocumentsDirectory();
@@ -1015,7 +1017,7 @@ abstract class Utils {
       }
 
       if (filename == "") {
-        filename = url;
+        filename = url.split("/").last.split("?").first;
       }
       final savePath = '${directory.path}/$filename';
       showLoadingDialog();
@@ -1360,9 +1362,23 @@ abstract class Utils {
     return '${inputDate.toIso8601String().split('T')[0]}T00:00:00';
   }
 
+  static Future<Directory> _getDirectory() async {
+    if (Platform.isAndroid) {
+      final baseDir = await getExternalStorageDirectory();
+      final pathSegments =
+          baseDir!.path.split("/").takeWhile((e) => e != "Android").join("/");
+      final newPath = "$pathSegments/Download/npz";
+      final directory = Directory(newPath);
+      if (!await directory.exists()) await directory.create(recursive: true);
+      return directory;
+    } else {
+      return await getApplicationDocumentsDirectory();
+    }
+  }
+
   static Future<File?> urlIntoFile(String url, String fileName) async {
     try {
-      final dir = await getApplicationDocumentsDirectory();
+      final dir = await _getDirectory();
       final savePath = '${dir.path}/$fileName';
       final file = File(savePath);
 
