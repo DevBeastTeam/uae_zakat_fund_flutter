@@ -25,101 +25,120 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
     return SingleChildScrollView(
       controller: controller.scrollController,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildSectionTitle("About Us"),
-          _buildDualFieldRow("About Us (English)", "aboutSahemEn",
-              "About Us (Arabic)", "aboutSahemAr"),
-          _buildSectionTitle("Section"),
-          ...List.generate(
-              3,
-              (index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDualFieldRow(
-                          "Section ${index + 1} Heading (English)",
-                          "section_${index}_headingEn",
-                          "Section ${index + 1} Heading (Arabic)",
-                          "section_${index}_headingAr"),
-                      _buildDualFieldRow(
-                          "Section ${index + 1} Details (English)",
-                          "section_${index}_detailsEn",
-                          "Section ${index + 1} Details (Arabic)",
-                          "section_${index}_detailsAr"),
-                      _buildFilePicker("section_${index}_image",
-                          "Section ${index + 1} Image"),
-                      if (index < 2) 20.verticalSpace,
-                    ],
-                  )),
-          _buildSectionTitle("Our Mission & Vision"),
-          _buildDualFieldRow("Mission Subject (English)", "missionSubjectEn",
-              "Mission Subject (Arabic)", "missionSubjectAr"),
-          _buildDualFieldRow("Mission Details (English)", "missionDetailsEn",
-              "Mission Details (Arabic)", "missionDetailsAr"),
-          _buildDualFieldRow("Vision Details (English)", "visionDetailsEn",
-              "Vision Details (Arabic)", "visionDetailsAr"),
-          _buildSectionTitle("The entity Vision and Mission"),
-          _buildSectionTitle("Corporate Values"),
-          ...List.generate(
-              3,
-              (index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDualFieldRow(
-                          "Corporate Values Heading (English) ${index + 1}",
-                          "corporateValue_${index}_headingEn",
-                          "Corporate Values Heading (Arabic) ${index + 1}",
-                          "corporateValue_${index}_headingAr"),
-                      _buildDualFieldRow(
-                          "Corporate Values Details (English) ${index + 1}",
-                          "corporateValue_${index}_detailsEn",
-                          "Corporate Values Details (Arabic) ${index + 1}",
-                          "corporateValue_${index}_detailsAr"),
-                      if (index < 2) 16.verticalSpace,
-                    ],
-                  )),
-          _buildSectionTitle("Strategic Goals"),
-          ...List.generate(
-              3,
-              (index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDualFieldRow(
-                          "Strategic Goals Details (English) ${index + 1}",
-                          "strategicGoal_${index}_detailsEn",
-                          "Strategic Goals Details (Arabic) ${index + 1}",
-                          "strategicGoal_${index}_detailsAr"),
-                      if (index < 2) 16.verticalSpace,
-                    ],
-                  )),
-          _buildSectionTitle("Our Team"),
-          ...List.generate(
-              4,
-              (index) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _buildDualFieldRow(
-                          "Our TeamMember Name (English) ${index + 1}",
-                          "teamMember_${index}_nameEn",
-                          "Our TeamMember Name (Arabic) ${index + 1}",
-                          "teamMember_${index}_nameAr"),
-                      _buildDualFieldRow(
-                          "Our TeamMember JobTitle (English)",
-                          "teamMember_${index}_jobEn",
-                          "Our TeamMember JobTitle (Arabic)",
-                          "teamMember_${index}_jobAr"),
-                      _buildFilePicker(
-                          "teamMember_${index}_image", "Our TeamMember Image",
-                          buttonLabel: "Choose File", isRequired: true),
-                      if (index < 3) 24.verticalSpace,
-                    ],
-                  )),
-          30.verticalSpace,
-          _buildActionButtons(),
-          20.verticalSpace,
-        ],
-      ),
+      child: Obx(() {
+        final config = controller.aboutUsConfig.value;
+        if (config == null)
+          return const Center(child: CircularProgressIndicator());
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle("aboutUs".tr),
+            _buildDualFieldRow(
+                "aboutUs".tr, "AboutSahemEn", "aboutUs".tr, "AboutSahemAr"),
+            if (config.sections.isNotEmpty) ...[
+              _buildSectionTitle("cmsSectionHeader".tr),
+              ...List.generate(
+                  config.sections.length,
+                  (index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildDualFieldRow(
+                              "${"cmsSectionHeader".tr} ${index + 1} ${"cmsHeadingLabel".tr}",
+                              "sections[$index].SectionHeadingEn",
+                              "${"cmsSectionHeader".tr} ${index + 1} ${"cmsHeadingLabel".tr}",
+                              "sections[$index].SectionHeadingAr"),
+                          _buildDualFieldRow(
+                              "${"cmsSectionHeader".tr} ${index + 1} ${"cmsDetailsLabel".tr}",
+                              "sections[$index].SectionDetailsEn",
+                              "${"cmsSectionHeader".tr} ${index + 1} ${"cmsDetailsLabel".tr}",
+                              "sections[$index].SectionDetailsAr"),
+                          _buildFilePicker("sections[$index].SectionImage",
+                              "${"cmsSectionHeader".tr} ${index + 1} ${"cmsImageLabel".tr}"),
+                          if (index < config.sections.length - 1)
+                            20.verticalSpace,
+                        ],
+                      )),
+            ],
+            _buildSectionTitle("missionAndVision".tr),
+            _buildDualFieldRow("missionSubject".tr, "MissionSubjectEn",
+                "missionSubject".tr, "MissionSubjectAr"),
+            _buildDualFieldRow("missionDetails".tr, "MissionDetailsEn",
+                "missionDetails".tr, "MissionDetailsAr"),
+            _buildDualFieldRow("visionDetails".tr, "VisionDetailsEn",
+                "visionDetails".tr, "VisionDetailsAr"),
+            if (config.corporateValuesSections.isNotEmpty) ...[
+              _buildSectionTitle("corporateValues".tr),
+              ...List.generate(
+                  config.corporateValuesSections.length,
+                  (index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildDualFieldRow(
+                              "${"corporateValues".tr} ${"cmsHeadingLabel".tr} ${index + 1}",
+                              "corporateValuesSections[$index].CorporateValuesHeadingEn",
+                              "${"corporateValues".tr} ${"cmsHeadingLabel".tr} ${index + 1}",
+                              "corporateValuesSections[$index].CorporateValuesHeadingAr"),
+                          _buildDualFieldRow(
+                              "${"corporateValues".tr} ${"cmsDetailsLabel".tr} ${index + 1}",
+                              "corporateValuesSections[$index].CorporateValuesDetailsEn",
+                              "${"corporateValues".tr} ${"cmsDetailsLabel".tr} ${index + 1}",
+                              "corporateValuesSections[$index].CorporateValuesDetailsAr"),
+                          if (index < config.corporateValuesSections.length - 1)
+                            16.verticalSpace,
+                        ],
+                      )),
+            ],
+            if (config.strategicGoalsSections.isNotEmpty) ...[
+              _buildSectionTitle("strategicGoals".tr),
+              ...List.generate(
+                  config.strategicGoalsSections.length,
+                  (index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildDualFieldRow(
+                              "${"strategicGoals".tr} ${"cmsDetailsLabel".tr} ${index + 1}",
+                              "strategicGoalsSections[$index].StrategicGoalsDetailsEn",
+                              "${"strategicGoals".tr} ${"cmsDetailsLabel".tr} ${index + 1}",
+                              "strategicGoalsSections[$index].StrategicGoalsDetailsAr"),
+                          if (index < config.strategicGoalsSections.length - 1)
+                            16.verticalSpace,
+                        ],
+                      )),
+            ],
+            if (config.teamMembers.isNotEmpty) ...[
+              _buildSectionTitle("ourTeam".tr),
+              ...List.generate(
+                  config.teamMembers.length,
+                  (index) => Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildDualFieldRow(
+                              "${"ourTeamMember".tr} ${"cmsNameLabel".tr} ${index + 1}",
+                              "teamMembers[$index].OurTeamMemberNameEn",
+                              "${"ourTeamMember".tr} ${"cmsNameLabel".tr} ${index + 1}",
+                              "teamMembers[$index].OurTeamMemberNameAr"),
+                          _buildDualFieldRow(
+                              "${"ourTeamMember".tr} ${"cmsJobTitleLabel".tr}",
+                              "teamMembers[$index].OurTeamMemberJobTitleEn",
+                              "${"ourTeamMember".tr} ${"cmsJobTitleLabel".tr}",
+                              "teamMembers[$index].OurTeamMemberJobTitleAr"),
+                          _buildFilePicker(
+                              "teamMembers[$index].OurTeamMemberImage",
+                              "${"ourTeamMember".tr} ${"cmsImageLabel".tr}",
+                              buttonLabel: "chooseFile".tr,
+                              isRequired: true),
+                          if (index < config.teamMembers.length - 1)
+                            24.verticalSpace,
+                        ],
+                      )),
+            ],
+            30.verticalSpace,
+            _buildActionButtons(),
+            20.verticalSpace,
+          ],
+        );
+      }),
     );
   }
 
@@ -138,14 +157,14 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
 
   Widget _buildDualFieldRow(
       String labelEn, String keyEn, String labelAr, String keyAr) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildTextFieldWidget(labelEn, keyEn),
-        16.verticalSpace,
-        _buildTextFieldWidget(labelAr, keyAr, isArabic: true),
-        16.verticalSpace,
-      ],
+    bool isArabic = Get.locale?.languageCode == 'ar';
+    return Padding(
+      padding: EdgeInsets.only(bottom: 16.h),
+      child: _buildTextFieldWidget(
+        isArabic ? labelAr : labelEn,
+        isArabic ? keyAr : keyEn,
+        isArabic: isArabic,
+      ),
     );
   }
 
@@ -225,7 +244,7 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
                     Expanded(
                       child: Text(
                         controller.editControllers[key]?.text ??
-                            "No file chosen",
+                            "noFileChosen".tr,
                         style: AppTextStyle.primaryDarkGrey12spTextStyle1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -260,12 +279,12 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
               )),
           4.verticalSpace,
           Text(
-            "Supported Formats: PNG, JPEG and SVG",
+            "supportedFormatsMsg".tr,
             style: AppTextStyle.primaryDarkGrey12spTextStyle1
                 .copyWith(fontSize: 10.sp, color: AppColors.darkGreyColor),
           ),
           Text(
-            "Maximum Size: 5MB",
+            "maxSizeMsg".tr,
             style: AppTextStyle.primaryDarkGrey12spTextStyle1
                 .copyWith(fontSize: 10.sp, color: AppColors.darkGreyColor),
           ),
@@ -290,7 +309,7 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
               ),
             ),
             child: Text(
-              "Save",
+              "save".tr,
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -314,7 +333,7 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
                     ),
                   ),
                   child: Text(
-                    "Edit",
+                    "edit".tr,
                     style: TextStyle(
                         color: const Color(0xff5D3B26),
                         fontWeight: FontWeight.bold,
@@ -337,7 +356,7 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
                     ),
                   ),
                   child: Text(
-                    "Cancel",
+                    "cancel".tr,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,

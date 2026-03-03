@@ -735,7 +735,7 @@ abstract class AppTextStyle {
       fontWeight: FontWeight.w500);
 
   static TextStyle secondaryPrimaryBlack20spTextStyle1 = TextStyle(
-      fontSize: 20.sp,
+      fontSize: 18.sp,
       color: AppColors.secondaryPrimaryBlackColor,
       fontWeight: FontWeight.bold);
 

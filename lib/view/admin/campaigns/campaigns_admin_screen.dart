@@ -223,8 +223,9 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                    "${campaign.campaignName.tr.length > 35 ? campaign.campaignName.tr.substring(0, 35) + '...' : campaign.campaignName.tr}"),
+                Text(campaign.campaignName.tr.length > 35
+                    ? '${campaign.campaignName.tr.substring(0, 35)}...'
+                    : campaign.campaignName.tr),
                 Container(
                   width: 36.w,
                   height: 36.w,
@@ -243,21 +244,11 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
             padding: EdgeInsets.all(16.w),
             child: Column(
               children: [
-                // _buildDataRow("Request ID", campaign.campaignName),
-                // 12.verticalSpace,
-                _buildDataRow("Requestor Name", "Admin User"),
+                _buildDataRow("requestorName", "Admin User"),
                 12.verticalSpace,
-                _buildDataRow("Request Date", campaign.startDate ?? "-"),
+                _buildDataRow("requestDate", campaign.startDate ?? "-"),
                 12.verticalSpace,
-                _buildDataRow("Request Type", campaign.status ?? 'accepted'),
-                // "Request Type", campaign.category ?? "Static Page Update"),
-                12.verticalSpace,
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.end,
-                //   children: [
-                //     _buildStatusChip(campaign.status ?? 'accepted'),
-                //   ],
-                // ),
+                _buildDataRow("requestType", campaign.status ?? 'accepted'),
               ],
             ),
           ),
@@ -271,7 +262,7 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          label,
+          label.tr,
           style: TextStyle(
             fontSize: 14.sp,
             color: Colors.grey[600],
@@ -279,7 +270,7 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
           ),
         ),
         Text(
-          value,
+          value.tr,
           style: TextStyle(
             fontSize: 14.sp,
             color: Colors.black,

@@ -34,7 +34,7 @@ class CampaignTemplatesScreen extends GetView<CampaignTemplatesViewModel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Email Templates".tr,
+            "emailTemplates".tr,
             style: AppTextStyle.secondaryPrimaryBlack24spTextStyle2,
           ),
           16.verticalSpace,
@@ -137,7 +137,8 @@ class CampaignTemplatesScreen extends GetView<CampaignTemplatesViewModel> {
 
   Widget _buildTemplateItem(CampaignTemplate template) {
     String status =
-        template.status ?? (template.isActive ? "Accepted" : "Pending");
+        (template.status ?? (template.isActive ? "accepted" : "pending"))
+            .toLowerCase();
 
     List<DashboardData> templateDetails = [
       DashboardData(title: "pageName", value: template.templateName),
@@ -147,7 +148,7 @@ class CampaignTemplatesScreen extends GetView<CampaignTemplatesViewModel> {
       DashboardData(
           title: "lastModifiedDate", value: template.lastModifiedDate ?? "-"),
       DashboardData(title: "creatorName", value: template.creatorName ?? "-"),
-      DashboardData(title: "category", value: template.category ?? "Email"),
+      DashboardData(title: "category", value: template.category ?? "email"),
     ];
 
     return Container(

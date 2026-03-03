@@ -808,23 +808,37 @@ class AccountViewModel extends GetxController
     switch (index) {
       case 0:
         Get.toNamed(AppRoutes.donorDashboardScreen);
+        break;
       case 1:
-        openDonorProfileScreen(true);
+        final isIncomplete =
+            user.status != 1 || individual.value.accountInfo == null;
+        if (isIncomplete) {
+          openDonorProfileScreen(false);
+        } else {
+          openDonorProfileScreen(true);
+        }
+        break;
       case 2:
         Get.toNamed(AppRoutes.favouriteScreen);
+        break;
       case 3:
         Get.toNamed(AppRoutes.requestsScreen,
             arguments: ModuleCodes.adminRequestManagementCode);
+        break;
       case 4:
         Get.toNamed(AppRoutes.feedbackScreen,
             arguments: {"code": ModuleCodes.adminFeedbackManagementCode});
+        break;
       case 5:
         Get.toNamed(AppRoutes.transactionScreen,
             arguments: {"code": ModuleCodes.companyDonationsCode});
+        break;
       case 6:
         Get.toNamed(AppRoutes.accessibilityScreen);
+        break;
       case 7:
         Get.toNamed(AppRoutes.notificationScreen);
+        break;
       case 8:
         Get.toNamed(AppRoutes.settingsScreen,
                 arguments: {"individual": individual.value})!
@@ -832,7 +846,9 @@ class AccountViewModel extends GetxController
           Utils.showLoadingDialog();
           fetchIndividualProfile(notUpdate: false);
         });
+        break;
       default:
+        break;
     }
   }
 

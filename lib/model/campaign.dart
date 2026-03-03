@@ -74,7 +74,7 @@ class Campaign {
       return stringValue;
     }
 
-    String? _convertStatusToString(dynamic statusValue) {
+    String? convertStatusToString(dynamic statusValue) {
       if (statusValue == null) return null;
       // If status is already a string, return it
       if (statusValue is String) {
@@ -109,7 +109,7 @@ class Campaign {
       lastModifiedDate: formatDate(json['lastModifiedDate']),
       createdByName: json['createdByName']?.toString(),
       lastModifiedByName: json['lastModifiedByName']?.toString(),
-      status: _convertStatusToString(json['status'] ?? json['statusName']),
+      status: convertStatusToString(json['status'] ?? json['statusName']),
       isActive: json['isActive'] ?? true,
     );
   }

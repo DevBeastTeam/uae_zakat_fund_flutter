@@ -43,7 +43,7 @@ class CampaignsAdminViewModel extends GetxController {
   void _initStatsList() {
     statsList.value = [
       DashboardData(
-        title: "Total",
+        title: "total",
         value: "0",
         backColor: const Color(0xffFFF9E7),
         labelColor: const Color(0xffD69E2E),
@@ -54,7 +54,7 @@ class CampaignsAdminViewModel extends GetxController {
         ),
       ),
       DashboardData(
-        title: "Approved",
+        title: "approved",
         value: "0",
         backColor: const Color(0xffE6F4EA),
         labelColor: const Color(0xff1E7E34),
@@ -65,7 +65,7 @@ class CampaignsAdminViewModel extends GetxController {
         ),
       ),
       DashboardData(
-        title: "Pending",
+        title: "pending",
         value: "0",
         backColor: const Color(0xffFFF4E5),
         labelColor: const Color(0xffA17111),
@@ -76,7 +76,7 @@ class CampaignsAdminViewModel extends GetxController {
         ),
       ),
       DashboardData(
-        title: "Returned",
+        title: "returned",
         value: "0",
         backColor: const Color(0xffFFF1F1),
         labelColor: const Color(0xffE53E3E),
@@ -87,7 +87,7 @@ class CampaignsAdminViewModel extends GetxController {
         ),
       ),
       DashboardData(
-        title: "Rejected",
+        title: "rejected",
         value: "0",
         backColor: const Color(0xffFFF1F1),
         labelColor: const Color(0xffE53E3E),
