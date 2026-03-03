@@ -57,35 +57,34 @@ class BaseApiModel {
     final String? paymentUri =
         json["paymentUri"] ?? _extractPaymentUri(dataField);
     return BaseApiModel(
-        success: json["success"] ?? json["ValidRequest"],
-        activeCount: json["activeCount"] ?? 0,
-        inactiveCount: json["inactiveCount"] ?? 0,
-        totalRecords: json["totalRecords"] ?? 0,
-        path: json["path"],
-        sessionId: _extractBatchID(dataField),
-        paymentUri: paymentUri,
-        fileName: json["fileName"],
-        data: dataField,
-        statusCode: json["statusCode"] ?? 200,
-        errors: json["errors"],
-        message: json["message"] ?? "Spmething went wrong try again",
-        stats: json["stats"] != null
-            ? Stats.fromJson(json["stats"])
-            : Stats.empty(),
-        projectsStats: json["projectsStats"] != null
-            ? ProjectStats.fromJson(json["projectsStats"])
-            : ProjectStats.empty(),
-        createdBy: json["createdBy"] ?? "",
-        createdByAr: json["createdByAr"] ?? "",
-        modifiedBy: json["modifiedBy"] ?? "",
-        modifiedByAr: json["modifiedByAr"] ?? "",
-        createdDate: json["createdDate"] != null
-            ? DateTime.parse(json["createdDate"])
-            : null,
-        modifiedDate: json["modifiedDate"] != null
-            ? DateTime.parse(json["modifiedDate"])
-            : null,
-      );
+      success: json["success"] ?? json["ValidRequest"],
+      activeCount: json["activeCount"] ?? 0,
+      inactiveCount: json["inactiveCount"] ?? 0,
+      totalRecords: json["totalRecords"] ?? 0,
+      path: json["path"],
+      sessionId: _extractBatchID(dataField),
+      paymentUri: paymentUri,
+      fileName: json["fileName"],
+      data: dataField,
+      statusCode: json["statusCode"] ?? 200,
+      errors: json["errors"],
+      message: json["message"] ?? "Spmething went wrong try again",
+      stats:
+          json["stats"] != null ? Stats.fromJson(json["stats"]) : Stats.empty(),
+      projectsStats: json["projectsStats"] != null
+          ? ProjectStats.fromJson(json["projectsStats"])
+          : ProjectStats.empty(),
+      createdBy: json["createdBy"] ?? "",
+      createdByAr: json["createdByAr"] ?? "",
+      modifiedBy: json["modifiedBy"] ?? "",
+      modifiedByAr: json["modifiedByAr"] ?? "",
+      createdDate: json["createdDate"] != null
+          ? DateTime.parse(json["createdDate"])
+          : null,
+      modifiedDate: json["modifiedDate"] != null
+          ? DateTime.parse(json["modifiedDate"])
+          : null,
+    );
   }
 
   static String? _extractPaymentUri(dynamic dataField) {
@@ -132,6 +131,7 @@ class Stats {
   int escalationRate;
   int onTrackRate;
   int breachedRate;
+  int drafted;
 
   Stats({
     required this.total,
@@ -155,6 +155,7 @@ class Stats {
     required this.escalationRate,
     required this.onTrackRate,
     required this.breachedRate,
+    required this.drafted,
   });
 
   Stats.empty()
@@ -178,6 +179,7 @@ class Stats {
         totalBeneficiaries = 0,
         onTrackRate = 0,
         breachedRate = 0,
+        drafted = 0,
         rejected = 0;
 
   factory Stats.fromJson(Map<String, dynamic> json) => Stats(
@@ -202,6 +204,7 @@ class Stats {
         complaints: json["complaints"] ?? 0,
         suggestions: json["suggestions"] ?? 0,
         rejected: json["rejected"] ?? 0,
+        drafted: json["drafted"] ?? 0,
       );
 }
 

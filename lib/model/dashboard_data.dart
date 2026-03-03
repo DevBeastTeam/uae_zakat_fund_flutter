@@ -4,6 +4,7 @@ class DashboardData {
   String title, value;
   String? icon;
   Color? backColor;
+  Color? labelColor;
   TextStyle? style;
   double? valueInDouble;
 
@@ -13,6 +14,7 @@ class DashboardData {
     this.icon,
     this.style,
     this.backColor,
-    this.valueInDouble
+    this.labelColor,
+    this.valueInDouble,
   });
 }

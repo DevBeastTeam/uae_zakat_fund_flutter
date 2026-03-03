@@ -68,10 +68,29 @@ class Campaign {
       try {
         DateTime? dateTime = DateTime.tryParse(stringValue);
         if (dateTime != null) {
-          return Utils.dateFormat1.format(dateTime);
+          return Utils.dateFormat2.format(dateTime);
         }
       } catch (_) {}
       return stringValue;
+    }
+
+    String? _convertStatusToString(dynamic statusValue) {
+      if (statusValue == null) return null;
+      // If status is already a string, return it
+      if (statusValue is String) {
+        return statusValue.toLowerCase();
+      }
+      // If status is a number, convert it to string
+      if (statusValue is int) {
+        return Utils.statusIntoString(statusValue);
+      }
+      // Try to parse as int
+      try {
+        int statusInt = int.parse(statusValue.toString());
+        return Utils.statusIntoString(statusInt);
+      } catch (_) {
+        return statusValue.toString().toLowerCase();
+      }
     }
 
     return Campaign(
@@ -90,7 +109,7 @@ class Campaign {
       lastModifiedDate: formatDate(json['lastModifiedDate']),
       createdByName: json['createdByName']?.toString(),
       lastModifiedByName: json['lastModifiedByName']?.toString(),
-      status: (json['status'] ?? json['statusName'])?.toString(),
+      status: _convertStatusToString(json['status'] ?? json['statusName']),
       isActive: json['isActive'] ?? true,
     );
   }

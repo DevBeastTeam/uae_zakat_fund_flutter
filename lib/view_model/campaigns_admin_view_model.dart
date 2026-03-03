@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:zakat_fund/data/response/app_state.dart';
+import 'package:zakat_fund/model/base_api_model.dart';
 import 'package:zakat_fund/model/campaign.dart';
 import 'package:zakat_fund/model/dashboard_data.dart';
 import 'package:zakat_fund/model/request_body.dart';
@@ -41,25 +43,59 @@ class CampaignsAdminViewModel extends GetxController {
   void _initStatsList() {
     statsList.value = [
       DashboardData(
-        title: "total",
+        title: "Total",
         value: "0",
         backColor: const Color(0xffFFF9E7),
-        style: const TextStyle(
-            color: Color(0xffFFB800), fontWeight: FontWeight.bold),
+        labelColor: const Color(0xffD69E2E),
+        style: TextStyle(
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffD69E2E),
+        ),
       ),
       DashboardData(
-        title: "activeCount",
+        title: "Approved",
         value: "0",
-        backColor: const Color(0xffE8F5E9),
-        style: const TextStyle(
-            color: Color(0xff2E7D32), fontWeight: FontWeight.bold),
+        backColor: const Color(0xffE6F4EA),
+        labelColor: const Color(0xff1E7E34),
+        style: TextStyle(
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xff1E7E34),
+        ),
       ),
       DashboardData(
-        title: "inactiveCount",
+        title: "Pending",
         value: "0",
-        backColor: const Color(0xffFFEBEE),
-        style: const TextStyle(
-            color: Color(0xffC62828), fontWeight: FontWeight.bold),
+        backColor: const Color(0xffFFF4E5),
+        labelColor: const Color(0xffA17111),
+        style: TextStyle(
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffA17111),
+        ),
+      ),
+      DashboardData(
+        title: "Returned",
+        value: "0",
+        backColor: const Color(0xffFFF1F1),
+        labelColor: const Color(0xffE53E3E),
+        style: TextStyle(
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffE53E3E),
+        ),
+      ),
+      DashboardData(
+        title: "Rejected",
+        value: "0",
+        backColor: const Color(0xffFFF1F1),
+        labelColor: const Color(0xffE53E3E),
+        style: TextStyle(
+          fontSize: 22.sp,
+          fontWeight: FontWeight.bold,
+          color: const Color(0xffE53E3E),
+        ),
       ),
     ];
   }
@@ -87,16 +123,33 @@ class CampaignsAdminViewModel extends GetxController {
 
     isLoading.value = false;
     if (response.appState == AppState.onSuccess) {
-      final campaignResponse = CampaignResponse.fromJson(response.data);
-      if (isRefresh) {
-        campaigns.value = campaignResponse.data;
-      } else {
-        campaigns.addAll(campaignResponse.data);
+      if (response.data is! BaseApiModel) {
+        debugPrint(
+            "Error: Expected BaseApiModel, but got ${response.data.runtimeType}");
       }
-      totalRecords.value = campaignResponse.totalRecords;
-      activeCount.value = campaignResponse.activeCount;
-      inactiveCount.value = campaignResponse.inactiveCount;
-      stats.value = campaignResponse.stats;
+      final baseApiModel = response.data as BaseApiModel;
+      final List<dynamic> dataList =
+          baseApiModel.data is List ? baseApiModel.data : [];
+      final List<Campaign> items = dataList
+          .map((x) => Campaign.fromJson(x as Map<String, dynamic>))
+          .toList();
+
+      if (isRefresh) {
+        campaigns.value = items;
+      } else {
+        campaigns.addAll(items);
+      }
+      totalRecords.value = baseApiModel.totalRecords;
+      activeCount.value = baseApiModel.activeCount;
+      inactiveCount.value = baseApiModel.inactiveCount;
+      stats.value = CampaignStats(
+        total: baseApiModel.stats.total,
+        accepted: baseApiModel.stats.accepted,
+        pending: baseApiModel.stats.pending,
+        rejected: baseApiModel.stats.rejected,
+        returned: baseApiModel.stats.returned,
+        drafted: baseApiModel.stats.drafted,
+      );
       _updateStatsList();
     } else {
       Utils.handleAPIError(response);
@@ -104,10 +157,14 @@ class CampaignsAdminViewModel extends GetxController {
   }
 
   void _updateStatsList() {
-    statsList[0].value = stats.value.total.toString();
-    statsList[1].value = activeCount.value.toString();
-    statsList[2].value = inactiveCount.value.toString();
-    statsList.refresh();
+    if (statsList.length >= 5) {
+      statsList[0].value = stats.value.total.toString();
+      statsList[1].value = stats.value.accepted.toString();
+      statsList[2].value = stats.value.pending.toString();
+      statsList[3].value = stats.value.returned.toString();
+      statsList[4].value = stats.value.rejected.toString();
+      statsList.refresh();
+    }
   }
 
   void onSearch(String value) {

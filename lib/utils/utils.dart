@@ -723,7 +723,7 @@ abstract class Utils {
     if (type == 1 || type == 0) {
       return "pending";
     } else if (type == 2) {
-      return "accepted";
+      return "approved";
     } else if (type == 3) {
       return "rejected";
     } else if (type == 4) {
