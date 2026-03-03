@@ -84,7 +84,12 @@ class CampaignsProjectsScreen extends GetView<CampaignsAndProjectsViewModel> {
                   ListTile(
                     selected: true,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r)),
+                        borderRadius: BorderRadius.circular(10.r),
+                        side: BorderSide(
+                            color: data.labelColor ??
+                                data.style?.color ??
+                                Colors.transparent,
+                            width: 1.w)),
                     selectedTileColor: data.backColor,
                     leading:
                         SvgPicture.asset(data.icon!, width: 24.w, height: 24.h),

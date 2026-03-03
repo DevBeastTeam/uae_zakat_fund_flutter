@@ -122,7 +122,12 @@ class UserEngagementScreen extends GetView<UserEngagementViewModel> {
                       ],
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.r),
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                          color: data.labelColor ??
+                              data.style?.color ??
+                              Colors.transparent,
+                          width: 1.w),
                     ),
                   ),
                   if (controller.lowestActivityTime.length - 1 != index)
@@ -191,13 +196,31 @@ class UserEngagementScreen extends GetView<UserEngagementViewModel> {
                       childrenPadding: EdgeInsets.symmetric(horizontal: 16.w),
                       initiallyExpanded: true,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.r)),
+                          borderRadius: BorderRadius.circular(10.r),
+                          side: BorderSide(
+                              color: data.labelColor ??
+                                  data.style?.color ??
+                                  Colors.transparent,
+                              width: 1.w)),
+                      collapsedShape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.r),
+                          side: BorderSide(
+                              color: data.labelColor ??
+                                  data.style?.color ??
+                                  Colors.transparent,
+                              width: 1.w)),
                       collapsedBackgroundColor: data.backColor,
                       backgroundColor: data.backColor,
                       title: ListTile(
                         selected: true,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r)),
+                          borderRadius: BorderRadius.circular(10.r),
+                          side: BorderSide(
+                              color: data.labelColor ??
+                                  data.style?.color ??
+                                  Colors.transparent,
+                              width: 1.w),
+                        ),
                         selectedTileColor: data.backColor,
                         contentPadding: EdgeInsets.zero,
                         visualDensity: const VisualDensity(vertical: -4),

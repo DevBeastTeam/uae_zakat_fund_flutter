@@ -13,7 +13,7 @@ Container searchAddContainer(
     required Function(String) onChanged,
     Function(String)? onSubmitted,
     required void Function()? onFilterPressed,
-      VoidCallback? onClear,
+    VoidCallback? onClear,
     bool noContainer = false}) {
   return Container(
     padding: EdgeInsets.symmetric(horizontal: noContainer ? 0.w : 16.w),
@@ -87,7 +87,7 @@ Widget expandedChip(
       padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 16.w),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(100.r),
+          borderRadius: BorderRadius.circular(7.r),
           border:
               Border.all(color: AppColors.secondaryLightGreyColor, width: 1.w)),
       child: Row(

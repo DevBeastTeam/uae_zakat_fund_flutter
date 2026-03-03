@@ -27,8 +27,9 @@ class CMSAboutUsScreen extends GetView<CMSAboutUsViewModel> {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
       child: Obx(() {
         final config = controller.aboutUsConfig.value;
-        if (config == null)
+        if (config == null) {
           return const Center(child: CircularProgressIndicator());
+        }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

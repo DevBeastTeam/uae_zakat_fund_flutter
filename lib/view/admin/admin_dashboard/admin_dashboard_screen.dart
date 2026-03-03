@@ -63,7 +63,12 @@ class AdminDashboardScreen extends GetView<AdminDashboardViewModel> {
                   ListTile(
                     selected: true,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                        borderRadius: BorderRadius.circular(10.r),
+                        side: BorderSide(
+                            color: data.labelColor ??
+                                data.style?.color ??
+                                Colors.transparent,
+                            width: 1.w)),
                     selectedTileColor: data.backColor,
                     title: Text(
                       data.title.tr,
@@ -151,7 +156,12 @@ class AdminDashboardScreen extends GetView<AdminDashboardViewModel> {
                 ],
               ),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.r),
+                borderRadius: BorderRadius.circular(10.r),
+                side: BorderSide(
+                    color: data.labelColor ??
+                        data.style?.color ??
+                        Colors.transparent,
+                    width: 1.w),
               ),
             ),
             if (controller.lowestActivityTime.length - 1 != index)
@@ -294,7 +304,11 @@ class AdminDashboardScreen extends GetView<AdminDashboardViewModel> {
     return ListTile(
       selected: true,
       contentPadding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.r),
+          side: BorderSide(
+              color: data.labelColor ?? data.style?.color ?? Colors.transparent,
+              width: 1.w)),
       selectedTileColor: data.backColor,
       title: Text(data.title.tr, style: data.style),
       subtitle: Padding(

@@ -72,10 +72,12 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
     return Expanded(
       child: Container(
         height: 70.h,
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
         decoration: BoxDecoration(
           color: stat.backColor,
           borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(
+              color: stat.labelColor ?? Colors.transparent, width: 1.w),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
