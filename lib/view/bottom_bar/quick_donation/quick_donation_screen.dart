@@ -380,7 +380,10 @@ Widget _projectListView() {
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           itemBuilder: (BuildContext context, int index) {
             if (index == viewModel.projects.length) {
-              return SecurePaymentTitleWidget();
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: SecurePaymentTitleWidget(),
+              );
             }
             ProjectElements project = viewModel.projects[index];
             return Column(
