@@ -1553,4 +1553,9 @@ abstract class AppTextStyle {
     fontSize: 12.sp,
     color: AppColors.lightGray,
   );
+  static TextStyle lightGray10spTextStyle = TextStyle(
+    fontWeight: FontWeight.w500,
+    fontSize: 12.sp,
+    color: AppColors.greyColor,
+  );
 }

@@ -19,6 +19,7 @@ import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
 
 import '../../../widgets/secure_paymen_ttitle_widget.dart';
+import '../../../widgets/total_payment_widget.dart';
 
 void quickDonationBottomSheet() {
   Utils.logEvent(name: EventConstant.quickDonationScreen);
@@ -243,7 +244,10 @@ Widget _selectedProjects() {
                                       // ),
                                       backgroundColor: data == project.price
                                           ? themeViewModel.color
-                                          : AppColors.greyBackColor,
+                                          : Colors.white,
+                                      // backgroundColor: data == project.price
+                                      //     ? themeViewModel.color
+                                      //     : AppColors.greyBackColor,
                                       // side: BorderSide(
                                       //     color: data == project.price
                                       //         ? AppColors.brownPrimaryColor
@@ -323,25 +327,9 @@ Widget _selectedProjects() {
                 ),
               );
             }),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-              margin: EdgeInsets.symmetric(vertical: 16.h),
-              decoration: BoxDecoration(
-                  color: AppColors.grayColor,
-                  // color: const Color.fromARGB(255, 230, 230, 230),
-                  borderRadius: BorderRadius.circular(8.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("totalAmount".tr),
-                  Text(
-                    "${viewModel.getTotalAmount()} ${"currency".tr}",
-                    style: AppTextStyle.secondaryBlack14spTextStyle,
-                  ),
-                ],
-              ),
-            ),
-            SecurePaymentTitleWidget(padding: EdgeInsets.zero),
+
+            TotalPaymentWidget(totalAmount: viewModel.getTotalAmount()),
+            SecurePaymentTitleWidget(),
             // Container(
             //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             //   decoration: BoxDecoration(

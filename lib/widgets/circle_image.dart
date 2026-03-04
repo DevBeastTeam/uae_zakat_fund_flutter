@@ -9,6 +9,8 @@ import 'package:zakat_fund/widgets/cache_image.dart';
 Widget circleImage(String? image,
     {bool showAdd = false,
     bool profile = false,
+    double? width,
+    double? height,
     required VoidCallback onPressed}) {
   return Center(
     child: Stack(
@@ -23,14 +25,14 @@ Widget circleImage(String? image,
             child: image != null
                 ? CachedImage(
                     image: image,
-                    width: 96.w,
-                    height: 96.h,
+                    width: width ?? 96.w,
+                    height: height ?? 96.h,
                     profile: profile,
                   )
                 : Image.asset(
                     AppResources.userAvatar,
-                    width: 96.w,
-                    height: 96.h,
+                    width: width ?? 96.w,
+                    height: height ?? 96.h,
                     fit: BoxFit.cover,
                   ),
           ),
@@ -47,8 +49,8 @@ Widget circleImage(String? image,
               mini: true,
               child: SvgPicture.asset(
                 AppResources.pencilIcon,
-                width: 16.w,
-                height: 16.h,
+                width: width ?? 16.w,
+                height: height ?? 16.h,
               ),
             ),
           ),

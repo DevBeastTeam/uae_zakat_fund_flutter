@@ -12,6 +12,10 @@ import 'package:zakat_fund/view_model/payment_method_view_model.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/label_text_field.dart';
 
+import '../../../../view_model/main_view_model.dart';
+import '../../../../widgets/secure_paymen_ttitle_widget.dart';
+import '../../../../widgets/total_payment_widget.dart';
+
 class OnlinePaymentMethodWidget extends GetView<PaymentMethodViewModel> {
   const OnlinePaymentMethodWidget({super.key});
 
@@ -102,8 +106,13 @@ class OnlinePaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                 checkValidation: true,
                 isRequired: true,
               ),
-              16.verticalSpace,
+              // 0.verticalSpace,
             ],
+
+            TotalPaymentWidget(
+                totalAmount: Get.find<MainViewModel>().getTotalAmount()),
+            SecurePaymentTitleWidget(),
+            SizedBox(height: 16.h),
             elevatedButton(
                 text: "payNow",
                 onPressed: () {
