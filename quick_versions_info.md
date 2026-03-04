@@ -40,3 +40,47 @@ Admin@12345
   //     }
   //     Utils.logInAgain();
   //   }
+
+
+
+  3. /Users/mac/Documents/flutter_projects/uae_zakat_fund_flutter/lib/view/bottom_bar/cart/payment/online_payment_method.dart
+
+  added --> 
+  on bottom of comment:
+   SizedBox(
+              height: 72.h,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                children: [
+                  if (controller.showCreditCard) ...[
+                    _buildCreditCardOption(),
+                    16.horizontalSpace
+                  ],
+                  if (Platform.isAndroid && controller.showGooglePay)
+                    GooglePayButton(
+                      paymentItems: controller.paymentItems,
+                      type: GooglePayButtonType.donate,
+                      onPaymentResult: (paymentResult) {
+                        debugPrint("Payment Result: $paymentResult");
+                      },
+                      loadingIndicator: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      paymentConfiguration: defaultGooglePayConfig,
+                    ),
+                  if (Platform.isIOS && controller.showApplePay)
+                    ApplePayButton(
+                      paymentItems: controller.paymentItems,
+                      type: ApplePayButtonType.donate,
+                      onPaymentResult: (paymentResult) {
+                        debugPrint("Payment Result: $paymentResult");
+                      },
+                      loadingIndicator: const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                      paymentConfiguration: defaultApplePayConfig,
+                    ),
+                ],
+              ),
+            ),

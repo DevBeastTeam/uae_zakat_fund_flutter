@@ -118,7 +118,7 @@ class SettingsViewModel extends GetxController {
       Get.toNamed(AppRoutes.webViewScreen, arguments: {
         "title": "privacyPolicy".tr,
         "url":
-            "${FlavorConfig.webSiteUrl}${Utils.isArabic ? 'ar' : 'en'}/privacy-policy"
+            "${FlavorConfig.webSiteUrl}page/privacy${Utils.isArabic ? 'ar' : 'en'}"
       });
       return;
     }

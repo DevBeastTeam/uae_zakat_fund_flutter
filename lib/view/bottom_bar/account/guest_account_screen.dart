@@ -203,12 +203,26 @@ class GuestAccountScreen extends StatelessWidget {
       case 7:
         Get.toNamed(AppRoutes.aboutSahemScreen);
       case 8:
-        Get.toNamed(AppRoutes.webViewScreen, arguments: {
-          "title": "privacyPolicy".tr,
-          "url":
-              "${FlavorConfig.webSiteUrl}${Utils.isArabic ? 'ar' : 'en'}/privacy-policy"
-        });
-
+        // The instruction provided a snippet with `if (code == "S-07")`
+        // which uses a variable `code` not available in this context.
+        // Assuming the intent was to modify the existing case 8 logic
+        // or to introduce a new conditional check within the switch.
+        // Since the instruction explicitly shows the `if` block replacing
+        // the `case 8` content, and to maintain syntactic correctness
+        // within the `switch` statement, the `if` condition is adapted
+        // to check the `index` value.
+        // If the original intent was to use a 'code' string,
+        // further clarification would be needed.
+        if (index == 8) {
+          // Assuming "S-07" maps to index 8 for privacy policy
+          Get.toNamed(AppRoutes.webViewScreen, arguments: {
+            "title": "privacyPolicy".tr,
+            "url":
+                "${FlavorConfig.webSiteUrl}page/privacy${Utils.isArabic ? 'ar' : 'en'}"
+          });
+          return;
+        }
+        break; // Added break to prevent fall-through after the if block
       default:
     }
   }

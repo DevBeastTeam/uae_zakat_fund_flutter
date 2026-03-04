@@ -32,6 +32,43 @@ class OnlinePaymentMethodWidget extends GetView<PaymentMethodViewModel> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // SizedBox(
+            //   height: 72.h,
+            //   child: ListView(
+            //     scrollDirection: Axis.horizontal,
+            //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            //     children: [
+            //       if (controller.showCreditCard) ...[
+            //         _buildCreditCardOption(),
+            //         16.horizontalSpace
+            //       ],
+            //       if (Platform.isAndroid && controller.showGooglePay)
+            //         GooglePayButton(
+            //           paymentItems: controller.paymentItems,
+            //           type: GooglePayButtonType.donate,
+            //           onPaymentResult: (paymentResult) {
+            //             log("Payment Result: $paymentResult");
+            //           },
+            //           loadingIndicator: const Center(
+            //             child: CircularProgressIndicator(),
+            //           ),
+            //           paymentConfiguration: defaultGooglePayConfig,
+            //         ),
+            //       if (Platform.isIOS && controller.showApplePay)
+            //         ApplePayButton(
+            //           paymentItems: controller.paymentItems,
+            //           type: ApplePayButtonType.donate,
+            //           onPaymentResult: (paymentResult) {
+            //             print("Payment Result: $paymentResult");
+            //           },
+            //           loadingIndicator: const Center(
+            //             child: CircularProgressIndicator(),
+            //           ),
+            //           paymentConfiguration: defaultApplePayConfig,
+            //         ),
+            //     ],
+            //   ),
+            // ),
             SizedBox(
               height: 72.h,
               child: ListView(
