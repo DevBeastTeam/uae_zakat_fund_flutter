@@ -3,6 +3,7 @@ const Map<String, String> ar = {
   'campaigns': 'الحملات',
   'cart': 'السلة',
   'account': 'الحساب',
+  'privacyPolicy': 'سياسة الخصوصية',
   'search': 'بحث',
   'selectAssociation': 'اختر الجمعية',
   'ramadanCampaignsTitle': 'الحملات الرمضانية',
@@ -2249,5 +2250,6 @@ const Map<String, String> ar = {
   "bankTransfer": "تحويل\nبنكي",
   "credit/DebitCard": "بطاقة ائتمان/\nسحب آلي",
   "paymentFailed": "لم نتمكن من معالجة عملية الدفع. يرجى إعادة المحاولة لاحقًا",
-  "securePaymentMessage": "جميع المعاملات المالية آمنة بنسبة 100% تحت إشراف الهيئة العامة للشؤون الإسلامية والأوقاف والزكاة"
+  "securePaymentMessage":
+      "جميع المعاملات المالية آمنة بنسبة 100% تحت إشراف الهيئة العامة للشؤون الإسلامية والأوقاف والزكاة"
 };

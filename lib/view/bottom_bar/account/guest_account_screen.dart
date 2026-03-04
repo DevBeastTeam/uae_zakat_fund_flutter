@@ -11,6 +11,7 @@ import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/routes/app_routes.dart';
 import 'package:zakat_fund/utils/utils.dart';
+import 'package:zakat_fund/flavor/flavor_config.dart';
 import 'package:zakat_fund/view_model/main_view_model.dart';
 import 'package:zakat_fund/widgets/account_list_tile.dart';
 import 'package:zakat_fund/widgets/cache_image.dart';
@@ -28,18 +29,12 @@ class GuestAccountScreen extends StatelessWidget {
     Categories(name: "contactUs", icon: AppResources.contactUs),
     Categories(name: "faqs", icon: AppResources.faqs),
     Categories(name: "aboutUs", icon: AppResources.aboutUs),
+    Categories(name: "privacyPolicy", icon: AppResources.securityIcon),
   ];
   final viewModel = Get.find<MainViewModel>();
 
   @override
   Widget build(BuildContext context) {
-    final List<String> routes = [
-      AppRoutes.faqScreen,
-      AppRoutes.addFeedbackScreen,
-      AppRoutes.accessibilityScreen,
-      AppRoutes.settingsScreen,
-    ];
-
     return Container(
       color: Colors.white,
       height: Get.height,
@@ -208,7 +203,11 @@ class GuestAccountScreen extends StatelessWidget {
       case 7:
         Get.toNamed(AppRoutes.aboutSahemScreen);
       case 8:
-        Get.toNamed(AppRoutes.aboutSahemScreen);
+        Get.toNamed(AppRoutes.webViewScreen, arguments: {
+          "title": "privacyPolicy".tr,
+          "url":
+              "${FlavorConfig.webSiteUrl}${Utils.isArabic ? 'ar' : 'en'}/privacy-policy"
+        });
 
       default:
     }

@@ -8,6 +8,7 @@ import 'package:zakat_fund/utils/constants/app_resources.dart';
 import 'package:zakat_fund/utils/constants/event_constant.dart';
 import 'package:zakat_fund/utils/routes/app_routes.dart';
 import 'package:zakat_fund/utils/utils.dart';
+import 'package:zakat_fund/flavor/flavor_config.dart';
 import 'package:zakat_fund/view_model/account_view_model.dart';
 
 class SettingsViewModel extends GetxController {
@@ -32,27 +33,33 @@ class SettingsViewModel extends GetxController {
 
   void _initializeSettingTabs() {
     settingTabs = [
-      if (userBox.isNotEmpty&&accountViewModel.showNotificationPreferences)
+      if (userBox.isNotEmpty && accountViewModel.showNotificationPreferences)
         Categories(
             name: "notificationsPreferences",
             icon: AppResources.notificationIcon,
             code: "S-01"),
       Categories(
           name: "languages", icon: AppResources.languageIcon, code: "S-02"),
-      if (userBox.isNotEmpty&&userBox.getAt(0).roles[0]=="Individuals"&&!userBox.getAt(0).isEmployeeAndDonor)
+      if (userBox.isNotEmpty &&
+          userBox.getAt(0).roles[0] == "Individuals" &&
+          !userBox.getAt(0).isEmployeeAndDonor)
         Categories(
             name: "account", icon: AppResources.accountInfoIcon, code: "S-03"),
-      if (userBox.isNotEmpty&&accountViewModel.showPasswordSecurity)
+      if (userBox.isNotEmpty && accountViewModel.showPasswordSecurity)
         Categories(
             name: "passwordSecurity",
             icon: AppResources.securityIcon,
             code: "S-04"),
-      if (userBox.isNotEmpty&&userBox.getAt(0).roles[0]=="Individuals")
+      if (userBox.isNotEmpty && userBox.getAt(0).roles[0] == "Individuals")
         Categories(
-            name: "donationReminder", icon: AppResources.timerIcon, code: "S-05"),
-      if (userBox.isNotEmpty&&userBox.getAt(0).roles[0]=="Individuals")
+            name: "donationReminder",
+            icon: AppResources.timerIcon,
+            code: "S-05"),
+      if (userBox.isNotEmpty && userBox.getAt(0).roles[0] == "Individuals")
         Categories(
-            name: "newProjectAlerts", icon: AppResources.notificationIcon, code: "S-06"),
+            name: "newProjectAlerts",
+            icon: AppResources.notificationIcon,
+            code: "S-06"),
     ];
   }
 
@@ -77,9 +84,9 @@ class SettingsViewModel extends GetxController {
       _updateAccountInfo(
         logo: individual!.accountInfo!.photo,
         nameArabic:
-        "${individual!.accountInfo?.firstNameArabic ?? ""} ${individual!.accountInfo?.lastNameArabic ?? ""}",
+            "${individual!.accountInfo?.firstNameArabic ?? ""} ${individual!.accountInfo?.lastNameArabic ?? ""}",
         nameEnglish:
-        "${individual!.accountInfo?.firstName ?? ""} ${individual!.accountInfo?.lastName ?? ""}",
+            "${individual!.accountInfo?.firstName ?? ""} ${individual!.accountInfo?.lastName ?? ""}",
       );
     } else if (company?.accountInfo != null) {
       _updateAccountInfo(
@@ -90,7 +97,8 @@ class SettingsViewModel extends GetxController {
     }
   }
 
-  void _updateAccountInfo({String? logo, String? nameArabic, String? nameEnglish}) {
+  void _updateAccountInfo(
+      {String? logo, String? nameArabic, String? nameEnglish}) {
     this.logo = logo ?? "";
     name.value = Utils.isArabic ? (nameArabic ?? "") : (nameEnglish ?? "");
   }
@@ -103,7 +111,17 @@ class SettingsViewModel extends GetxController {
       "S-04": AppRoutes.passwordSecurityScreen,
       "S-05": AppRoutes.donationReminderScreen,
       "S-06": AppRoutes.projectAlertsScreen,
+      "S-07": AppRoutes.webViewScreen,
     };
+
+    if (code == "S-07") {
+      Get.toNamed(AppRoutes.webViewScreen, arguments: {
+        "title": "privacyPolicy".tr,
+        "url":
+            "${FlavorConfig.webSiteUrl}${Utils.isArabic ? 'ar' : 'en'}/privacy-policy"
+      });
+      return;
+    }
 
     final route = routes[code];
     if (route != null) {
@@ -120,5 +138,4 @@ class SettingsViewModel extends GetxController {
     name.close();
     super.onClose();
   }
-
 }
