@@ -39,18 +39,21 @@ Widget circleImage(String? image,
         ),
         if (showAdd)
           Positioned(
-            bottom: -5,
-            right: 0,
-            child: FloatingActionButton(
-              heroTag: "camera",
-              backgroundColor: themeViewModel.color,
-              onPressed: onPressed,
-              shape: const CircleBorder(),
-              mini: true,
-              child: SvgPicture.asset(
-                AppResources.pencilIcon,
-                width: width ?? 16.w,
-                height: height ?? 16.h,
+            bottom: -10,
+            right: -10,
+            child: Transform.scale(
+              scale: 0.7,
+              child: FloatingActionButton(
+                heroTag: "camera",
+                backgroundColor: themeViewModel.color,
+                onPressed: onPressed,
+                shape: const CircleBorder(),
+                mini: true,
+                child: SvgPicture.asset(
+                  AppResources.pencilIcon,
+                  width: 20.w,
+                  height: 20.h,
+                ),
               ),
             ),
           ),

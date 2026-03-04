@@ -55,6 +55,8 @@ class IndividualProfileScreen extends GetView<AccountViewModel> {
             circleImage(
               controller.profilePhoto.value,
               profile: true,
+              width: 50.w,
+              height: 50.h,
               onPressed: () => controller.addImage(),
               // showAdd: info?.userId == controller.user.id,
               showAdd: false,
