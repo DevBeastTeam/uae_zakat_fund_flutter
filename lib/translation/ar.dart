@@ -3,6 +3,7 @@ const Map<String, String> ar = {
   'campaigns': 'الحملات',
   'cart': 'السلة',
   'account': 'الحساب',
+  'privacyPolicy': 'سياسة الخصوصية',
   'search': 'بحث',
   'selectAssociation': 'اختر الجمعية',
   'ramadanCampaignsTitle': 'الحملات الرمضانية',
@@ -342,11 +343,11 @@ const Map<String, String> ar = {
   'ourServices': 'خدماتنا',
   'allServices': 'كل الخدمات',
   'serviceDetails': 'تفاصيل الخدمة',
-  'aboutService': 'عن هذه الخدمة',
+  'aboutService': 'وصف الخدمة',
   'theOperation': 'العملية',
-  'termsOfUse': 'شروط الاستخدام',
+  'termsOfUse': 'شروط الخدمة',
   'durationOfService': 'مدة إنجاز الخدمة',
-  'serviceCost': 'تكلفة الخدمة',
+  'serviceCost': 'علامة الدرهم',
   'serviceChannels': 'قنوات الخدمة',
   'paymentMethods': 'وسائل الدفع',
   'targetAudience': 'الجمهور المستهدف',
@@ -2163,7 +2164,7 @@ const Map<String, String> ar = {
       "قم بتسجيل الدخول إلى مزودي الخدمة باستخدام هاتفك الذكي",
   "digitalSignature": "التوقيع الرقمي",
   "onBoardingMessage3": "التوقيع والتحقق من صحة المستندات رقميًا",
-  "skip": "يتخطى",
+  "skip": "تخطي",
   "copyrightZakatFund":
       "جميع الحقوق محفوظة © ٢٠٢٥. الهيئة العامة للشؤون الاسلامية و الاوقاف و الزكاة",
   "uaePassSignInMessage":
@@ -2249,5 +2250,6 @@ const Map<String, String> ar = {
   "bankTransfer": "تحويل\nبنكي",
   "credit/DebitCard": "بطاقة ائتمان/\nسحب آلي",
   "paymentFailed": "لم نتمكن من معالجة عملية الدفع. يرجى إعادة المحاولة لاحقًا",
-  "securePaymentMessage": "جميع المعاملات المالية آمنة بنسبة 100% تحت إشراف الهيئة العامة للشؤون الإسلامية والأوقاف والزكاة"
+  "securePaymentMessage":
+      "جميع المعاملات المالية آمنة بنسبة 100% تحت إشراف الهيئة العامة للشؤون الإسلامية والأوقاف والزكاة"
 };

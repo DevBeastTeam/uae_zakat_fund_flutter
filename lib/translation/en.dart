@@ -2270,5 +2270,6 @@ const Map<String, String> en = {
   "bankTransfer": "Bank\nTransfer",
   "credit/DebitCard": "Credit/Debit\nCard",
   "paymentFailed": "Your payment could not be processed. Please try again.",
-  "securePaymentMessage": "All payment transactions are 100% secure under the supervision of General Authority for Islamic Affairs, Endowments and Zakat"
+  "securePaymentMessage":
+      "All payment transactions are 100% secure under the supervision of General Authority for Islamic Affairs, Endowments and Zakat"
 };
