@@ -136,7 +136,7 @@ class AdminAccountScreen extends GetView<AccountViewModel> {
             ),
             16.verticalSpace,
             _buildInfoRow("mobile".tr, "${user.mobile ?? ""}"),
-            4.verticalSpace,
+            16.verticalSpace,
             // _buildInfoRow("gender".tr, "${user.gender ?? ""}"),
             // 4.verticalSpace,
             // _buildInfoRow("nationality".tr, "${user.nationality ?? ""}"),
