@@ -1521,6 +1521,7 @@ abstract class AppTextStyle {
       fontSize: 23.sp,
       color: AppColors.secondaryDarkBrownColor,
       fontWeight: FontWeight.bold);
+
   static TextStyle secondaryDarkBrownColor26spTextStyle = TextStyle(
       fontSize: 26.sp,
       color: AppColors.secondaryDarkBrownColor,

@@ -20,7 +20,6 @@ import 'package:zakat_fund/widgets/my_app_bar.dart';
 
 import '../../../widgets/secure_paymen_ttitle_widget.dart';
 import '../../../widgets/total_payment_widget.dart';
-import 'package:zakat_fund/dubaigooglepay/dubai_google_pay.dart';
 
 void quickDonationBottomSheet() {
   Utils.logEvent(name: EventConstant.quickDonationScreen);

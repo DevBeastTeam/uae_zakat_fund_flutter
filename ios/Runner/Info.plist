@@ -81,8 +81,6 @@
 	<string>Let National Platform for Zakat access Camera to scan qrcode.</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>Let National Platform for Zakat access to save files</string>
-	<key>NSFaceIDUsageDescription</key>
-	<string>Let National Platform for Zakat access Face id to make authentication process more secure.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Let National Platform for Zakat access your location show in map to add new address.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>

@@ -197,7 +197,7 @@ abstract class PDFHelper {
       final baseDir = await getExternalStorageDirectory();
       final pathSegments =
           baseDir!.path.split("/").takeWhile((e) => e != "Android").join("/");
-      final newPath = "$pathSegments/Download/npz";
+      final newPath = "$pathSegments/Download/NPZ";
       final directory = Directory(newPath);
       if (!await directory.exists()) await directory.create(recursive: true);
       return directory;

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:pay/pay.dart';
+// import 'package:pay/pay.dart';
 import 'package:zakat_fund/data/response/app_state.dart';
 import 'package:zakat_fund/data/response/network_response.dart';
 import 'package:zakat_fund/flavor/flavor_config.dart';
@@ -129,11 +129,11 @@ class PaymentMethodViewModel extends GetxController
   late Company company;
 
   final paymentItems = [
-    PaymentItem(
-      label: 'Total',
-      amount: '99.99',
-      status: PaymentItemStatus.final_price,
-    )
+    // PaymentItem(
+    //   label: 'Total',
+    //   amount: '99.99',
+    //   status: PaymentItemStatus.final_price,
+    // )
   ];
 
   PaymentMethodViewModel(this.isCart);
