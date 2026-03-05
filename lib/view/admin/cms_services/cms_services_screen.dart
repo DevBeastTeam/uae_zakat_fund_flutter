@@ -202,20 +202,20 @@ class CmsServicesScreen extends GetView<CMSServicesViewModel> {
 
   Padding _buildSwitchBtn(OurServices service) {
     return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("enableDisable".tr,
-                  style: AppTextStyle.primaryDarkGrey12spTextStyle1),
-              CupertinoSwitchWidget(
-                value: service.isActive,
-                onChanged: controller.canEdit && service.requestStatus == 2
-                    ? (_) => controller.updateStatus(service)
-                    : null,
-              ),
-            ],
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("enableDisable".tr,
+              style: AppTextStyle.primaryDarkGrey12spTextStyle1),
+          CupertinoSwitchWidget(
+            value: service.isActive,
+            onChanged: controller.canEdit && service.requestStatus == 2
+                ? (_) => controller.updateStatus(service)
+                : null,
           ),
-        );
+        ],
+      ),
+    );
   }
 }

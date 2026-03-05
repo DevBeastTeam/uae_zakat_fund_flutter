@@ -6,10 +6,13 @@ import 'package:zakat_fund/model/stats_data.dart';
 Widget statsContainer({required StatsData stats}) {
   return Expanded(
     child: Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 10.h),
+      padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 12.h),
       decoration: BoxDecoration(
           color: stats.backgroundColor.withOpacity(0.10),
-          borderRadius: BorderRadius.circular(8.r)),
+          borderRadius: BorderRadius.circular(10.r),
+          border: Border.all(
+              color: stats.titleStyle.color ?? stats.backgroundColor,
+              width: 1.w)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

@@ -18,6 +18,9 @@ import 'package:zakat_fund/widgets/cupertino_search_field.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
 
+import '../../../widgets/secure_paymen_ttitle_widget.dart';
+import '../../../widgets/total_payment_widget.dart';
+
 void quickDonationBottomSheet() {
   Utils.logEvent(name: EventConstant.quickDonationScreen);
   final viewModel = Get.find<MainViewModel>();
@@ -44,6 +47,7 @@ void quickDonationBottomSheet() {
                   ? _selectedProjects()
                   : _projectListView();
             }),
+            SizedBox(height: 24.h),
             _buildBottomActions(viewModel)
           ],
         ),
@@ -86,6 +90,9 @@ Widget _buildBottomActions(MainViewModel viewModel) {
               Expanded(
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     side: BorderSide(color: themeViewModel.color),
                     // side:
                     //     BorderSide(width: 2.w, color: AppColors.darkBrownColor),
@@ -214,7 +221,7 @@ Widget _selectedProjects() {
                             spacing: 8.w,
                             children: [
                               ...project.priceList.map((data) => SizedBox(
-                                    height: 40,
+                                    height: 35,
                                     child: RawChip(
                                       onPressed: () {
                                         project.controller.clear();
@@ -237,7 +244,10 @@ Widget _selectedProjects() {
                                       // ),
                                       backgroundColor: data == project.price
                                           ? themeViewModel.color
-                                          : AppColors.greyBackColor,
+                                          : Colors.white,
+                                      // backgroundColor: data == project.price
+                                      //     ? themeViewModel.color
+                                      //     : AppColors.greyBackColor,
                                       // side: BorderSide(
                                       //     color: data == project.price
                                       //         ? AppColors.brownPrimaryColor
@@ -247,17 +257,18 @@ Widget _selectedProjects() {
                                       //     : Colors.white,
                                       label: Text("$data ${"currency".tr}"),
                                       labelStyle: data == project.price
-                                          ? AppTextStyle.white14spTextStyle
+                                          ? AppTextStyle.white12spTextStyle
                                           : TextStyle(
                                               fontWeight: FontWeight.w500,
-                                              fontSize: 14.sp,
+                                              fontSize: 12.sp,
                                               color: AppColors.lightGray,
                                             ),
                                     ),
                                   )),
+                              SizedBox(width: 10.w),
                               SizedBox(
                                 height: 35,
-                                width: 115.w,
+                                width: double.infinity,
                                 child: TextField(
                                   controller: project.controller,
                                   focusNode: project.focusNode,
@@ -311,50 +322,38 @@ Widget _selectedProjects() {
                       ),
                     ),
                     6.verticalSpace,
-                    const Divider(color: AppColors.lightGrey, height: 0)
+                    const Divider(color: AppColors.lightGrey1, height: 0)
                   ],
                 ),
               );
             }),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
-              margin: EdgeInsets.symmetric(vertical: 16.h),
-              decoration: BoxDecoration(
-                  color: AppColors.grayColor,
-                  // color: const Color.fromARGB(255, 230, 230, 230),
-                  borderRadius: BorderRadius.circular(8.r)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text("totalAmount".tr),
-                  Text("${viewModel.getTotalAmount()} ${"currency".tr}"),
-                ],
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-              decoration: BoxDecoration(
-                color: AppColors.grayColor,
-                // color: Color.fromARGB(255, 230, 230, 230),
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: Row(
-                children: [
-                  Icon(
-                    Icons.verified_user_rounded,
-                    color: themeViewModel.color,
-                  ),
-                  6.horizontalSpace,
-                  Flexible(
-                    child: Text(
-                      "paymentSecureMessage".tr,
-                      textAlign: TextAlign.center,
-                      style: AppTextStyle.primaryDarkBlack10spTextStyle,
-                    ),
-                  )
-                ],
-              ),
-            ),
+
+            TotalPaymentWidget(totalAmount: viewModel.getTotalAmount()),
+            SecurePaymentTitleWidget(),
+            // Container(
+            //   padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            //   decoration: BoxDecoration(
+            //     color: AppColors.grayColor,
+            //     // color: Color.fromARGB(255, 230, 230, 230),
+            //     borderRadius: BorderRadius.circular(10.r),
+            //   ),
+            //   child: Row(
+            //     children: [
+            //       Icon(
+            //         Icons.verified_user_rounded,
+            //         color: themeViewModel.color,
+            //       ),
+            //       6.horizontalSpace,
+            //       Flexible(
+            //         child: Text(
+            //           "paymentSecureMessage".tr,
+            //           textAlign: TextAlign.center,
+            //           style: AppTextStyle.primaryDarkBlack10spTextStyle,
+            //         ),
+            //       )
+            //     ],
+            //   ),
+            // ),
           ],
         )),
   );
@@ -365,8 +364,15 @@ Widget _projectListView() {
   return Expanded(
     child: Obx(() => ListView.builder(
           shrinkWrap: true,
+          itemCount: viewModel.projects.length + 1,
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           itemBuilder: (BuildContext context, int index) {
+            if (index == viewModel.projects.length) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: SecurePaymentTitleWidget(),
+              );
+            }
             ProjectElements project = viewModel.projects[index];
             return Column(
               mainAxisSize: MainAxisSize.min,
@@ -400,7 +406,6 @@ Widget _projectListView() {
               ],
             );
           },
-          itemCount: viewModel.projects.length,
         )),
   );
 }

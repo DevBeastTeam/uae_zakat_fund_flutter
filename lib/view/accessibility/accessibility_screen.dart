@@ -118,7 +118,7 @@ class AccessibilityScreen extends GetView<AccessibilityViewModel> {
         ),
         shape: WidgetStatePropertyAll(
           RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50.r),
+            borderRadius: BorderRadius.circular(12.r),
           ),
         ),
       ),

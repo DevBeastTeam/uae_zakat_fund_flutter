@@ -20,10 +20,7 @@ class CompanyAccountScreen extends GetView<AccountViewModel> {
       padding: EdgeInsets.symmetric(vertical: 20.h),
       child: Column(
         children: [
-          _buildImage(),
-          8.verticalSpace,
-          _buildCompanyName(),
-          16.verticalSpace,
+          // 16.verticalSpace,
           _buildAboutSection(),
           16.verticalSpace,
           _buildAccountTabs(),
@@ -52,52 +49,87 @@ class CompanyAccountScreen extends GetView<AccountViewModel> {
     );
   }
 
-  Widget _buildCompanyName() {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      child: Obx(() {
-        final name = Utils.isArabic
-            ? controller.company.value.accountInfo?.accountNameArabic
-            : controller.company.value.accountInfo?.accountName;
-        return Text(
-          name ?? "",
-          textAlign: TextAlign.center,
-          style: AppTextStyle.primaryDarkBrown24spTextStyle,
-        );
-      }),
-    );
-  }
-
-  Obx _buildImage() =>
-      Obx(() => circleImage(controller.profilePhoto.value, onPressed: () {}));
+  Obx _buildImage() => Obx(() => circleImage(controller.profilePhoto.value,
+      onPressed: () {}, width: 30.w, height: 30.h));
 
   Widget _buildAboutSection() {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.lightWhiteColor,
-        border: Border(
-          bottom: BorderSide(width: 1.h, color: AppColors.lightGrey),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Container(
+        decoration: BoxDecoration(
+          // color: AppColors.lightWhiteColor,
+          // border: Border(
+          //   bottom: BorderSide(width: 1.h, color: AppColors.lightGrey),
+          // ),
+          border: Border.all(color: AppColors.lightGrey),
+          borderRadius: BorderRadius.circular(12.r),
         ),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              const Expanded(child: SizedBox.shrink()),
-              Expanded(
-                flex: Utils.isArabic ? 3 : 2,
-                child: _buildAboutLabels(),
-              ),
-              Expanded(
-                flex: 4,
-                child: _buildAboutValues(),
-              ),
-            ],
-          ),
-          16.verticalSpace,
-          _buildActionButtons(),
-        ],
+        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+        child: Column(
+          children: [
+            // _buildImage(),
+            // 8.verticalSpace,
+            // _buildCompanyName(),
+            // 16.verticalSpace,
+            // ListTile(
+            //   leading: _buildImage(),
+            //   title: Obx(() {
+            //     final name = Utils.isArabic
+            //         ? controller.company.value.accountInfo?.accountNameArabic
+            //         : controller.company.value.accountInfo?.accountName;
+            //     return Text(
+            //       name ?? "",
+            //       textAlign: TextAlign.center,
+            //       style: AppTextStyle.primaryDarkBrown16spTextStyle,
+            //     );
+            //   }),
+            //   subtitle: Obx(() {
+            //     final contact = controller.company.value.accountContact;
+            //     return _valueWithLTR(contact?.email);
+            //   }),
+            // ),
+            Row(
+              children: [
+                _buildImage(),
+                8.horizontalSpace,
+                Obx(() {
+                  final name = Utils.isArabic
+                      ? controller.company.value.accountInfo?.accountNameArabic
+                      : controller.company.value.accountInfo?.accountName;
+                  final email = controller.company.value.accountContact?.email;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name ?? "",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.black14spTextStyle,
+                      ),
+                      Text(
+                        email ?? "",
+                        textAlign: TextAlign.center,
+                        style: AppTextStyle.lightGray12spTextStyle,
+                      ),
+                    ],
+                  );
+                }),
+              ],
+            ),
+            16.verticalSpace,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildAboutLabels(),
+                SizedBox(width: 25),
+                _buildAboutValues(),
+                const Expanded(child: SizedBox.shrink()),
+              ],
+            ),
+            16.verticalSpace,
+            _buildActionButtons(),
+          ],
+        ),
       ),
     );
   }
@@ -106,8 +138,6 @@ class CompanyAccountScreen extends GetView<AccountViewModel> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildAccountTitle("email"),
-        4.verticalSpace,
         buildAccountTitle("mobile".tr),
         4.verticalSpace,
         buildAccountTitle("website".tr),
@@ -126,8 +156,6 @@ class CompanyAccountScreen extends GetView<AccountViewModel> {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _valueWithLTR(contact?.email),
-          4.verticalSpace,
           _valueWithLTR(contact?.mobile),
           4.verticalSpace,
           _valueWithLTR(contact?.website),

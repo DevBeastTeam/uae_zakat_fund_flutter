@@ -4,13 +4,12 @@ import 'package:get/get.dart';
 import 'package:zakat_fund/model/association.dart';
 import 'package:zakat_fund/model/lookup_data.dart';
 import 'package:zakat_fund/utils/constants/app_colors.dart';
-import 'package:zakat_fund/utils/constants/app_textstyle.dart';
 import 'package:zakat_fund/utils/utils.dart';
 import 'package:zakat_fund/view_model/account_view_model.dart';
 import 'package:zakat_fund/view_model/association_view_model.dart';
-import 'package:zakat_fund/widgets/circle_image.dart';
 import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/profile_text_widget.dart';
+import 'package:zakat_fund/widgets/profile_view_widget.dart';
 import 'package:zakat_fund/widgets/tabbar_widget_v2.dart';
 
 class AssociationProfileScreen extends GetView<AccountViewModel> {
@@ -20,67 +19,21 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
   Widget build(BuildContext context) {
     controller.currentTabIndex.value = 0;
     controller.tabController.animateTo(0);
-    return Column(
-      children: [
-        16.verticalSpace,
-        _buildHeaderCard(),
-        16.verticalSpace,
-        _buildTabBar(),
-        16.verticalSpace,
-        Expanded(child: _buildContentCard()),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          _buildHeaderImage(),
+          16.verticalSpace,
+          _buildTabBar(),
+          16.verticalSpace,
+          _buildContentCard(),
+        ],
+      ),
     );
   }
 
-  // ── Header card: avatar + name + email ──────────────────────────────────
-  Widget _buildHeaderCard() {
-    return Obx(() {
-      final info = controller.association.value.associationInfo;
-      final name = Utils.isArabic
-          ? (info?.accountNameArabic ?? '')
-          : (info?.accountName ?? '');
-      final email = controller.association.value.accountContact?.email ?? '';
-      return Container(
-        margin: EdgeInsets.symmetric(horizontal: 16.w),
-        padding: EdgeInsets.all(16.r),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12.r),
-          border: Border.all(color: AppColors.lightGrey),
-        ),
-        child: Row(
-          children: [
-            circleImage(
-              controller.profilePhoto.value,
-              profile: true,
-              onPressed: () {},
-              showAdd: false,
-            ),
-            16.horizontalSpace,
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: AppTextStyle.secondaryPrimaryBlack16spTextStyle2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  4.verticalSpace,
-                  Text(
-                    email,
-                    style: AppTextStyle.darkGreyOne12spTextStyle2,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
-    });
+  Widget _buildHeaderImage() {
+    return associationHeader(controller, false, false, showLess: true);
   }
 
   // ── TabBarWidgetV2 ────────────────────────────────────────────────────────
@@ -102,21 +55,18 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
           controller.user.id;
       return Column(
         children: [
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 16.w),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12.r),
-                border: Border.all(color: AppColors.lightGrey),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.r),
-                child: SingleChildScrollView(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                  child: _buildTabContent(),
-                ),
+          Container(
+            margin: EdgeInsets.symmetric(horizontal: 16.w),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12.r),
+              border: Border.all(color: AppColors.lightGrey),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12.r),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                child: _buildTabContent(),
               ),
             ),
           ),
@@ -198,8 +148,7 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
                 : ""),
         profileTextWidget(label: "licensingAuthority", value: authority),
         profileAttachWidget(
-            label: "associationLicense",
-            value: associationInfo?.license ?? ''),
+            label: "associationLicense", value: associationInfo?.license ?? ''),
         if (associationInfo?.agreementUrl != null)
           profileAttachWidget(
               label: "agreement",
@@ -268,7 +217,8 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         profileTextWidget(
-            label: 'firstNameInEnglish', value: representative?.firstName ?? ''),
+            label: 'firstNameInEnglish',
+            value: representative?.firstName ?? ''),
         profileTextWidget(
             label: 'lastNameInEnglish', value: representative?.lastName ?? ''),
         profileTextWidget(
@@ -280,7 +230,8 @@ class AssociationProfileScreen extends GetView<AccountViewModel> {
         profileTextWidget(label: 'email', value: representative?.email ?? ''),
         profileTextWidget(label: 'mobile', value: representative?.phone ?? ''),
         profileTextWidget(
-            label: 'jobDescription', value: representative?.jobDescription ?? ''),
+            label: 'jobDescription',
+            value: representative?.jobDescription ?? ''),
         profileTextWidget(label: 'nationality', value: nationality),
         profileTextWidget(
             label: 'uaeId', value: representative?.emirateId ?? ''),

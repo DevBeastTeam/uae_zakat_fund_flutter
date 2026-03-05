@@ -48,11 +48,21 @@ class SplashPage extends StatelessWidget {
                   ),
                   16.verticalSpace,
                   Text(
+                    "بوابة رقمية موثوقة لزكاتكم وصدقاتكم. نضمن وصول تبرعاتكم إلى مستحقيها بشفافية تامة والتزام كامل باللوائح.",
+                    textAlign: TextAlign.center,
+                    style: AppTextStyle.secondaryDarkBrown18spTextStyle,
+                  ),
+                  10.verticalSpace,
+                  Text(
                     "splashDesc".tr,
                     textAlign: TextAlign.center,
                     style: AppTextStyle.secondaryDarkBrown18spTextStyle,
                   ),
                   20.verticalSpace,
+                  Text(
+                    "اختار اللغة",
+                    style: AppTextStyle.secondaryDarkBrownColor32spTextStyle,
+                  ),
                   Text(
                     "selectLanguage".tr,
                     style: AppTextStyle.secondaryDarkBrownColor32spTextStyle,

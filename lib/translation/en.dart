@@ -451,7 +451,26 @@ const Map<String, String> en = {
   'services': 'Services',
   'startService': 'Start Service',
   'aboutUs': 'About Us',
+  'cmsSectionHeader': 'Section',
+  'cmsHeadingLabel': 'Heading',
+  'cmsDetailsLabel': 'Details',
+  'cmsImageLabel': 'Image',
+  'cmsNameLabel': 'Name',
+  'cmsJobTitleLabel': 'Job Title',
+  'missionSubject': 'Mission Subject',
+  'missionDetails': 'Mission Details',
+  'visionDetails': 'Vision Details',
+  'corporateValues': 'Corporate Values',
+  'ourTeamMember': 'Team Member',
+  'chooseFile': 'Choose File',
+  'noFileChosen': 'No file chosen',
+  'supportedFormatsMsg': 'Supported Formats: PNG, JPEG and SVG',
+  'maxSizeMsg': 'Maximum Size: 5MB',
   'beneficiaries': 'Beneficiaries',
+  'campaignTemplates': 'Campaign Templates',
+  'emailTemplates': 'Email Templates',
+  'creatorName': 'Creator Name',
+  'deactivateActivate': 'Deactivate/Activate',
   'projectComplete':
       'The project has been completed and we hope to achieve more together.',
   'markAsRead': 'Mark as Read',
@@ -1124,7 +1143,6 @@ const Map<String, String> en = {
   'notificationPreview': 'Notification Preview',
   'notificationAccepted': 'Notification Request Successfully Accepted!',
   'notificationRejection': 'Notification Rejection',
-  'image': 'Image',
   'return': 'Return',
   'aboutAssociationReturn': 'About Association Return',
   'bannerAdReturn': 'Banner Ad Return',
@@ -2251,5 +2269,7 @@ const Map<String, String> en = {
   "fullName": "Full Name",
   "bankTransfer": "Bank\nTransfer",
   "credit/DebitCard": "Credit/Debit\nCard",
-  "paymentFailed": "Your payment could not be processed. Please try again."
+  "paymentFailed": "Your payment could not be processed. Please try again.",
+  "securePaymentMessage":
+      "All payment transactions are 100% secure under the supervision of General Authority for Islamic Affairs, Endowments and Zakat"
 };

@@ -318,7 +318,7 @@ class ColorBlindScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(40),
           border: Border.all(
             color: isSelected ? const Color(0xFFB58B3C) : Colors.grey.shade300,
             width: 1.4,

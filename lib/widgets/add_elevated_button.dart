@@ -15,6 +15,11 @@ Widget addElevatedButton(
       fixedSize: WidgetStatePropertyAll(Size(Get.width, 40.h)),
       backgroundColor: WidgetStatePropertyAll(themeViewModel.color),
       elevation: const WidgetStatePropertyAll(0),
+      shape: WidgetStatePropertyAll(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(7.r),
+        ),
+      ),
     ),
     onPressed: onPressed,
     label: Text(

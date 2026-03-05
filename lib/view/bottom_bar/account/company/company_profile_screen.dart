@@ -51,6 +51,8 @@ class CompanyProfileScreen extends GetView<AccountViewModel> {
         child: Row(
           children: [
             circleImage(
+              width: 60.w,
+              height: 60.h,
               controller.profilePhoto.value,
               profile: true,
               onPressed: () {},
@@ -258,7 +260,8 @@ class CompanyProfileScreen extends GetView<AccountViewModel> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         profileTextWidget(
-            label: 'firstNameInEnglish', value: representative?.firstName ?? ''),
+            label: 'firstNameInEnglish',
+            value: representative?.firstName ?? ''),
         profileTextWidget(
             label: 'lastNameInEnglish', value: representative?.lastName ?? ''),
         profileTextWidget(
@@ -270,7 +273,8 @@ class CompanyProfileScreen extends GetView<AccountViewModel> {
         profileTextWidget(label: 'email', value: representative?.email ?? ''),
         profileTextWidget(label: 'mobile', value: representative?.phone ?? ''),
         profileTextWidget(
-            label: 'jobDescription', value: representative?.jobDescription ?? ''),
+            label: 'jobDescription',
+            value: representative?.jobDescription ?? ''),
         profileTextWidget(label: 'nationality', value: nationality),
         profileTextWidget(
             label: 'uaeId', value: representative?.emirateId ?? ''),

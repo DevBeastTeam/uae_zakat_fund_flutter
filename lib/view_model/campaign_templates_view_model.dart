@@ -27,19 +27,19 @@ class CampaignTemplatesViewModel extends GetxController with GenericMixin {
 
   RxList<StatsData> statsList = <StatsData>[
     StatsData(
-        title: "Total",
+        title: "total",
         value: "0",
         titleStyle: AppTextStyle.darkBrown12spTextStyle1,
         valueStyle: AppTextStyle.darkBrown20spTextStyle1,
         backgroundColor: const Color.fromARGB(255, 255, 236, 202)),
     StatsData(
-        title: "Active",
+        title: "active",
         value: "0",
         titleStyle: AppTextStyle.darkGreenColor12spTextStyle1,
         valueStyle: AppTextStyle.darkGreen16spTextStyle1,
         backgroundColor: const Color.fromARGB(255, 204, 255, 170)),
     StatsData(
-        title: "InActive",
+        title: "inactive",
         value: "0",
         titleStyle: AppTextStyle.red12spTextStyle,
         valueStyle: AppTextStyle.red16spTextStyle,

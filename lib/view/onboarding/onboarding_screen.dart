@@ -67,15 +67,15 @@ class OnBoardingScreen extends GetView<OnboardingViewModel> {
                                   SvgPicture.asset(
                                     data.image,
                                     width: 350.w,
-                                    height: 250.h,
+                                    height: 200.h,
                                   ),
-                                  16.verticalSpace,
+                                  5.verticalSpace,
                                   Text(
                                     data.title.tr,
                                     textAlign: TextAlign.center,
-                                    style: AppTextStyle.white26spTextStyle,
+                                    style: AppTextStyle.white24spTextStyle,
                                   ),
-                                  16.verticalSpace,
+                                  5.verticalSpace,
                                   Text(
                                     data.subTitle.tr,
                                     textAlign: TextAlign.center,
@@ -105,7 +105,7 @@ class OnBoardingScreen extends GetView<OnboardingViewModel> {
                     onboardingBox.add(true);
                     Get.offNamed(AppRoutes.mainScreen);
                   }),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
               Text(
                 "copyrightZakatFund".tr,
                 textAlign: TextAlign.center,

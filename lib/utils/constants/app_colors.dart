@@ -30,7 +30,8 @@ abstract class AppColors {
   static const Color primaryDarkBrownColor = Color(0xff683D1B);
   static const Color lightBrownColor = Color(0xff935C15);
   static const Color lightBrownColor1 = Color(0xffB88016);
-  static const Color secondaryLightGreyColor = Color(0xffE7E6E7);
+  static const Color secondaryLightGreyColor =
+      Color.fromARGB(255, 219, 219, 219);
   static const Color warningBackColor = Color(0xffF9F7ED);
   static const Color lightGreen = Color(0xffF7FFF1);
   static const Color lightWhiteColor = Color(0xfff8f8f8);
@@ -127,6 +128,4 @@ abstract class AppColors {
   static const Color urgentText = Color(0xffD83731);
   static const Color lightGray = Color(0xff475569);
   static const Color quickDonateColor = Color(0xffB68A35);
-
-
 }

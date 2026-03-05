@@ -23,13 +23,16 @@ class SelectedProjectsListView extends StatelessWidget {
         return ListView(
           padding: EdgeInsets.symmetric(horizontal: 16.w),
           children: [
-            ...List.generate(selectedProjects.length, (index){
+            ...List.generate(selectedProjects.length, (index) {
               final project = selectedProjects[index];
               return KeyboardActions(
                 autoScroll: false,
                 config: Utils.buildConfig(
                   context,
-                  [KeyboardActionsItem(displayArrows: false, focusNode: project.focusNode)],
+                  [
+                    KeyboardActionsItem(
+                        displayArrows: false, focusNode: project.focusNode)
+                  ],
                 ),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -44,7 +47,8 @@ class SelectedProjectsListView extends StatelessWidget {
                               Utils.isArabic
                                   ? project.projectNameArabic
                                   : project.projectName,
-                              style: AppTextStyle.secondaryPrimaryBlack16spTextStyle3,
+                              style: AppTextStyle
+                                  .secondaryPrimaryBlack16spTextStyle3,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -79,7 +83,8 @@ class SelectedProjectsListView extends StatelessWidget {
                             runSpacing: 8.h,
                             spacing: 8.w,
                             children: [
-                              ...project.priceList.map((price) => _buildPriceChip(project, price)),
+                              ...project.priceList.map(
+                                  (price) => _buildPriceChip(project, price)),
                               _buildCustomAmountField(project),
                             ],
                           ),
@@ -115,7 +120,8 @@ class SelectedProjectsListView extends StatelessWidget {
         },
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.r)),
         side: const BorderSide(color: AppColors.lightGrey),
-        backgroundColor: isSelected ? AppColors.chipBackgroundColor : Colors.white,
+        backgroundColor:
+            isSelected ? AppColors.chipBackgroundColor : Colors.white,
         label: Text("$price ${"currency".tr}"),
         labelStyle: isSelected
             ? AppTextStyle.accentBrown12spTextStyle
@@ -148,7 +154,8 @@ class SelectedProjectsListView extends StatelessWidget {
           contentPadding: EdgeInsets.symmetric(horizontal: 8.w),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),
-            borderSide: BorderSide(width: 1.w, color: AppColors.accentBrownColor),
+            borderSide:
+                BorderSide(width: 1.w, color: AppColors.accentBrownColor),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.r),

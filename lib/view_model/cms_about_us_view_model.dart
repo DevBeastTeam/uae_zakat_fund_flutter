@@ -57,63 +57,75 @@ class CMSAboutUsViewModel extends ModulePermissionsViewModel {
     final config = aboutUsConfig.value!;
 
     // About Sahem
-    _initializeController("aboutSahemEn", config.aboutSahemEn ?? "");
-    _initializeController("aboutSahemAr", config.aboutSahemAr ?? "");
+    _initializeController("AboutSahemEn", config.aboutSahemEn ?? "");
+    _initializeController("AboutSahemAr", config.aboutSahemAr ?? "");
 
     // Mission
-    _initializeController("missionSubjectEn", config.missionSubjectEn ?? "");
-    _initializeController("missionSubjectAr", config.missionSubjectAr ?? "");
-    _initializeController("missionDetailsEn", config.missionDetailsEn ?? "");
-    _initializeController("missionDetailsAr", config.missionDetailsAr ?? "");
+    _initializeController("MissionSubjectEn", config.missionSubjectEn ?? "");
+    _initializeController("MissionSubjectAr", config.missionSubjectAr ?? "");
+    _initializeController("MissionDetailsEn", config.missionDetailsEn ?? "");
+    _initializeController("MissionDetailsAr", config.missionDetailsAr ?? "");
 
     // Vision
-    _initializeController("visionDetailsEn", config.visionDetailsEn ?? "");
-    _initializeController("visionDetailsAr", config.visionDetailsAr ?? "");
+    _initializeController("VisionDetailsEn", config.visionDetailsEn ?? "");
+    _initializeController("VisionDetailsAr", config.visionDetailsAr ?? "");
 
     // Sections
     for (int i = 0; i < config.sections.length; i++) {
       final section = config.sections[i];
       _initializeController(
-          "section_${i}_headingEn", section.sectionHeadingEn ?? "");
+          "sections[$i].SectionHeadingEn", section.sectionHeadingEn ?? "");
       _initializeController(
-          "section_${i}_headingAr", section.sectionHeadingAr ?? "");
+          "sections[$i].SectionHeadingAr", section.sectionHeadingAr ?? "");
       _initializeController(
-          "section_${i}_detailsEn", section.sectionDetailsEn ?? "");
+          "sections[$i].SectionDetailsEn", section.sectionDetailsEn ?? "");
       _initializeController(
-          "section_${i}_detailsAr", section.sectionDetailsAr ?? "");
-      _initializeController("section_${i}_image", section.sectionImage ?? "");
+          "sections[$i].SectionDetailsAr", section.sectionDetailsAr ?? "");
+      _initializeController(
+          "sections[$i].SectionImage", section.sectionImage ?? "");
     }
 
     // Corporate Values
     for (int i = 0; i < config.corporateValuesSections.length; i++) {
       final section = config.corporateValuesSections[i];
       _initializeController(
-          "corporateValue_${i}_headingEn", section.headingEn ?? "");
+          "corporateValuesSections[$i].CorporateValuesHeadingEn",
+          section.headingEn ?? "");
       _initializeController(
-          "corporateValue_${i}_headingAr", section.headingAr ?? "");
+          "corporateValuesSections[$i].CorporateValuesHeadingAr",
+          section.headingAr ?? "");
       _initializeController(
-          "corporateValue_${i}_detailsEn", section.detailsEn ?? "");
+          "corporateValuesSections[$i].CorporateValuesDetailsEn",
+          section.detailsEn ?? "");
       _initializeController(
-          "corporateValue_${i}_detailsAr", section.detailsAr ?? "");
+          "corporateValuesSections[$i].CorporateValuesDetailsAr",
+          section.detailsAr ?? "");
     }
 
     // Strategic Goals
     for (int i = 0; i < config.strategicGoalsSections.length; i++) {
       final section = config.strategicGoalsSections[i];
       _initializeController(
-          "strategicGoal_${i}_detailsEn", section.detailsEn ?? "");
+          "strategicGoalsSections[$i].StrategicGoalsDetailsEn",
+          section.detailsEn ?? "");
       _initializeController(
-          "strategicGoal_${i}_detailsAr", section.detailsAr ?? "");
+          "strategicGoalsSections[$i].StrategicGoalsDetailsAr",
+          section.detailsAr ?? "");
     }
 
     // Team Members
     for (int i = 0; i < config.teamMembers.length; i++) {
       final member = config.teamMembers[i];
-      _initializeController("teamMember_${i}_nameEn", member.nameEn ?? "");
-      _initializeController("teamMember_${i}_nameAr", member.nameAr ?? "");
-      _initializeController("teamMember_${i}_jobEn", member.jobTitleEn ?? "");
-      _initializeController("teamMember_${i}_jobAr", member.jobTitleAr ?? "");
-      _initializeController("teamMember_${i}_image", member.image ?? "");
+      _initializeController(
+          "teamMembers[$i].OurTeamMemberNameEn", member.nameEn ?? "");
+      _initializeController(
+          "teamMembers[$i].OurTeamMemberNameAr", member.nameAr ?? "");
+      _initializeController(
+          "teamMembers[$i].OurTeamMemberJobTitleEn", member.jobTitleEn ?? "");
+      _initializeController(
+          "teamMembers[$i].OurTeamMemberJobTitleAr", member.jobTitleAr ?? "");
+      _initializeController(
+          "teamMembers[$i].OurTeamMemberImage", member.image ?? "");
     }
 
     configData.refresh();

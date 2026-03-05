@@ -61,13 +61,31 @@ class DonationDataScreen extends GetView<DonationDataViewModel> {
                   childrenPadding: EdgeInsets.symmetric(horizontal: 16.w),
                   initiallyExpanded: true,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r)),
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                          color: data.labelColor ??
+                              data.style?.color ??
+                              Colors.transparent,
+                          width: 1.w)),
+                  collapsedShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                          color: data.labelColor ??
+                              data.style?.color ??
+                              Colors.transparent,
+                          width: 1.w)),
                   collapsedBackgroundColor: data.backColor,
                   backgroundColor: data.backColor,
                   title: ListTile(
                     selected: true,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.r)),
+                      borderRadius: BorderRadius.circular(10.r),
+                      side: BorderSide(
+                          color: data.labelColor ??
+                              data.style?.color ??
+                              Colors.transparent,
+                          width: 1.w),
+                    ),
                     selectedTileColor: data.backColor,
                     contentPadding: EdgeInsets.zero,
                     visualDensity: const VisualDensity(vertical: -4),
@@ -198,7 +216,12 @@ class DonationDataScreen extends GetView<DonationDataViewModel> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.r)),
+                        borderRadius: BorderRadius.circular(10.r),
+                        side: BorderSide(
+                            color: data.labelColor ??
+                                data.style?.color ??
+                                Colors.transparent,
+                            width: 1.w)),
                     selectedTileColor: data.backColor,
                     title: Text(data.title.tr, style: data.style),
                     subtitle: Padding(
