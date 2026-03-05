@@ -17,9 +17,9 @@ class Cart {
   @HiveField(6)
   String projectDescriptionShort;
   @HiveField(7)
-  String associationName;
+  String? associationName;
   @HiveField(8)
-  String associationNameArabic;
+  String? associationNameArabic;
   @HiveField(9)
   double amount;
   @HiveField(10)
@@ -34,8 +34,8 @@ class Cart {
     required this.projectName,
     required this.projectDescriptionShortArabic,
     required this.projectDescriptionShort,
-    required this.associationName,
-    required this.associationNameArabic,
+    this.associationName,
+    this.associationNameArabic,
     required this.amount,
     required this.projectImage,
     required this.minimumAmount,
@@ -44,15 +44,16 @@ class Cart {
   factory Cart.fromJson(Map<String, dynamic> json) => Cart(
         cartId: json["cartId"],
         projectId: json["projectId"],
-        projectNameArabic: json["projectNameArabic"],
-        projectName: json["projectName"],
-        projectDescriptionShortArabic: json["projectDescriptionShortArabic"],
-        projectDescriptionShort: json["projectDescriptionShort"],
+        projectNameArabic: json["projectNameArabic"] ?? "",
+        projectName: json["projectName"] ?? "",
+        projectDescriptionShortArabic:
+            json["projectDescriptionShortArabic"] ?? "",
+        projectDescriptionShort: json["projectDescriptionShort"] ?? "",
         associationName: json["associationName"],
         associationNameArabic: json["associationNameArabic"],
-        amount: json["amount"],
+        amount: json["amount"]?.toDouble() ?? 0.0,
         projectImage: json["projectImage"],
-        minimumAmount: json["minimumAmount"],
+        minimumAmount: json["minimumAmount"]?.toDouble() ?? 0.0,
       );
 
   Map<String, dynamic> toJson() => {

@@ -1406,6 +1406,10 @@ abstract class AppTextStyle {
       fontWeight: FontWeight.w500,
       fontSize: 16.sp);
 
+  static TextStyle secondaryDarkBrown16spTextStyle = TextStyle(
+      fontSize: 16.sp,
+      color: AppColors.secondaryDarkBrownColor,
+      fontWeight: FontWeight.w400);
   static TextStyle secondaryDarkBrown18spTextStyle = TextStyle(
       fontSize: 18.sp,
       color: AppColors.secondaryDarkBrownColor,
@@ -1513,6 +1517,10 @@ abstract class AppTextStyle {
       color: AppColors.secondaryDarkBrownColor,
       fontWeight: FontWeight.bold);
 
+  static TextStyle secondaryDarkBrownColor23spTextStyle = TextStyle(
+      fontSize: 23.sp,
+      color: AppColors.secondaryDarkBrownColor,
+      fontWeight: FontWeight.bold);
   static TextStyle secondaryDarkBrownColor26spTextStyle = TextStyle(
       fontSize: 26.sp,
       color: AppColors.secondaryDarkBrownColor,
