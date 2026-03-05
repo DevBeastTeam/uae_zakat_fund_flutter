@@ -223,8 +223,9 @@ class CampaignsAdminScreen extends GetView<CampaignsAdminViewModel> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                    "${campaign.campaignName.tr.length > 35 ? campaign.campaignName.tr.substring(0, 35) + '...' : campaign.campaignName.tr}"),
+                Text(campaign.campaignName.tr.length > 35
+                    ? '${campaign.campaignName.tr.substring(0, 35)}...'
+                    : campaign.campaignName.tr),
                 Container(
                   width: 36.w,
                   height: 36.w,
