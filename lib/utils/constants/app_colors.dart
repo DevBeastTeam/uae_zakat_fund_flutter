@@ -48,6 +48,7 @@ abstract class AppColors {
   static const Color greenColor = Color(0xff2DA771);
   static const Color progressBack = Color(0xffF3EEE1);
   static const Color dividerColor = Color(0xffEBEBEB);
+  static const Color dividerDarkColor = Color.fromARGB(255, 209, 209, 209);
   static const Color darkGreenColor = Color(0xff2C6C00);
   static const Color darkerGreenColor = Color(0xff2F663C);
   static const Color grayColor = Color(0xffF6F6F6);

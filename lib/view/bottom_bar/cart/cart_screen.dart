@@ -14,8 +14,8 @@ import 'package:zakat_fund/view_model/cart_view_model.dart';
 import 'package:zakat_fund/view_model/payment_method_view_model.dart';
 import 'package:zakat_fund/widgets/cache_image.dart';
 import 'package:zakat_fund/widgets/edit_price_dialog.dart';
-import 'package:zakat_fund/widgets/elevated_button.dart';
 import 'package:zakat_fund/widgets/my_app_bar.dart';
+import 'package:zakat_fund/widgets/secure_paymen_ttitle_widget.dart';
 
 class CartScreen extends GetView<CartViewModel> {
   const CartScreen({super.key});
@@ -23,7 +23,7 @@ class CartScreen extends GetView<CartViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xffF5F5F5),
       appBar: myAppBar(title: "cart"),
       body: Obx(
         () => controller.cart.isEmpty
@@ -32,12 +32,15 @@ class CartScreen extends GetView<CartViewModel> {
                     style: AppTextStyle.secondaryBlack14spTextStyle),
               )
             : SingleChildScrollView(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    _buildStepIndicator(),
-                    4.verticalSpace,
-                    _buildStepTitle(),
+                    // Show steps only for guest/unregistered users
+                    if (userBox.isEmpty) ...[
+                      _buildStepIndicatorRow(context),
+                      20.verticalSpace
+                    ],
                     controller.currentStep.value == 1
                         ? _buildCartList()
                         : const PaymentMethodWidget(),
@@ -48,56 +51,137 @@ class CartScreen extends GetView<CartViewModel> {
     );
   }
 
-  Widget _buildStepIndicator() {
-    return Container(
-      width: 50.w,
-      height: 50.h,
-      margin: EdgeInsets.only(top: 16.h),
-      decoration: BoxDecoration(
-        color: themeViewModel.color,
-        shape: BoxShape.circle,
-        border:
-            Border.all(color: AppColors.lightBtnBackgroundColor, width: 6.w),
-      ),
-      alignment: Alignment.center,
-      child: Text(
-        "${controller.currentStep.value}",
-        style: AppTextStyle.white16spTextStyle,
-      ),
-    );
-  }
+  Widget _buildStepIndicatorRow(context) {
+    final step = controller.currentStep.value;
+    final steps = ['cartDetails'.tr, 'paymentDetails'.tr, 'confirmation'.tr];
 
-  Widget _buildStepTitle() {
-    final title = controller.currentStep.value == 1
-        ? "cartDetails".tr
-        : "paymentDetails".tr;
-    return Center(
-      child: Text(title, style: AppTextStyle.primaryBlack14spTextStyle),
+    Widget buildCircle(int index) {
+      final isActive = step >= index;
+      if (isActive) {
+        return Container(
+          width: 40.r,
+          height: 40.r,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: themeViewModel.color.withValues(alpha: 0.2),
+          ),
+          alignment: Alignment.center,
+          child: Container(
+            width: 28.r,
+            height: 28.r,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: themeViewModel.color,
+            ),
+            alignment: Alignment.center,
+            child: Text('$index',
+                style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white)),
+          ),
+        );
+      }
+      return Container(
+        width: 28.r,
+        height: 28.r,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.transparent,
+          border: Border.all(color: const Color(0xffD1D1D1), width: 1.5),
+        ),
+        alignment: Alignment.center,
+        child: Text('$index',
+            style: TextStyle(
+                fontSize: 11.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.primaryDarkGreyColor)),
+      );
+    }
+
+    Widget buildLine(int afterIndex) => Container(
+          height: 1.5,
+          color: step > afterIndex
+              ? themeViewModel.color
+              : const Color(0xffD1D1D1),
+        );
+
+    TextStyle labelStyle(int index) => TextStyle(
+          fontSize: 11.sp,
+          fontWeight: step >= index ? FontWeight.w600 : FontWeight.w400,
+          color: step >= index
+              ? AppColors.primaryBlackColor
+              : AppColors.primaryDarkGreyColor,
+        );
+
+    return Column(
+      children: [
+        // circles interleaved with connector lines in one flat Row
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(child: Center(child: buildCircle(1))),
+            Expanded(flex: 2, child: buildLine(1)),
+            Expanded(child: Center(child: buildCircle(2))),
+            Expanded(flex: 2, child: buildLine(2)),
+            Expanded(child: Center(child: buildCircle(3))),
+          ],
+        ),
+        8.verticalSpace,
+        // labels mirror the same flex pattern
+        Row(
+          children: [
+            Expanded(
+                child: Text(steps[0],
+                    textAlign: TextAlign.center, style: labelStyle(1))),
+            const Spacer(flex: 2),
+            Expanded(
+                child: Text(steps[1],
+                    textAlign: TextAlign.center, style: labelStyle(2))),
+            const Spacer(flex: 2),
+            Expanded(
+                child: Text(steps[2],
+                    textAlign: TextAlign.center, style: labelStyle(3))),
+          ],
+        ),
+      ],
     );
   }
 
   Widget _buildCartList() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _buildCartContainer(),
+        16.verticalSpace,
         _buildCartSummary(),
-        120.verticalSpace,
+        24.verticalSpace,
       ],
     );
   }
 
+  /// ── Cart items card ──────────────────────────────────────────────────────
   Widget _buildCartContainer() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-      padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 13.h),
-      decoration: _containerDecoration(),
+      padding: EdgeInsets.all(16.r),
+      decoration: _cardDecoration(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildCartHeader(),
-          10.verticalSpace,
-          ...List.generate(
-              controller.cart.length, (index) => _buildCartItem(index)),
-          3.verticalSpace,
+          12.verticalSpace,
+          ...List.generate(controller.cart.length, (index) {
+            return Column(
+              children: [
+                _buildCartItem(index),
+                if (index != controller.cart.length - 1) ...[
+                  14.verticalSpace,
+                  Divider(color: AppColors.dividerDarkColor, height: 1.h),
+                  14.verticalSpace,
+                ],
+              ],
+            );
+          }),
         ],
       ),
     );
@@ -105,215 +189,312 @@ class CartScreen extends GetView<CartViewModel> {
 
   Widget _buildCartHeader() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("cart".tr, style: AppTextStyle.secondaryBlack18spTextStyle1),
-        Text(" (${controller.cart.length})",
-            style: AppTextStyle.primaryDarkGrey18spTextStyle),
-        const Spacer(),
-        TextButton(
-          onPressed: controller.deleteAllCart,
-          style: TextButton.styleFrom(
-              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              padding: EdgeInsets.zero),
-          child: Text("deleteAll".tr, style: AppTextStyle.red14spTextStyle2),
-        )
+        Text(
+          "${"cart".tr} (${controller.cart.length})",
+          style: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.w700,
+            color: AppColors.primaryBlackColor,
+          ),
+        ),
+        GestureDetector(
+          onTap: controller.deleteAllCart,
+          child: Text(
+            "deleteAll".tr,
+            style: TextStyle(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.redColor,
+            ),
+          ),
+        ),
       ],
     );
   }
 
   Widget _buildCartItem(int index) {
     final cart = controller.cart[index];
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildCartImage(cart),
-            10.horizontalSpace,
-            _buildCartDetails(cart, index),
-          ],
-        ),
-        if (index != controller.cart.length - 1) ...[
-          16.verticalSpace,
-          Divider(color: AppColors.dividerColor, height: 1.h),
-          16.verticalSpace,
-        ],
-      ],
-    );
-  }
-
-  Widget _buildCartImage(Cart cart) {
-    final placeholder = Image.asset(
-      AppResources.placeholder,
-      width: 140.w,
-      height: 120.h,
-      fit: BoxFit.cover,
-    );
-
-    if (cart.projectImage == null) {
-      return ClipRRect(
-          borderRadius: BorderRadius.circular(15.r), child: placeholder);
-    }
-
-    if (Utils.isVideo(cart.projectImage!)) {
-      return FutureBuilder(
-        future: Utils.urlThumbnail(cart.projectImage!),
-        builder: (context, AsyncSnapshot snapshot) {
-          final fileImage = snapshot.hasData
-              ? Image.file(File(snapshot.data),
-                  width: 140.w, height: 120.h, fit: BoxFit.cover)
-              : placeholder;
-          return ClipRRect(
-              borderRadius: BorderRadius.circular(15.r), child: fileImage);
-        },
-      );
-    }
-
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(15.r),
-      child:
-          CachedImage(image: cart.projectImage!, width: 140.w, height: 120.h),
-    );
-  }
-
-  Widget _buildCartDetails(Cart cart, int index) {
     final isArabic = Utils.isArabic;
-    return Expanded(
-      child: ConstrainedBox(
-        constraints: BoxConstraints(minWidth: Get.width, minHeight: 120.h),
-        child: IntrinsicHeight(
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildCartImage(cart),
+        12.horizontalSpace,
+        Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${cart.amount.round()} ${"currency".tr}",
-                  style: AppTextStyle.darkBrown18spTextStyle1),
-              const Spacer(),
+              Text(
+                "${cart.amount.round()} ${" currency".tr}",
+                style: TextStyle(
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.darkBrownColor,
+                ),
+              ),
+              6.verticalSpace,
               Text(
                 isArabic ? cart.projectNameArabic : cart.projectName,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.secondaryBlack14spTextStyle3,
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primaryBlackColor,
+                ),
               ),
-              Text(
-                isArabic ? cart.associationNameArabic : cart.associationName,
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.primaryDarkGrey12spTextStyle,
-              ),
-              const Spacer(),
+              4.verticalSpace,
+              if ((isArabic
+                      ? cart.associationNameArabic
+                      : cart.associationName) !=
+                  null)
+                Text(
+                  isArabic
+                      ? (cart.associationNameArabic ?? "")
+                      : (cart.associationName ?? ""),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.primaryDarkGreyColor,
+                  ),
+                ),
+              10.verticalSpace,
               Row(
                 children: [
-                  Flexible(
-                      child: _actionButton("edit", AppResources.editIcon,
-                          () => editPriceDialog(cart: cart, index: index))),
-                  8.horizontalSpace,
-                  Flexible(
-                      child: _actionButton("delete", AppResources.deleteIcon,
-                          () => controller.deleteProduct(cart),
-                          isDelete: true)),
+                  _actionButton(
+                    label: "edit".tr,
+                    iconPath: AppResources.editIcon,
+                    onPressed: () => editPriceDialog(cart: cart, index: index),
+                    isDelete: false,
+                  ),
+                  20.horizontalSpace,
+                  _actionButton(
+                    label: "delete".tr,
+                    iconPath: AppResources.deleteIcon,
+                    onPressed: () => controller.deleteProduct(cart),
+                    isDelete: true,
+                  ),
                 ],
               ),
             ],
           ),
         ),
-      ),
+      ],
     );
   }
 
-  Widget _actionButton(String label, String iconPath, VoidCallback onPressed,
-      {bool isDelete = false}) {
-    return TextButton.icon(
-      onPressed: onPressed,
-      style: TextButton.styleFrom(
-          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          padding: EdgeInsets.zero),
-      label: Text(label.tr,
-          style: isDelete
-              ? AppTextStyle.red14spTextStyle2
-              : AppTextStyle.lightBrown14spTextStyle),
-      icon: Image.asset(iconPath,
-          width: 16.w,
-          height: 16.h,
-          color: isDelete ? null : AppColors.lightBrownColor),
+  Widget _buildCartImage(Cart cart) {
+    const double size = 90;
+    final placeholder = Image.asset(
+      AppResources.placeholder,
+      width: size.w,
+      height: size.h,
+      fit: BoxFit.cover,
+    );
+
+    Widget imageWidget;
+    if (cart.projectImage == null) {
+      imageWidget = placeholder;
+    } else if (Utils.isVideo(cart.projectImage!)) {
+      imageWidget = FutureBuilder(
+        future: Utils.urlThumbnail(cart.projectImage!),
+        builder: (context, AsyncSnapshot snapshot) {
+          final fileImage = snapshot.hasData
+              ? Image.file(File(snapshot.data),
+                  width: size.w, height: size.h, fit: BoxFit.cover)
+              : placeholder;
+          return fileImage;
+        },
+      );
+    } else {
+      imageWidget =
+          CachedImage(image: cart.projectImage!, width: size.w, height: size.h);
+    }
+
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(12.r),
+      child: SizedBox(width: size.w, height: size.h, child: imageWidget),
     );
   }
 
-  Widget _buildCartSummary() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
-      padding: EdgeInsets.symmetric(horizontal: 13.w, vertical: 20.h),
-      decoration: _containerDecoration(),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _actionButton({
+    required String label,
+    required String iconPath,
+    required VoidCallback onPressed,
+    required bool isDelete,
+  }) {
+    final color = isDelete ? AppColors.redColor : AppColors.lightBrownColor;
+    return GestureDetector(
+      onTap: onPressed,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Text("orderSummary".tr,
-              style: AppTextStyle.secondaryPrimaryBlack24spTextStyle),
-          16.verticalSpace,
-          _summaryRow("totalDonations".tr, controller.totalAmount.value),
-          16.verticalSpace,
-          Divider(color: AppColors.dividerColor, height: 1.h),
-          16.verticalSpace,
-          _summaryRow("total".tr, controller.totalAmount.value),
-          16.verticalSpace,
-          elevatedButton(
-            text: "completePayment",
-            onPressed: () async {
-              await Get.delete<PaymentMethodViewModel>();
-              Get.put(PaymentMethodViewModel(true));
-              return controller.completePayment();
-            },
+          Image.asset(
+            iconPath,
+            width: 16.w,
+            height: 16.h,
+            color: color,
           ),
-          16.verticalSpace,
-          _securePaymentNote(),
+          4.horizontalSpace,
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 13.sp,
+              fontWeight: FontWeight.w500,
+              color: color,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget _summaryRow(String label, int amount) {
+  /// ── Order Summary card ───────────────────────────────────────────────────
+  Widget _buildCartSummary() {
+    return Container(
+      padding: EdgeInsets.all(16.r),
+      decoration: _cardDecoration(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "orderSummary".tr,
+            style: TextStyle(
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
+              color: AppColors.primaryBlackColor,
+            ),
+          ),
+          20.verticalSpace,
+          _summaryRow(
+            label: "totalDonations".tr,
+            amount: controller.totalAmount.value,
+            bold: false,
+          ),
+          16.verticalSpace,
+          Divider(color: AppColors.dividerDarkColor, height: 1.h),
+          16.verticalSpace,
+          _summaryRow(
+            label: "total".tr,
+            amount: controller.totalAmount.value,
+            bold: true,
+          ),
+          20.verticalSpace,
+          _payNowButton(),
+          16.verticalSpace,
+          // _securePaymentNote(),
+          SecurePaymentTitleWidget(bgColor: AppColors.dividerColor),
+        ],
+      ),
+    );
+  }
+
+  Widget _summaryRow(
+      {required String label, required int amount, required bool bold}) {
+    final labelStyle = bold
+        ? TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w700,
+            color: AppColors.primaryBlackColor,
+          )
+        : TextStyle(
+            fontSize: 15.sp,
+            fontWeight: FontWeight.w400,
+            color: AppColors.primaryDarkGreyColor,
+          );
+
+    final valueStyle = TextStyle(
+      fontSize: 16.sp,
+      fontWeight: FontWeight.w700,
+      color: AppColors.primaryBlackColor,
+    );
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(label, style: AppTextStyle.primaryDarkGrey16spTextStyle1),
-        Text("$amount ${"currency".tr}"),
+        Text(label, style: labelStyle),
+        Text("$amount ${"currency".tr}", style: valueStyle),
       ],
+    );
+  }
+
+  Widget _payNowButton() {
+    return SizedBox(
+      width: double.infinity,
+      height: 50.h,
+      child: ElevatedButton(
+        onPressed: () async {
+          await Get.delete<PaymentMethodViewModel>();
+          Get.put(PaymentMethodViewModel(true));
+          controller.completePayment();
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: const Color(0xff5D3B26),
+          foregroundColor: Colors.white,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+        ),
+        child: Text(
+          "completePayment".tr,
+          style: TextStyle(
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
   Widget _securePaymentNote() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       decoration: BoxDecoration(
-        color: AppColors.grayColor,
-        borderRadius: BorderRadius.circular(20.r),
+        color: const Color(0xffF6F6F6),
+        borderRadius: BorderRadius.circular(12.r),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Icon(Icons.verified_user_rounded,
-              color: AppColors.lightBrownColor),
-          4.verticalSpace,
-          Text(
-            "paymentSecureMessage".tr,
-            textAlign: TextAlign.center,
-            style: AppTextStyle.primaryDarkBlack14spTextStyle,
+          Icon(
+            Icons.verified_user_rounded,
+            color: themeViewModel.color,
+            size: 20.r,
+          ),
+          10.horizontalSpace,
+          Expanded(
+            child: Text(
+              "paymentSecureMessage".tr,
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w400,
+                color: AppColors.primaryBlackColor,
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 
-  BoxDecoration _containerDecoration() {
+  BoxDecoration _cardDecoration() {
     return BoxDecoration(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(20.r),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.black.withOpacity(0.1),
-          offset: const Offset(0, 4),
-          blurRadius: 50.0,
-        ),
-      ],
+      // color: Colors.white,
+      borderRadius: BorderRadius.circular(16.r),
+      border: Border.all(color: AppColors.dividerDarkColor),
+      // boxShadow: [
+      //   BoxShadow(
+      //     color: Colors.black.withOpacity(0.06),
+      //     offset: const Offset(0, 2),
+      //     blurRadius: 12,
+      //   ),
+      // ],
     );
   }
 }

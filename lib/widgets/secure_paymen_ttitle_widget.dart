@@ -6,10 +6,12 @@ import 'package:zakat_fund/utils/constants/app_colors.dart';
 class SecurePaymentTitleWidget extends StatelessWidget {
   const SecurePaymentTitleWidget({
     this.padding,
+    this.bgColor,
     super.key,
   });
 
   final EdgeInsetsGeometry? padding;
+  final Color? bgColor;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +20,7 @@ class SecurePaymentTitleWidget extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: Colors.grey.shade100,
+          color: bgColor ?? Colors.grey.shade100,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Expanded(
