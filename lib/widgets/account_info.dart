@@ -10,6 +10,6 @@ Text buildAccountValue(String value) => Text(
     );
 
 Text buildAccountTitle(String title) => Text(
-      title.tr + ":",
+      "${title.tr}:",
       style: AppTextStyle.grey14spTextStyle,
     );

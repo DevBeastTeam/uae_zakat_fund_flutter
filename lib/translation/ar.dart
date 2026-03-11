@@ -2248,7 +2248,7 @@ const Map<String, String> ar = {
   "viewMoreLink": "الاطلاع على المزيد",
   "fullName": "الاسم الكامل",
   "bankTransfer": "تحويل\nبنكي",
-  "credit/DebitCard": "بطاقة ائتمان/\nسحب آلي",
+  "credit/DebitCard": "بطاقة ائتمان",
   "paymentFailed": "لم نتمكن من معالجة عملية الدفع. يرجى إعادة المحاولة لاحقًا",
   "securePaymentMessage":
       "جميع المعاملات المالية آمنة بنسبة 100% تحت إشراف الهيئة العامة للشؤون الإسلامية والأوقاف والزكاة"
