@@ -50,10 +50,10 @@ abstract class PDFHelper {
     final pdfBytes = await pdf.save();
     Utils.hideLoadingDialog();
     if (isPreview) {
-      Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
-        'pdfBytes': pdfBytes,
-        'title': 'taxCertificate'.tr,
-      });
+      // Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
+      //   'pdfBytes': pdfBytes,
+      //   'title': 'taxCertificate'.tr,
+      // });
     } else {
       final directory = await _getDirectory();
       final file = File(
@@ -91,10 +91,10 @@ abstract class PDFHelper {
     final pdfBytes = await pdf.save();
     Utils.hideLoadingDialog();
     if (isPreview) {
-      Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
-        'pdfBytes': pdfBytes,
-        'title': 'paymentReceipt'.tr,
-      });
+      // Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
+      //   'pdfBytes': pdfBytes,
+      //   'title': 'paymentReceipt'.tr,
+      // });
     } else {
       final directory = await _getDirectory();
       String fileName = "";
@@ -119,9 +119,8 @@ abstract class PDFHelper {
 
   static Future<void> generateTaskCollectionReceiptPdf(TaskReceipt details,
       {bool isPreview = false}) async {
-    if (!isPreview && !await _requestStoragePermission(hideLoader: false)) {
+    if (!isPreview && !await _requestStoragePermission(hideLoader: false))
       return;
-    }
     final pdf = pw.Document();
     final fonts = await _loadFonts();
     final logos = await _loadLogos();
@@ -137,10 +136,10 @@ abstract class PDFHelper {
     final pdfBytes = await pdf.save();
     if (isPreview) {
       Utils.hideLoadingDialog();
-      Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
-        'pdfBytes': pdfBytes,
-        'title': 'collectionReceipt'.tr,
-      });
+      // Get.toNamed(AppRoutes.pdfPreviewScreen, arguments: {
+      //   'pdfBytes': pdfBytes,
+      //   'title': 'collectionReceipt'.tr,
+      // });
     } else {
       final directory = await _getDirectory();
       String fileName = "";
@@ -156,19 +155,13 @@ abstract class PDFHelper {
 
   static Future<bool> _requestStoragePermission(
       {bool hideLoader = true}) async {
-    if (Platform.isAndroid) {
-      // For Android 13 and above, we use media permissions if needed,
-      // but for app-specific directories, no permission is required.
-      // If you were accessing shared storage, you'd need READ_MEDIA_IMAGES etc.
-      // For PDF generation in app-specific folders, we can return true.
-      return true;
-    } else {
-      final status = await Permission.storage.request();
-      if (!status.isGranted) {
-        if (hideLoader) Utils.hideLoadingDialog();
-        Utils.showFrontEndSnackBar(message: 'Storage permission denied');
-        return false;
-      }
+    final status = Platform.isAndroid
+        ? await PermissionStatus.granted
+        : await Permission.storage.request();
+    if (!status.isGranted) {
+      if (hideLoader) Utils.hideLoadingDialog();
+      Utils.showFrontEndSnackBar(message: 'Storage permission denied');
+      return false;
     }
     return true;
   }
