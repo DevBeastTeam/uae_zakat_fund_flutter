@@ -125,7 +125,7 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                             opacity: 0.9,
                             child: InkWell(
                               onTap: () {
-                                if (onTapGooglePay != null) onTapGooglePay!();
+                                // if (onTapGooglePay != null) onTapGooglePay!();
                               },
                               child: Container(
                                 height: 65.h,
