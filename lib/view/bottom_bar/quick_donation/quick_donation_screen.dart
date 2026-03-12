@@ -43,27 +43,27 @@ void quickDonationBottomSheet() {
                 return Expanded(
                   child: SingleChildScrollView(child: PaymentMethodWidget(
                     onTapGooglePay: () {
-                      final service = DubaiGooglePayService(
-                          apiClient: DubaiPayApiClient(
-                              basicAuthToken: 'dummy_auth_token',
-                              secretKey: 'dummy_secret_key',
-                              baseUrl:
-                                  'https://api.qa.dubai.gov.ae/secure/sdg/dubaipay/payment/2.0.0'),
-                          spCode: 'SDG',
-                          servCode: 'TEST',
-                          version: '1.0');
-                      service.showGooglePay(
-                        amount: viewModel.getTotalAmount().toString(),
-                        spTrn: 'sptrn-${DateTime.now().millisecondsSinceEpoch}',
-                        label: "GPay Dummy Test",
-                        onPaymentResult: (result) {
-                          Get.snackbar(
-                              "Google Pay", "Payment processed dummy UI flow");
-                        },
-                        onError: (err) {
-                          Get.snackbar("Google Pay Error", err.toString());
-                        },
-                      );
+                      // final service = DubaiGooglePayService(
+                      //     apiClient: DubaiPayApiClient(
+                      //         basicAuthToken: 'dummy_auth_token',
+                      //         secretKey: 'dummy_secret_key',
+                      //         baseUrl:
+                      //             'https://api.qa.dubai.gov.ae/secure/sdg/dubaipay/payment/2.0.0'),
+                      //     spCode: 'SDG',
+                      //     servCode: 'TEST',
+                      //     version: '1.0');
+                      // service.showGooglePay(
+                      //   amount: viewModel.getTotalAmount().toString(),
+                      //   spTrn: 'sptrn-${DateTime.now().millisecondsSinceEpoch}',
+                      //   label: "GPay Dummy Test",
+                      //   onPaymentResult: (result) {
+                      //     Get.snackbar(
+                      //         "Google Pay", "Payment processed dummy UI flow");
+                      //   },
+                      //   onError: (err) {
+                      //     Get.snackbar("Google Pay Error", err.toString());
+                      //   },
+                      // );
                     },
                   )),
                 );

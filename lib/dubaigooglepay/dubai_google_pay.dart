@@ -1,4 +1,4 @@
-library dubai_google_pay;
+library;
 
 export 'dubai_pay_models.dart';
 export 'dubai_pay_signature.dart';

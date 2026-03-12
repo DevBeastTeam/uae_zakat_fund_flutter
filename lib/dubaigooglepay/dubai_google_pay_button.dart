@@ -16,7 +16,7 @@ class DubaiGooglePayButton extends StatelessWidget {
   final Function(String error)? onError;
 
   const DubaiGooglePayButton({
-    Key? key,
+    super.key,
     required this.dubaiGooglePayService,
     required this.amount,
     required this.spTrn,
@@ -27,7 +27,7 @@ class DubaiGooglePayButton extends StatelessWidget {
     this.description,
     this.onPaymentResult,
     this.onError,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
