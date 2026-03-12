@@ -2271,5 +2271,6 @@ const Map<String, String> en = {
   "credit/DebitCard": "Credit/Debit\nCard",
   "paymentFailed": "Your payment could not be processed. Please try again.",
   "securePaymentMessage":
-      "All payment transactions are 100% secure under the supervision of General Authority for Islamic Affairs, Endowments and Zakat"
+      "All payment transactions are 100% secure under the supervision of General Authority for Islamic Affairs, Endowments and Zakat",
+  "somethingWentWrongTryAgain": "Something went wrong, please try again later",
 };

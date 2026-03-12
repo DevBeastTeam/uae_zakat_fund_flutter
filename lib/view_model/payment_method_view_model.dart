@@ -540,8 +540,7 @@ class PaymentMethodViewModel extends GetxController
     if (apiResponse.appState == AppState.onSuccess) {
       BaseApiModel data = apiResponse.data;
       if (data.paymentUri == null) {
-        Utils.showGlobalSnackBar(
-            message: 'Something went wrong try again later');
+        Utils.showGlobalSnackBar(message: 'somethingWentWrongTryAgain'.tr);
         return;
       }
       url = data.paymentUri!;
