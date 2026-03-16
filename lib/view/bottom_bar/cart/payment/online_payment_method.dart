@@ -70,8 +70,8 @@ class OnlinePaymentMethodWidget extends GetView<PaymentMethodViewModel> {
               LabelTextField(
                 controller: controller.dpfNameController,
                 label: "fullName",
-                isRequired: true,
-                checkValidation: true,
+                isRequired: controller.isCart,
+                checkValidation: controller.isCart,
                 hint: "fullName",
               ),
               // 16.verticalSpace,

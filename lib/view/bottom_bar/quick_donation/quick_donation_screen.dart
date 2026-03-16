@@ -20,6 +20,7 @@ import 'package:zakat_fund/widgets/my_app_bar.dart';
 
 import '../../../widgets/secure_paymen_ttitle_widget.dart';
 import '../../../widgets/total_payment_widget.dart';
+import 'package:zakat_fund/dubaigooglepay/dubai_google_pay.dart';
 
 void quickDonationBottomSheet() {
   Utils.logEvent(name: EventConstant.quickDonationScreen);
@@ -39,8 +40,32 @@ void quickDonationBottomSheet() {
                 : _buildSearchField(viewModel)),
             Obx(() {
               if (viewModel.showPaymentMethod.value) {
-                return const Expanded(
-                  child: SingleChildScrollView(child: PaymentMethodWidget()),
+                return Expanded(
+                  child: SingleChildScrollView(child: PaymentMethodWidget(
+                    onTapGooglePay: () {
+                      // final service = DubaiGooglePayService(
+                      //     apiClient: DubaiPayApiClient(
+                      //         basicAuthToken: 'dummy_auth_token',
+                      //         secretKey: 'dummy_secret_key',
+                      //         baseUrl:
+                      //             'https://api.qa.dubai.gov.ae/secure/sdg/dubaipay/payment/2.0.0'),
+                      //     spCode: 'SDG',
+                      //     servCode: 'TEST',
+                      //     version: '1.0');
+                      // service.showGooglePay(
+                      //   amount: viewModel.getTotalAmount().toString(),
+                      //   spTrn: 'sptrn-${DateTime.now().millisecondsSinceEpoch}',
+                      //   label: "GPay Dummy Test",
+                      //   onPaymentResult: (result) {
+                      //     Get.snackbar(
+                      //         "Google Pay", "Payment processed dummy UI flow");
+                      //   },
+                      //   onError: (err) {
+                      //     Get.snackbar("Google Pay Error", err.toString());
+                      //   },
+                      // );
+                    },
+                  )),
                 );
               }
               return viewModel.goNext.value

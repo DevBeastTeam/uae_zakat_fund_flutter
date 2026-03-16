@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -13,7 +15,8 @@ import 'package:zakat_fund/view_model/payment_method_view_model.dart';
 import 'package:zakat_fund/widgets/tab_bar_widget.dart';
 
 class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
-  const PaymentMethodWidget({super.key});
+  final Function? onTapGooglePay;
+  const PaymentMethodWidget({super.key, this.onTapGooglePay});
 
   @override
   Widget build(BuildContext context) {
@@ -96,41 +99,50 @@ class PaymentMethodWidget extends GetView<PaymentMethodViewModel> {
                         ),
                       ),
                       8.horizontalSpace,
-                      Expanded(
-                        child: Opacity(
-                          opacity: 0.4,
-                          child: Container(
-                            height: 65.h,
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                border: Border.all(color: AppColors.greyColor)),
-                            child: Image.asset(
-                              AppResources.applePayIcon,
-                              width: 58.w,
-                              height: 24.h,
+                      if (Platform.isIOS)
+                        Expanded(
+                          child: Opacity(
+                            opacity: 0.4,
+                            child: Container(
+                              height: 65.h,
+                              padding: EdgeInsets.symmetric(horizontal: 10.w),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  border:
+                                      Border.all(color: AppColors.greyColor)),
+                              child: Image.asset(
+                                AppResources.applePayIcon,
+                                width: 58.w,
+                                height: 24.h,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      8.horizontalSpace,
-                      Expanded(
-                        child: Opacity(
-                          opacity: 0.4,
-                          child: Container(
-                            height: 65.h,
-                            padding: EdgeInsets.symmetric(horizontal: 10.w),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8.r),
-                                border: Border.all(color: AppColors.greyColor)),
-                            child: SvgPicture.asset(
-                              AppResources.googlePay,
-                              width: 48.w,
-                              height: 24.h,
+                      if (Platform.isIOS) 8.horizontalSpace,
+                      if (Platform.isAndroid)
+                        Expanded(
+                          child: Opacity(
+                            opacity: 0.9,
+                            child: InkWell(
+                              onTap: () {
+                                // if (onTapGooglePay != null) onTapGooglePay!();
+                              },
+                              child: Container(
+                                height: 65.h,
+                                padding: EdgeInsets.symmetric(horizontal: 10.w),
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.r),
+                                    border:
+                                        Border.all(color: AppColors.greyColor)),
+                                child: SvgPicture.asset(
+                                  AppResources.googlePay,
+                                  width: 48.w,
+                                  height: 24.h,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
                     ],
                   ),
                 ),
